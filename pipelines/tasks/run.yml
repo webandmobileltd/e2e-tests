@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: cypress/base
+    tag: "10"
+
+inputs:
+- name: source
+
+outputs:
+- name: test-results
+
+params:
+  CYPRESS_USERNAME:
+  CYPRESS_PASSWORD:
+
+run:
+  path: source/pipelines/scripts/run
+
+caches:
+- path: ../../../root/.cache
+- path: ../../../root/.npm

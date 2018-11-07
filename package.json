@@ -1,0 +1,21 @@
+{
+  "name": "e2e-tests",
+  "version": "1.0.0",
+  "description": "Acceptance tests for Boclips",
+  "main": "test.js",
+  "scripts": {
+    "test": "test",
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "cypress:run": "./node_modules/.bin/cypress run"
+  },
+  "author": "Boclippas",
+  "license": "ISC",
+  "dependencies": {
+    "@cypress/webpack-preprocessor": "^2.0.1",
+    "@types/uuid": "^3.4.4",
+    "cypress": "^3.1.0",
+    "ts-loader": "^4.4.2",
+    "typescript": "^3.0.1",
+    "uuid": "^3.3.2"
+  }
+}

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+cwd="$(cd "$(dirname $0)" && pwd)"
+
+CYPRESS_USERNAME=$(lpass show e2e-backoffice-testing --username)
+CYPRESS_PASSWORD=$(lpass show e2e-backoffice-testing --password)
+
+export CYPRESS_USERNAME
+export CYPRESS_PASSWORD
+fly --target ci \
+    execute \
+    --config "$cwd/pipelines/tasks/run.yml" \
+    --input source="$cwd" \
+    --output test-results=test-results

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+unknown=0
+
+if [ "$#" -eq 2 ] && [ "$2" = "ci" ]
+then
+    cypress="npm run cypress:run"
+else
+    cypress="npm run cypress:open"
+fi
+
+if [ "$#" -eq 0 ] || [ $unknown -eq 1 ]
+then
+    read -p "Which environment to run against? " env
+else
+    env=$1
+fi
+
+case $env in
+    [Ll]* )
+        CYPRESS_BASE_URL=http://localhost:3000 \
+        CYPRESS_PASSWORD="areallygoodpassword" \
+            $cypress
+        ;;
+    [Tt]* )
+        : ${CYPRESS_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
+        : ${CYPRESS_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
+        export CYPRESS_USERNAME
+        export CYPRESS_PASSWORD
+        CYPRESS_BASE_URL=https://backoffice.testing-boclips.com \
+            $cypress
+        ;;
+    [Ss]* )
+        : ${CYPRESS_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
+        : ${CYPRESS_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
+        export CYPRESS_USERNAME
+        export CYPRESS_PASSWORD
+        CYPRESS_BASE_URL=https://backoffice.staging-boclips.com \
+            $cypress
+        ;;
+    * )
+        echo "Please answer [l]ocal, [t]esting or [s]taging."
+        unknown=1
+        ;;
+esac
