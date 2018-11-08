@@ -1,5 +1,5 @@
 .DS_Store
 node_modules
-cypress/videos
-cypress/screenshots
+cypress/videos/*.mp4
+cypress/screenshots/*/*.png
 .idea
