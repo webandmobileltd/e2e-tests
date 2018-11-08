@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 produce_output () {
+    mkdir -p source/cypress/{screenshots,videos}
+    touch source/cypress/{screenshots,videos}/tar-avoid-empty-dir
     cd "source/cypress" || exit
     tar -cf ../../test-results/results.tar \
         screenshots/* \
@@ -19,3 +21,4 @@ cd source || exit 1
 npm ci || exit 1
 ./run t ci
 )
+git st
