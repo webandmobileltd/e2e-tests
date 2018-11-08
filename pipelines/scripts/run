@@ -3,7 +3,7 @@
 wd=source
 produce_output () {
     cd "$wd/cypress" || exit
-    tar -cf ../../../test-results/results.tar \
+    tar -cf ../../test-results/results.tar \
         screenshots/* \
         videos/*
 }
