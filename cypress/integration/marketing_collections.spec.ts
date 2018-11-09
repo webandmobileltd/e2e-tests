@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { MarketingCollectionListPage } from "../page_objects/MarketingCollectionPage";
+import { MarketingCollectionListPage } from "../page_objects/marketing/MarketingCollectionPage";
 
 context("Marketing Collections", () => {
   const title = uuidv4();

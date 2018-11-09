@@ -20,25 +20,42 @@ fi
 
 case $env in
     [Ll]* )
-        CYPRESS_BASE_URL=http://localhost:3000 \
+        : ${CYPRESS_BACKOFFICE_BASE_URL:="http://localhost:3000"}
+        : ${CYPRESS_EDUCATORS_BASE_URL:="http://localhost:3000"}
+        export CYPRESS_BACKOFFICE_BASE_URL
+        export CYPRESS_EDUCATORS_BASE_URL
         CYPRESS_PASSWORD="areallygoodpassword" \
-            $cypress
+        $cypress
         ;;
     [Tt]* )
-        : ${CYPRESS_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
-        : ${CYPRESS_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-        export CYPRESS_USERNAME
-        export CYPRESS_PASSWORD
-        CYPRESS_BASE_URL=https://backoffice.testing-boclips.com \
-            $cypress
+        : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
+        : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
+        : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
+        : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.testing-boclips.com"}
+        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-testing --username)"}
+        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-testing --password)"}
+        export CYPRESS_BACKOFFICE_BASE_URL
+        export CYPRESS_BACKOFFICE_USERNAME
+        export CYPRESS_BACKOFFICE_PASSWORD
+        export CYPRESS_EDUCATORS_BASE_URL
+        export CYPRESS_EDUCATORS_USERNAME
+        export CYPRESS_EDUCATORS_PASSWORD
+        $cypress
         ;;
     [Ss]* )
-        : ${CYPRESS_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
-        : ${CYPRESS_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
-        export CYPRESS_USERNAME
-        export CYPRESS_PASSWORD
-        CYPRESS_BASE_URL=https://backoffice.staging-boclips.com \
-            $cypress
+        : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.staging-boclips.com"}
+        : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
+        : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
+        : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.staging-boclips.com"}
+        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-staging --username)"}
+        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-staging --password)"}
+        export CYPRESS_BACKOFFICE_BASE_URL
+        export CYPRESS_BACKOFFICE_USERNAME
+        export CYPRESS_BACKOFFICE_PASSWORD
+        export CYPRESS_EDUCATORS_BASE_URL
+        export CYPRESS_EDUCATORS_USERNAME
+        export CYPRESS_EDUCATORS_PASSWORD
+        $cypress
         ;;
     * )
         echo "Please answer [l]ocal, [t]esting or [s]taging."

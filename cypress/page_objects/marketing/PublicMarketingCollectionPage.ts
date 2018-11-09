@@ -1,4 +1,4 @@
-import { By } from "../support/By";
+import { By } from "../../support/By";
 import MarketingCollection from "./domain/MarketingCollection";
 import MarketingCollectionVideo from "./domain/MarketingCollectionVideo";
 

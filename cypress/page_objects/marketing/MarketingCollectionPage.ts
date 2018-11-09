@@ -1,4 +1,4 @@
-import { By } from "../support/By";
+import { By } from "../../support/By";
 import MarketingCollectionSummary from "./domain/MarketingCollectionSummary";
 import MarketingCollectionVideo from "./domain/MarketingCollectionVideo";
 import PublicMarketingCollectionPage from "./PublicMarketingCollectionPage";
@@ -99,7 +99,7 @@ export class MarketingCollectionListPage {
   private readonly url: string;
 
   constructor() {
-    this.url = "/marketing-collections";
+    this.url = Cypress.env("BACKOFFICE_BASE_URL")+"/marketing-collections";
   }
 
   public goToCreateCollection() {
@@ -113,8 +113,8 @@ export class MarketingCollectionListPage {
   }
 
   public logIn() {
-    cy.get("#username").type(Cypress.env("USERNAME"));
-    cy.get("#password").type(Cypress.env("PASSWORD"));
+    cy.get("#username").type(Cypress.env("BACKOFFICE_USERNAME"));
+    cy.get("#password").type(Cypress.env("BACKOFFICE_PASSWORD"));
     cy.get("#kc-form-login").submit();
     return this;
   }
