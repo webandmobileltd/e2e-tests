@@ -1,5 +1,4 @@
 import {By} from "../../support/By";
-import MarketingCollectionVideo from "../marketing/domain/MarketingCollectionVideo";
 import EducatorsVideo from "./domain/EducatorsVideo";
 
 export class EducatorsHomepage {
@@ -52,19 +51,24 @@ export class EducatorsHomepage {
         return this;
     }
 
-    submitForm() {
-        cy.get(By.dataQa("no-results-submit"))
-            .click();
-        return this;
-    }
-
-    copyLink() {
+    copyFirstLink() {
         cy.get(By.dataQa("copy-link"))
+            .first()
             .click();
         return this;
     }
 
     visitCopiedLink() {
+        cy.get('.ant-notification-notice-message')
+            .then((message)=> {
+                cy.visit(message.text());
+            });
+        return this;
+    }
+
+    playVideo() {
+        cy.get('.boclips-player')
+            .click();
         return this;
     }
 }

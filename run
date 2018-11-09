@@ -21,10 +21,17 @@ fi
 case $env in
     [Ll]* )
         : ${CYPRESS_BACKOFFICE_BASE_URL:="http://localhost:3000"}
-        : ${CYPRESS_EDUCATORS_BASE_URL:="http://localhost:3000"}
+        : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
+        : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
+        : ${CYPRESS_EDUCATORS_BASE_URL:="http://localhost:8081"}
+        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-testing --username)"}
+        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-testing --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
+        export CYPRESS_BACKOFFICE_USERNAME
+        export CYPRESS_BACKOFFICE_PASSWORD
         export CYPRESS_EDUCATORS_BASE_URL
-        CYPRESS_PASSWORD="areallygoodpassword" \
+        export CYPRESS_EDUCATORS_USERNAME
+        export CYPRESS_EDUCATORS_PASSWORD
         $cypress
         ;;
     [Tt]* )
