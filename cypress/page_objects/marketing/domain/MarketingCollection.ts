@@ -1,7 +1,7 @@
-import MarketingCollectionVideo from './MarketingCollectionVideo';
+import Video from '../../domain/Video';
 
 export default interface MarketingCollection {
   title: string;
   description: string;
-  videos: MarketingCollectionVideo[];
+  videos: Video[];
 }

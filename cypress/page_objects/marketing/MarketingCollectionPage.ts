@@ -1,6 +1,6 @@
 import { By } from "../../support/By";
 import MarketingCollectionSummary from "./domain/MarketingCollectionSummary";
-import MarketingCollectionVideo from "./domain/MarketingCollectionVideo";
+import Video from "../domain/Video";
 import PublicMarketingCollectionPage from "./PublicMarketingCollectionPage";
 
 function updateInlineEdit(dataQa: string, text: string) {
@@ -39,7 +39,7 @@ class MarketingCollectionPage {
     return this;
   }
 
-  public addVideo(video: MarketingCollectionVideo) {
+  public addVideo(video: Video) {
     cy.get(By.dataQa("add-video")).click();
 
     cy.get(By.dataQa("video-form-id")).clear();
@@ -47,7 +47,7 @@ class MarketingCollectionPage {
     cy.get(By.dataQa("video-form-title")).clear();
     cy.get(By.dataQa("video-form-title")).type(video.title);
     cy.get(By.dataQa("video-form-description")).clear();
-    cy.get(By.dataQa("video-form-description")).type(video.description);
+    cy.get(By.dataQa("video-form-description")).type(video.description!);
 
     cy.get(By.dataQa("video-form-submit")).click();
     return this;
@@ -61,8 +61,8 @@ class MarketingCollectionPage {
     return this;
   }
 
-  public withVideos(callback: (videos: MarketingCollectionVideo[]) => void) {
-    const videos: MarketingCollectionVideo[] = [];
+  public withVideos(callback: (videos: Video[]) => void) {
+    const videos: Video[] = [];
     cy.get(By.dataQa("marketing-video"))
       .then(videoCards =>
         videoCards.each((idx, el: HTMLElement) => {

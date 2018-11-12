@@ -10,15 +10,15 @@ context('Educators', () => {
         educatorsHomepage
             .visit()
             .logIn()
-            .search(invalidSearchQuery)
-            .enterEmail(email)
-            .search(validSearchQuery)
-            .showsVideo(videos => {
-                    let minimumAcceptableNumberOfVideos = 2;
-                    expect(videos.length).to.be.greaterThan(minimumAcceptableNumberOfVideos,
-                        `There are less than ${minimumAcceptableNumberOfVideos}`)
-                }
-            )
+            // .search(invalidSearchQuery)
+            // .enterEmail(email)
+            // .search(validSearchQuery)
+            // .showsVideo(videos => {
+            //         let minimumAcceptableNumberOfVideos = 2;
+            //         expect(videos.length).to.be.greaterThan(minimumAcceptableNumberOfVideos,
+            //             `There are less than ${minimumAcceptableNumberOfVideos}`)
+            //     }
+            // )
             // .copyFirstLink()
             // .visitCopiedLink()
             // .playVideo()

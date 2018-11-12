@@ -1,15 +1,15 @@
 import { By } from "../../support/By";
 import MarketingCollection from "./domain/MarketingCollection";
-import MarketingCollectionVideo from "./domain/MarketingCollectionVideo";
+import Video from "../domain/Video";
 
-function nodeToVideo(node: JQuery<HTMLElement>): MarketingCollectionVideo {
+function nodeToVideo(node: JQuery<HTMLElement>): Video {
   return {
     title: node.find(By.dataQa("video-title")).text(),
     description: node.find(By.dataQa("video-description")).text()
   };
 }
 
-function mapToVideos(list: JQuery<HTMLElement>): MarketingCollectionVideo[] {
+function mapToVideos(list: JQuery<HTMLElement>): Video[] {
   return list
     .toArray()
     .map((element: HTMLElement) => nodeToVideo(Cypress.$(element)));
