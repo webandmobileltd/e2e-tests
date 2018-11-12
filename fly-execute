@@ -1,12 +1,23 @@
 #!/usr/bin/env bash
 
+set -e
+
 cwd="$(cd "$(dirname $0)" && pwd)"
 
-CYPRESS_USERNAME=$(lpass show e2e-backoffice-testing --username)
-CYPRESS_PASSWORD=$(lpass show e2e-backoffice-testing --password)
+CYPRESS_BACKOFFICE_USERNAME="$(lpass show e2e-backoffice-testing --username)"
+CYPRESS_BACKOFFICE_PASSWORD="$(lpass show e2e-backoffice-testing --password)"
+CYPRESS_EDUCATORS_USERNAME="$(lpass show e2e-educators-testing --username)"
+CYPRESS_EDUCATORS_PASSWORD="$(lpass show e2e-educators-testing --password)"
+CYPRESS_FRONTEND_USERNAME="$(lpass show e2e-frontend-testing --username)"
+CYPRESS_FRONTEND_PASSWORD="$(lpass show e2e-frontend-testing --password)"
 
-export CYPRESS_USERNAME
-export CYPRESS_PASSWORD
+export CYPRESS_BACKOFFICE_USERNAME
+export CYPRESS_BACKOFFICE_PASSWORD
+export CYPRESS_EDUCATORS_USERNAME
+export CYPRESS_EDUCATORS_PASSWORD
+export CYPRESS_FRONTEND_USERNAME
+export CYPRESS_FRONTEND_PASSWORD
+
 fly --target ci \
     execute \
     --config "$cwd/pipelines/tasks/run.yml" \

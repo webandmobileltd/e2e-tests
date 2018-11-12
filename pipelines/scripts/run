@@ -10,9 +10,15 @@ produce_output () {
 }
 trap produce_output EXIT
 
-if [[ -z $CYPRESS_USERNAME || -z $CYPRESS_PASSWORD ]]
+if  [[ -z $CYPRESS_BACKOFFICE_USERNAME \
+    || -z $CYPRESS_BACKOFFICE_PASSWORD \
+    || -z $CYPRESS_EDUCATORS_USERNAME \
+    || -z $CYPRESS_EDUCATORS_PASSWORD \
+    || -z $CYPRESS_FRONTEND_USERNAME \
+    || -z $CYPRESS_FRONTEND_PASSWORD \
+    ]]
 then
-    echo "You must set CYPRESS_USERNAME and CYPRESS_PASSWORD"
+    echo "Missing CYPRESS_* credentials"
     exit 1
 fi
 

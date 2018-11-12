@@ -26,12 +26,18 @@ case $env in
         : ${CYPRESS_EDUCATORS_BASE_URL:="http://localhost:8081"}
         : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-testing --username)"}
         : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-testing --password)"}
+        : ${CYPRESS_FRONTEND_BASE_URL:="http://localhost:8080"}
+        : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
+        : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
         export CYPRESS_EDUCATORS_BASE_URL
         export CYPRESS_EDUCATORS_USERNAME
         export CYPRESS_EDUCATORS_PASSWORD
+        export CYPRESS_FRONTEND_BASE_URL
+        export CYPRESS_FRONTEND_USERNAME
+        export CYPRESS_FRONTEND_PASSWORD
         $cypress
         ;;
     [Tt]* )
@@ -41,12 +47,18 @@ case $env in
         : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.testing-boclips.com"}
         : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-testing --username)"}
         : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-testing --password)"}
+        : ${CYPRESS_FRONTEND_BASE_URL:="https://testing-boclips.com"}
+        : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
+        : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
         export CYPRESS_EDUCATORS_BASE_URL
         export CYPRESS_EDUCATORS_USERNAME
         export CYPRESS_EDUCATORS_PASSWORD
+        export CYPRESS_FRONTEND_BASE_URL
+        export CYPRESS_FRONTEND_USERNAME
+        export CYPRESS_FRONTEND_PASSWORD
         $cypress
         ;;
     [Ss]* )
@@ -56,12 +68,18 @@ case $env in
         : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.staging-boclips.com"}
         : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-staging --username)"}
         : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-staging --password)"}
+        : ${CYPRESS_FRONTEND_BASE_URL:="https://staging-boclips.com"}
+        : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-staging --username)"}
+        : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-staging --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
         export CYPRESS_EDUCATORS_BASE_URL
         export CYPRESS_EDUCATORS_USERNAME
         export CYPRESS_EDUCATORS_PASSWORD
+        export CYPRESS_FRONTEND_BASE_URL
+        export CYPRESS_FRONTEND_USERNAME
+        export CYPRESS_FRONTEND_PASSWORD
         $cypress
         ;;
     * )
