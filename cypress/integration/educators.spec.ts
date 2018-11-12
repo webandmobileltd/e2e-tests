@@ -19,9 +19,9 @@ context('Educators', () => {
                         `There are less than ${minimumAcceptableNumberOfVideos}`)
                 }
             )
-            .copyFirstLink()
-            .visitCopiedLink()
-            .playVideo()
+            // .copyFirstLink()
+            // .visitCopiedLink()
+            // .playVideo()
     })
 });
 
