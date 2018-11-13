@@ -1,7 +1,7 @@
 import {EducatorsHomepage} from "../page_objects/educators/EducatorsHomepage";
 
 context('Educators', () => {
-    const validSearchQuery = "test";
+    const validSearchQuery = "Richard";
     const invalidSearchQuery = "asdfghjklkjhgf";
     const email = "test@test.com";
 

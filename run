@@ -69,8 +69,8 @@ case $env in
         : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-staging --username)"}
         : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-staging --password)"}
         : ${CYPRESS_FRONTEND_BASE_URL:="https://staging-boclips.com"}
-        : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-staging --username)"}
-        : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-staging --password)"}
+        : ${CYPRESS_FRONTEND_USERNAME:="dummy-user"}
+        : ${CYPRESS_FRONTEND_PASSWORD:="BlessYou2"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD

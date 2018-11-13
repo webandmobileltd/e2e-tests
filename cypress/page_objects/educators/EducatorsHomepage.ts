@@ -71,5 +71,6 @@ export class EducatorsHomepage {
         cy.get('.boclips-player')
             .click();
         return this;
+
     }
 }
