@@ -23,7 +23,7 @@ export class Homepage {
     }
 
     public search(searchQuery: string) {
-        cy.wait(10000);
+        cy.wait(5000);
         cy.get(By.dataQa("search-input"))
             .first()
             .clear()
@@ -53,28 +53,26 @@ export class Homepage {
         return this;
     }
 
-    public goBack() {
-        cy.go("back");
-        return this;
-    }
-
     public sourceNameIsCorrectOnVideoDetailsPage(source: string) {
-        console.log(source);
-        expect(cy.get(By.dataQa("source-name")).contains(source)).to.equal(true);
+        cy.get(".status-get--content").contains(source);
         return this;
     }
 
-    private extractSourceNameFromSourceList(sourceFilterItem: JQuery<HTMLElement>): string {
-        return sourceFilterItem.find(By.dataQa("source-name")).text();
-    }
-
-    private checkPersistanceOfSelectedFilter(previousFilter: JQuery<HTMLElement>) {
-        expect(previousFilter.is(":checked")).to.equal(true);
+    private checkPersistanceOfSelectedFilter(previousCheckedFilterIndex: number, dataQaQuery: string) {
+        cy.get(By.dataQa(dataQaQuery))
+            .find("input").eq(previousCheckedFilterIndex)
+            .should("be.checked");
     }
 
     private getListOfFilterValuesForFilterContainer(dataQaQuery: string) {
         return cy.get(By.dataQa(dataQaQuery))
             .find(By.dataQa("filter-value"));
+    }
+
+    public findEachFilter(dataQaQuery: string, callback: (filterItem: JQuery<HTMLElement>, index: number) => void) {
+        this.getListOfFilterValuesForFilterContainer(dataQaQuery)
+            .each((filterItem: JQuery<HTMLElement>, index: number) => callback(filterItem, index));
+        return this
     }
 
     public filterByEachSource() {
@@ -85,19 +83,13 @@ export class Homepage {
             cy.wait(1000);
             this.clickOnFirstVideo();
             cy.wait(2000);
+            this.sourceNameIsCorrectOnVideoDetailsPage(sourceFilterItem.text());
             cy.go("back");
             cy.wait(2000);
-
+            this.checkPersistanceOfSelectedFilter(index, dataQaQuery);
             this.getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
-
         });
         return this;
-    }
-
-    public findEachFilter(dataQaQuery: string, callback: (filterItem: JQuery<HTMLElement>, index: number) => void) {
-        this.getListOfFilterValuesForFilterContainer(dataQaQuery)
-            .each((filterItem: JQuery<HTMLElement>, index: number) => callback(filterItem, index));
-        return this
     }
 
     public filterByEachDuration() {
@@ -111,6 +103,7 @@ export class Homepage {
             cy.go("back")
             cy.wait(2000);
 
+            this.checkPersistanceOfSelectedFilter(index, dataQaQuery);
             this.getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
 
         });
