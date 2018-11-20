@@ -10,18 +10,17 @@ context('Educators', () => {
         educatorsHomepage
             .visit()
             .logIn()
-            // .search(invalidSearchQuery)
-            // .enterEmail(email)
-            // .search(validSearchQuery)
-            // .showsVideo(videos => {
-            //         let minimumAcceptableNumberOfVideos = 2;
-            //         expect(videos.length).to.be.greaterThan(minimumAcceptableNumberOfVideos,
-            //             `There are less than ${minimumAcceptableNumberOfVideos}`)
-            //     }
-            // )
-            // .copyFirstLink()
-            // .visitCopiedLink()
-            // .playVideo()
+            .search(invalidSearchQuery)
+            .enterEmail(email)
+            .search(validSearchQuery)
+            .showsVideo(videos => {
+                expect(videos.length).to.be.greaterThan(0,
+                    `There are no videos showing`)
+                }
+            )
+            .copyFirstLink()
+            .visitCopiedLink()
+            .playVideo()
     })
 });
 
