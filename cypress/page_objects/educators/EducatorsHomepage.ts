@@ -52,10 +52,9 @@ export class EducatorsHomepage {
     }
 
     copyFirstLink() {
-        //cy.get(By.dataQa("copy-link"))
-        cy.contains("Copy link")
+        cy.get(By.dataQa("copy-link"))
             .first()
-            .click({ force: true });
+            .click();
         return this;
     }
 

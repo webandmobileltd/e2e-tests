@@ -14,21 +14,26 @@ export class Homepage {
     }
 
     public logIn() {
-        cy.wait(100);
         cy.get(By.dataQa("login-button")).click();
         cy.get(By.dataQa("username")).type(Cypress.env("FRONTEND_USERNAME"));
         cy.get(By.dataQa("password")).type(Cypress.env("FRONTEND_PASSWORD"));
         cy.get(By.dataQa("form-login")).click();
+
+        return this;
+    }
+
+    public assertSuccessfulLogIn() {
+        cy.get(".notification").should("be.visible");
         return this;
     }
 
     public search(searchQuery: string) {
-        cy.wait(5000);
         cy.get(By.dataQa("search-input"))
-            .first()
-            .clear()
+            .last()
+            .should("be.visible")
             .type(searchQuery)
             .type('{enter}');
+
         return this;
     }
 
@@ -62,6 +67,8 @@ export class Homepage {
         cy.get(By.dataQa(dataQaQuery))
             .find("input").eq(previousCheckedFilterIndex)
             .should("be.checked");
+
+        return this;
     }
 
     private getListOfFilterValuesForFilterContainer(dataQaQuery: string) {
@@ -72,22 +79,30 @@ export class Homepage {
     public findEachFilter(dataQaQuery: string, callback: (filterItem: JQuery<HTMLElement>, index: number) => void) {
         this.getListOfFilterValuesForFilterContainer(dataQaQuery)
             .each((filterItem: JQuery<HTMLElement>, index: number) => callback(filterItem, index));
-        return this
+
+        return this;
+    }
+
+    public waitForLoading() {
+        cy.get(".status-get--request").should("not.exist");
+        return this;
     }
 
     public filterByEachSource() {
         const dataQaQuery = "source-filter-container";
         this.findEachFilter(dataQaQuery, (sourceFilterItem: JQuery<HTMLElement>, index: number) => {
             this.getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
+            this.waitForLoading()
+                .clickOnFirstVideo()
+                .sourceNameIsCorrectOnVideoDetailsPage(sourceFilterItem.text());
 
-            cy.wait(1000);
-            this.clickOnFirstVideo();
-            cy.wait(2000);
-            this.sourceNameIsCorrectOnVideoDetailsPage(sourceFilterItem.text());
             cy.go("back");
-            cy.wait(2000);
-            this.checkPersistanceOfSelectedFilter(index, dataQaQuery);
-            this.getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
+
+            this.waitForLoading()
+                .checkPersistanceOfSelectedFilter(index, dataQaQuery)
+                .getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
+
+            this.waitForLoading();
         });
         return this;
     }
@@ -97,16 +112,19 @@ export class Homepage {
         this.findEachFilter(dataQaQuery, (durationFilterItem: JQuery<HTMLElement>, index: number) => {
             this.getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
 
-            cy.wait(1000);
-            this.clickOnFirstVideo();
-            cy.wait(2000);
-            cy.go("back")
-            cy.wait(2000);
+            this.waitForLoading()
+                .clickOnFirstVideo();
 
-            this.checkPersistanceOfSelectedFilter(index, dataQaQuery);
-            this.getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
+            cy.go("back");
+
+            this.waitForLoading()
+                .checkPersistanceOfSelectedFilter(index, dataQaQuery)
+                .getListOfFilterValuesForFilterContainer(dataQaQuery).eq(index).click();
+
+            this.waitForLoading();
 
         });
         return this;
     }
+
 }

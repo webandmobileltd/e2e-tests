@@ -8,11 +8,11 @@ context('Frontend', () => {
         homepage
             .visit()
             .logIn()
+            .assertSuccessfulLogIn()
             .search(validSearchQuery)
             .showsVideo(videos => {
-                    let minimumAcceptableNumberOfVideos = 1;
-                    expect(videos.length).to.be.greaterThan(minimumAcceptableNumberOfVideos,
-                        `There are less than ${minimumAcceptableNumberOfVideos}`)
+                    expect(videos.length).to.be.greaterThan(0,
+                        `There are no videos showing`)
                 }
             )
             .filterByEachSource()
