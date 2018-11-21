@@ -18,9 +18,6 @@ context('Educators', () => {
                     `There are no videos showing`)
                 }
             )
-            .copyFirstLink()
-            .visitCopiedLink()
-            .playVideo()
     })
 });
 
