@@ -122,8 +122,8 @@ export class MarketingCollectionListPage {
   public withMarketingCollections(
     callback: (collections: MarketingCollectionSummary[]) => void
   ) {
-    cy.get(By.dataQa("marketing-collection-summary")).then(
-      marketingCollections => {
+    cy.get(By.dataQa("marketing-collection-summary"))
+        .then(marketingCollections => {
         const allMarketingCollections: any = marketingCollections
           .toArray()
           .map((el: any) => {
@@ -136,15 +136,7 @@ export class MarketingCollectionListPage {
               )
             };
           });
-        let i = 0;
-        while (i >= 10) {
-          try {
-            callback(allMarketingCollections);
-            cy.wait(200);
-          } catch (e) {
-            i++;
-          }
-        }
+        callback(allMarketingCollections)
       }
     );
     return this;
@@ -155,6 +147,7 @@ export class MarketingCollectionListPage {
       cy.get(By.dataQa("delete-button")).click();
     });
     cy.get(".ant-popover-buttons .ant-btn-primary").click();
+    cy.get(By.dataState(title)).should("not.exist");
     return this;
   }
 }

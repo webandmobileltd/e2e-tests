@@ -6,7 +6,7 @@ context("Marketing Collections", () => {
   const expectedCollection = {
     title,
     description: "A new collection description!",
-    videos: [{ title: "video title", description: "video description" }]
+    videos: [{ title: "a new title", description: "a new description" }]
   };
 
   it("marketing collection journey", () => {
@@ -49,8 +49,6 @@ context("Marketing Collections", () => {
           { title: "a new title", description: "a new description" }
         ])
       )
-      .setVideoTitle("535", "video title")
-      .setVideoDescription("535", "video description")
       .goToPublicCollection()
       .withMarketingCollection(marketingCollection =>
         expect(marketingCollection).to.deep.eq(expectedCollection)
