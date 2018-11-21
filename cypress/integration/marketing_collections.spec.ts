@@ -66,8 +66,5 @@ context("Marketing Collections", () => {
         expect(collections).to.contain(marketingSummaryRow)
       )
       .deleteCollectionWithTitle(title)
-      .withMarketingCollections(collections =>
-        expect(collections).not.to.contain(marketingSummaryRow)
-      );
   });
 });
