@@ -14,7 +14,8 @@ export class Homepage {
     }
 
     public logIn() {
-        cy.get(By.dataQa("login-button")).click();
+        cy.wait(2000);  // We found that adding this helps cypress to avoid a mysterious error: "Cannot read property 'getComputedStyle' of null"
+        cy.get(By.dataQa("login-button")).find('span').click();
         cy.get(By.dataQa("username")).type(Cypress.env("FRONTEND_USERNAME"));
         cy.get(By.dataQa("password")).type(Cypress.env("FRONTEND_PASSWORD"));
         cy.get(By.dataQa("form-login")).click();
