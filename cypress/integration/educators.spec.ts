@@ -18,6 +18,7 @@ context('Educators', () => {
                     `There are no videos showing`)
                 }
             )
+            .isOnPage(1)
     })
 });
 

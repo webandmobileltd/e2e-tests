@@ -72,4 +72,14 @@ export class EducatorsHomepage {
         return this;
 
     }
+
+    isOnPage(pageNumber: number) {
+        cy.get(By.dataQa("pagination")).then(elements => {
+            elements.each((idx, element : HTMLElement) => {
+                let textContent = element.querySelector(".ant-pagination-item-active a")!.textContent;
+                expect(textContent).to.eq(pageNumber.toString());
+            });
+        });
+        return this;
+    }
 }
