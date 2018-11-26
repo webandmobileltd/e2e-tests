@@ -24,8 +24,8 @@ case $env in
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
         : ${CYPRESS_EDUCATORS_BASE_URL:="http://localhost:8081"}
-        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-testing --username)"}
-        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-testing --password)"}
+        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
+        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
         : ${CYPRESS_FRONTEND_BASE_URL:="http://localhost:8080"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
@@ -33,7 +33,7 @@ case $env in
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
         export CYPRESS_EDUCATORS_BASE_URL
-        export CYPRESS_EDUCATORS_USERNAME
+        export CYPRESS_EDUCATORS_USERNAMEv
         export CYPRESS_EDUCATORS_PASSWORD
         export CYPRESS_FRONTEND_BASE_URL
         export CYPRESS_FRONTEND_USERNAME
@@ -45,8 +45,8 @@ case $env in
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
         : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.testing-boclips.com"}
-        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-testing --username)"}
-        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-testing --password)"}
+        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
+        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
         : ${CYPRESS_FRONTEND_BASE_URL:="https://testing-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
