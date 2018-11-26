@@ -1,7 +1,7 @@
 import {EducatorsHomepage} from "../page_objects/educators/EducatorsHomepage";
 
 context('Educators', () => {
-    const validSearchQuery = "Richard";
+    const validSearchQuery = "Ted";
     const invalidSearchQuery = "asdfghjklkjhgf";
     const email = "test@test.com";
 
@@ -18,6 +18,10 @@ context('Educators', () => {
                     `There are no videos showing`)
                 }
             )
+            .isOnPage(1)
+            .goToNextPage()
+            .isOnPage(2)
+            .goToPreviousPage()
             .isOnPage(1)
     })
 });

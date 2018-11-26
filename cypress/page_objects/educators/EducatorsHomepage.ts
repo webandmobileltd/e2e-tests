@@ -74,12 +74,24 @@ export class EducatorsHomepage {
     }
 
     isOnPage(pageNumber: number) {
-        cy.get(By.dataQa("pagination")).then(elements => {
+        let activeElementInPagination = "[data-qa='pagination'] .ant-pagination-item-active a";
+        cy.get(activeElementInPagination).then(elements => {
             elements.each((idx, element : HTMLElement) => {
-                let textContent = element.querySelector(".ant-pagination-item-active a")!.textContent;
+                let textContent = element!.textContent;
                 expect(textContent).to.eq(pageNumber.toString());
             });
         });
         return this;
     }
+
+    goToNextPage() {
+        cy.get(".ant-pagination-next").click();
+        return this;
+    }
+
+    goToPreviousPage() {
+        cy.get(".ant-pagination-prev").click();
+        return this;
+    }
+
 }
