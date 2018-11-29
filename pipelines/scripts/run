@@ -25,5 +25,12 @@ fi
 (
 cd source || exit 1
 npm ci || exit 1
+
+curl \
+    --include \
+    --request POST \
+    https://video-service.testing-boclips.com/v1/admin/actions/rebuild_search_index \
+    --header "Authorization: Bearer $(create-teacher-token operator operator testing)"
+
 ./run t ci
 )
