@@ -9,6 +9,7 @@ image_resource:
 
 inputs:
 - name: source
+- name: infrastructure
 
 outputs:
 - name: test-results
