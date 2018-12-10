@@ -23,6 +23,7 @@ context('Educators', () => {
             .isOnPage(2)
             .goToPreviousPage()
             .isOnPage(1)
+            .goToFirstVideo()
     })
 });
 
