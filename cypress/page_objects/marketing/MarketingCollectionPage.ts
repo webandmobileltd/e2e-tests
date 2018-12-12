@@ -55,7 +55,7 @@ class MarketingCollectionPage {
 
   public deleteVideo(videoId: string) {
     cy.get(By.dataState(videoId))
-      .find(By.dataQa("delete-video", "i"))
+      .find(By.dataQa("delete-video", "button"))
       .click();
     cy.get(".ant-popover-buttons .ant-btn-primary").click();
     return this;
