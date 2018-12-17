@@ -47,7 +47,7 @@ case $env in
         : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.testing-boclips.com"}
         : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
         : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
-        : ${CYPRESS_FRONTEND_BASE_URL:="https://testing-boclips.com"}
+        : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
@@ -68,7 +68,7 @@ case $env in
         : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.staging-boclips.com"}
         : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-staging --username)"}
         : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-staging --password)"}
-        : ${CYPRESS_FRONTEND_BASE_URL:="https://staging-boclips.com"}
+        : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.staging-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="dummy-user"}
         : ${CYPRESS_FRONTEND_PASSWORD:="BlessYou2"}
         export CYPRESS_BACKOFFICE_BASE_URL
