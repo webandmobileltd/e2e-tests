@@ -1,13 +1,14 @@
 import {EducatorsHomepage} from "../page_objects/educators/EducatorsHomepage";
+import { EducatorsVideoDetailsPage } from '../page_objects/educators/EducatorsVideoDetailsPage';
 
 context('Educators', () => {
     const validSearchQuery = "Ted";
     const invalidSearchQuery = "asdfghjklkjhgf";
     const email = "test@test.com";
 
-    it('educators journey', () => {
-        const educatorsHomepage = new EducatorsHomepage();
-        educatorsHomepage
+    it('search journey', () => {
+        const homepage = new EducatorsHomepage();
+        homepage
             .visit()
             .logIn()
             .search(invalidSearchQuery)
@@ -24,6 +25,14 @@ context('Educators', () => {
             .goToPreviousPage()
             .isOnPage(1)
             .goToFirstVideo()
-    })
+    });
+
+    it('video details', () => {
+        const videoDetailsPage = new EducatorsVideoDetailsPage('535');
+        videoDetailsPage
+            .visit()
+            .showsTitle("Richard St. John: 8 secrets of success")
+            .showsSubject("Maths")
+    });
 });
 
