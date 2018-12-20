@@ -32,6 +32,7 @@ context('Educators', () => {
         videoDetailsPage
             .visit()
             .showsTitle("Richard St. John: 8 secrets of success")
+            .showsContentPartnerName("TeD")
             .showsSubject("Maths")
     });
 });
