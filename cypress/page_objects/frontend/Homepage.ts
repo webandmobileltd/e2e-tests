@@ -28,6 +28,11 @@ export class Homepage {
         return this;
     }
 
+    public assertHubspotChat() {
+        cy.get("#hubspot-messages-iframe-container").should("be.visible");
+        return this;
+    }
+
     public search(searchQuery: string) {
         cy.get(By.dataQa("search-input"))
             .last()
