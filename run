@@ -23,18 +23,18 @@ case $env in
         : ${CYPRESS_BACKOFFICE_BASE_URL:="http://localhost:3000"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-        : ${CYPRESS_EDUCATORS_BASE_URL:="http://localhost:8081"}
-        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
-        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
+        : ${CYPRESS_TEACHERS_BASE_URL:="http://localhost:8081"}
+        : ${CYPRESS_TEACHERS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
+        : ${CYPRESS_TEACHERS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
         : ${CYPRESS_FRONTEND_BASE_URL:="http://localhost:8080"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
-        export CYPRESS_EDUCATORS_BASE_URL
-        export CYPRESS_EDUCATORS_USERNAMEv
-        export CYPRESS_EDUCATORS_PASSWORD
+        export CYPRESS_TEACHERS_BASE_URL
+        export CYPRESS_TEACHERS_USERNAME
+        export CYPRESS_TEACHERS_PASSWORD
         export CYPRESS_FRONTEND_BASE_URL
         export CYPRESS_FRONTEND_USERNAME
         export CYPRESS_FRONTEND_PASSWORD
@@ -44,18 +44,18 @@ case $env in
         : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-        : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.testing-boclips.com"}
-        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
-        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
+        : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
+        : ${CYPRESS_TEACHERS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
+        : ${CYPRESS_TEACHERS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
         : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
-        export CYPRESS_EDUCATORS_BASE_URL
-        export CYPRESS_EDUCATORS_USERNAME
-        export CYPRESS_EDUCATORS_PASSWORD
+        export CYPRESS_TEACHERS_BASE_URL
+        export CYPRESS_TEACHERS_USERNAME
+        export CYPRESS_TEACHERS_PASSWORD
         export CYPRESS_FRONTEND_BASE_URL
         export CYPRESS_FRONTEND_USERNAME
         export CYPRESS_FRONTEND_PASSWORD
@@ -65,18 +65,18 @@ case $env in
         : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.staging-boclips.com"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
-        : ${CYPRESS_EDUCATORS_BASE_URL:="https://educators.staging-boclips.com"}
-        : ${CYPRESS_EDUCATORS_USERNAME:="$(lpass show e2e-educators-staging --username)"}
-        : ${CYPRESS_EDUCATORS_PASSWORD:="$(lpass show e2e-educators-staging --password)"}
+        : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.staging-boclips.com"}
+        : ${CYPRESS_TEACHERS_USERNAME:="$(lpass show e2e-teachers-staging --username)"}
+        : ${CYPRESS_TEACHERS_PASSWORD:="$(lpass show e2e-teachers-staging --password)"}
         : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.staging-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="dummy-user"}
         : ${CYPRESS_FRONTEND_PASSWORD:="BlessYou2"}
         export CYPRESS_BACKOFFICE_BASE_URL
         export CYPRESS_BACKOFFICE_USERNAME
         export CYPRESS_BACKOFFICE_PASSWORD
-        export CYPRESS_EDUCATORS_BASE_URL
-        export CYPRESS_EDUCATORS_USERNAME
-        export CYPRESS_EDUCATORS_PASSWORD
+        export CYPRESS_TEACHERS_BASE_URL
+        export CYPRESS_TEACHERS_USERNAME
+        export CYPRESS_TEACHERS_PASSWORD
         export CYPRESS_FRONTEND_BASE_URL
         export CYPRESS_FRONTEND_USERNAME
         export CYPRESS_FRONTEND_PASSWORD

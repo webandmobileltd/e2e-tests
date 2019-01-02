@@ -1,11 +1,11 @@
 import { By } from '../../support/By';
 import Video from '../domain/Video';
 
-export class EducatorsHomepage {
+export class TeachersHomepage {
   private readonly url: string;
 
   constructor() {
-    this.url = Cypress.env('EDUCATORS_BASE_URL');
+    this.url = Cypress.env('TEACHERS_BASE_URL');
   }
 
   public visit() {
@@ -14,8 +14,8 @@ export class EducatorsHomepage {
   }
 
   public logIn() {
-    cy.get('#username').type(Cypress.env('EDUCATORS_USERNAME'));
-    cy.get('#password').type(Cypress.env('EDUCATORS_PASSWORD'));
+    cy.get('#username').type(Cypress.env('TEACHERS_USERNAME'));
+    cy.get('#password').type(Cypress.env('TEACHERS_PASSWORD'));
     cy.get('#kc-form-login').submit();
     return this;
   }

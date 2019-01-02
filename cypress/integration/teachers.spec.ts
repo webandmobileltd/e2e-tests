@@ -1,13 +1,13 @@
-import {EducatorsHomepage} from "../page_objects/educators/EducatorsHomepage";
-import { EducatorsVideoDetailsPage } from '../page_objects/educators/EducatorsVideoDetailsPage';
+import {TeachersHomepage} from "../page_objects/teachers/TeachersHomepage";
+import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 
-context('Educators', () => {
+context('Teachers', () => {
     const validSearchQuery = "Ted";
     const invalidSearchQuery = "asdfghjklkjhgf";
     const email = "test@test.com";
 
     it('search journey', () => {
-        const homepage = new EducatorsHomepage();
+        const homepage = new TeachersHomepage();
         homepage
             .visit()
             .logIn()
@@ -28,7 +28,7 @@ context('Educators', () => {
     });
 
     it('video details', () => {
-        const videoDetailsPage = new EducatorsVideoDetailsPage('535');
+        const videoDetailsPage = new TeachersVideoDetailsPage('535');
         videoDetailsPage
             .visit()
             .showsTitle("Richard St. John: 8 secrets of success")

@@ -2,7 +2,7 @@ import {Homepage} from "../page_objects/frontend/Homepage";
 
 context('Frontend', () => {
 
-    it('educators journey', () => {
+    it('teachers journey', () => {
         const homepage = new Homepage();
         const validSearchQuery = "Richard";
         homepage

@@ -1,11 +1,11 @@
 import { By } from '../../support/By';
 
-export class EducatorsVideoDetailsPage {
+export class TeachersVideoDetailsPage {
 
   private readonly url: string;
 
   constructor(id: string) {
-    this.url = Cypress.env('EDUCATORS_BASE_URL') + '/videos/' + id;
+    this.url = Cypress.env('TEACHERS_BASE_URL') + '/videos/' + id;
   }
 
   public visit() {
