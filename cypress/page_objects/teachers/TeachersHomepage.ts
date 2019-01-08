@@ -99,4 +99,9 @@ export class TeachersHomepage {
     expect(cy.get(By.dataQa('video-details-title')));
     return this;
   }
+
+  noVideosShown() {
+    cy.get(By.dataQa('search-zero-results'));
+    return this;
+  }
 }

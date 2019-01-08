@@ -1,9 +1,10 @@
 import {TeachersHomepage} from "../page_objects/teachers/TeachersHomepage";
-import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
+import {TeachersVideoDetailsPage} from '../page_objects/teachers/TeachersVideoDetailsPage';
 
 context('Teachers', () => {
     const validSearchQuery = "Ted";
     const invalidSearchQuery = "asdfghjklkjhgf";
+    const nonEducationalSearchQuery = "Celebrities on the red carpet";
     const email = "test@test.com";
 
     it('search journey', () => {
@@ -15,8 +16,8 @@ context('Teachers', () => {
             .enterEmail(email)
             .search(validSearchQuery)
             .showsVideo(videos => {
-                expect(videos.length).to.be.greaterThan(0,
-                    `There are no videos showing`)
+                    expect(videos.length).to.be.greaterThan(0,
+                        `There are no videos showing`)
                 }
             )
             .isOnPage(1)
@@ -26,6 +27,15 @@ context('Teachers', () => {
             .isOnPage(1)
             .goToFirstVideo()
     });
+
+    it('shows only educational videos', () => {
+        const homepage = new TeachersHomepage();
+        homepage
+            .visit()
+            .logIn()
+            .search(nonEducationalSearchQuery)
+            .noVideosShown();
+    })
 
     it('video details', () => {
         const videoDetailsPage = new TeachersVideoDetailsPage('535');
