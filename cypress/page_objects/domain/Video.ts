@@ -2,6 +2,6 @@ export default interface Video {
   id?: string;
   title: string;
   description?: string;
-  source?: string;
+  contentPartner?: string;
   type?: string;
 }
