@@ -27,8 +27,6 @@ case $env in
         : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-        : ${CYPRESS_TEACHERS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
-        : ${CYPRESS_TEACHERS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
         : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
@@ -42,8 +40,6 @@ case $env in
         : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.staging-boclips.com"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
-        : ${CYPRESS_TEACHERS_USERNAME:="$(lpass show e2e-teachers-staging --username)"}
-        : ${CYPRESS_TEACHERS_PASSWORD:="$(lpass show e2e-teachers-staging --password)"}
         : ${CYPRESS_FRONTEND_USERNAME:="dummy-user"}
         : ${CYPRESS_FRONTEND_PASSWORD:="BlessYou2"}
         : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-staging --username)"}
