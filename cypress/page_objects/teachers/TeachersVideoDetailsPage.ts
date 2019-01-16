@@ -1,11 +1,10 @@
-import { By } from '../../support/By';
+import { By } from "../../support/By";
 
 export class TeachersVideoDetailsPage {
-
   private readonly url: string;
 
   constructor(id: string) {
-    this.url = Cypress.env('TEACHERS_BASE_URL') + '/videos/' + id;
+    this.url = Cypress.env("TEACHERS_BASE_URL") + "/videos/" + id;
   }
 
   public visit() {
@@ -14,19 +13,20 @@ export class TeachersVideoDetailsPage {
   }
 
   public showsTitle(title: string) {
-    cy.get(By.dataQa('video-details-title')).should("have.text", title);
+    cy.get(By.dataQa("video-details-title")).should("have.text", title);
     return this;
   }
 
   public showsContentPartnerName(contentPartnerName: string) {
-    cy.get(By.dataQa('video-content-partner')).should("have.text", contentPartnerName);
+    cy.get(By.dataQa("video-content-partner")).should(
+      "have.text",
+      contentPartnerName
+    );
     return this;
   }
 
   public showsSubject(subject: string) {
-    cy.get(By.dataQa('video-details-subject')).should("have.text", subject);
+    cy.get(By.dataQa("video-details-subject")).should("have.text", subject);
     return this;
   }
-
-
 }

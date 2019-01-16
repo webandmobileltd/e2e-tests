@@ -1,5 +1,5 @@
-import {TeachersHomepage} from "../page_objects/teachers/TeachersHomepage";
-import {TeachersVideoDetailsPage} from "../page_objects/teachers/TeachersVideoDetailsPage";
+import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
+import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
 
 context("Teachers", () => {
   const validSearchQuery = "Ted";
@@ -8,9 +8,7 @@ context("Teachers", () => {
   const email = "test@test.com";
 
   before(function() {
-    new TeachersHomepage()
-        .visit()
-        .createAccount();
+    new TeachersHomepage().visit().createAccount();
   });
 
   it("search journey", () => {
@@ -33,6 +31,24 @@ context("Teachers", () => {
       .goToPreviousPage()
       .isOnPage(1)
       .goToFirstVideo();
+
+    cy.location()
+      .then(location => {
+        const pathname = location.pathname;
+        const parts = pathname.split("/");
+        const id = parts[parts.length - 1];
+        return id;
+      })
+      .then(id => {
+        return new TeachersVideoDetailsPage(id);
+      })
+      .then(videoDetailsPage => {
+        videoDetailsPage
+          .visit()
+          .showsTitle("Michael Shermer: Why people believe weird things")
+          .showsContentPartnerName("TeD")
+          .showsSubject("Maths");
+      });
   });
 
   it("shows only educational videos", () => {
@@ -42,15 +58,6 @@ context("Teachers", () => {
       .logIn()
       .search(nonEducationalSearchQuery)
       .noVideosShown();
-  });
-
-  it("video details", () => {
-    const videoDetailsPage = new TeachersVideoDetailsPage("535");
-    videoDetailsPage
-      .visit()
-      .showsTitle("Richard St. John: 8 secrets of success")
-      .showsContentPartnerName("TeD")
-      .showsSubject("Maths");
   });
 
   it("seperating news journey", () => {
