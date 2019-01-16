@@ -58,7 +58,5 @@ cd source || exit 1
 
 npm ci || exit 1
 
-node setupE2E.js
-
 ./run t ci
 )
