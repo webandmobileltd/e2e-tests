@@ -18,9 +18,39 @@ if  [[ -z $CYPRESS_BACKOFFICE_USERNAME \
     || -z $CYPRESS_OPERATOR_PASSWORD \
     ]]
 then
-    echo "Missing CYPRESS_* credentials"
-    exit 1
-fi
+
+        if  [[ -z $CYPRESS_BACKOFFICE_USERNAME ]]
+        then
+            echo "Missing CYPRESS_BACKOFFICE_USERNAME"
+        fi
+
+        if  [[ -z $CYPRESS_BACKOFFICE_PASSWORD ]]
+        then
+            echo "Missing CYPRESS_BACKOFFICE_PASSWORD"
+        fi
+
+        if  [[ -z $CYPRESS_FRONTEND_USERNAME ]]
+        then
+            echo "Missing CYPRESS_FRONTEND_USERNAME"
+        fi
+
+        if  [[ -z $CYPRESS_FRONTEND_PASSWORD ]]
+        then
+            echo "Missing CYPRESS_FRONTEND_PASSWORD"
+        fi
+
+        if  [[ -z $CYPRESS_OPERATOR_USERNAME ]]
+        then
+            echo "Missing CYPRESS_OPERATOR_USERNAME"
+        fi
+
+        if  [[ -z $CYPRESS_OPERATOR_PASSWORD ]]
+        then
+            echo "Missing CYPRESS_OPERATOR_PASSWORD"
+        fi
+
+        exit 1
+    fi
 
 (
 cd source || exit 1
