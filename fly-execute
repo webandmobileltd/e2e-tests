@@ -6,15 +6,11 @@ cwd="$(cd "$(dirname $0)" && pwd)"
 
 CYPRESS_BACKOFFICE_USERNAME="$(lpass show e2e-backoffice-testing --username)"
 CYPRESS_BACKOFFICE_PASSWORD="$(lpass show e2e-backoffice-testing --password)"
-CYPRESS_TEACHERS_USERNAME="$(lpass show e2e-teachers-testing --username)"
-CYPRESS_TEACHERS_PASSWORD="$(lpass show e2e-teachers-testing --password)"
 CYPRESS_FRONTEND_USERNAME="$(lpass show e2e-frontend-testing --username)"
 CYPRESS_FRONTEND_PASSWORD="$(lpass show e2e-frontend-testing --password)"
 
 export CYPRESS_BACKOFFICE_USERNAME
 export CYPRESS_BACKOFFICE_PASSWORD
-export CYPRESS_TEACHERS_USERNAME
-export CYPRESS_TEACHERS_PASSWORD
 export CYPRESS_FRONTEND_USERNAME
 export CYPRESS_FRONTEND_PASSWORD
 

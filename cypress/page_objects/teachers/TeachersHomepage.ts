@@ -13,27 +13,31 @@ export class TeachersHomepage {
     return this;
   }
 
-  public createAccount() {
+  public createAccount(username: string, password: string) {
     cy.get(By.dataQa("create-account")).click();
 
     cy.get(By.dataQa("first-name")).type("Firstname");
     cy.get(By.dataQa("last-name")).type("Lastname");
     cy.get(By.dataQa("subjects")).type("Subjects");
-    cy.get(By.dataQa("email")).type(Cypress.env("TEACHERS_USERNAME"));
-    cy.get(By.dataQa("password")).type(Cypress.env("TEACHERS_PASSWORD"));
-    cy.get(By.dataQa("password-confirm")).type(
-      Cypress.env("TEACHERS_PASSWORD")
-    );
+    cy.get(By.dataQa("email")).type(username);
+    cy.get(By.dataQa("password")).type(password);
+    cy.get(By.dataQa("password-confirm")).type(password);
 
     cy.get(By.dataQa("register-button")).click();
     return this;
   }
 
-  public logIn() {
-    cy.get(By.dataQa("email")).type(Cypress.env("TEACHERS_USERNAME"));
-    cy.get(By.dataQa("password")).type(Cypress.env("TEACHERS_PASSWORD"));
+  public logIn(username: string, password: string) {
+    cy.get(By.dataQa("email")).type(username);
+    cy.get(By.dataQa("password")).type(password);
     cy.get(By.dataQa("login-button")).click();
     return this;
+  }
+
+  public logOut() {
+    this.search("test");
+    cy.get(By.dataQa("logout-button")).click();
+    cy.get(".ant-modal-confirm-btns .ant-btn-primary").click();
   }
 
   public search(searchQuery: string) {
@@ -134,6 +138,11 @@ export class TeachersHomepage {
       .find("button")
       .click();
 
+    return this;
+  }
+
+  reload() {
+    cy.reload();
     return this;
   }
 }
