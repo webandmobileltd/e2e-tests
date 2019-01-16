@@ -19,28 +19,9 @@ else
 fi
 
 case $env in
-    [Ll]* )
-        : ${CYPRESS_BACKOFFICE_BASE_URL:="http://localhost:3000"}
-        : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
-        : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-        : ${CYPRESS_TEACHERS_BASE_URL:="http://localhost:8081"}
-        : ${CYPRESS_TEACHERS_USERNAME:="$(lpass show e2e-teachers-testing --username)"}
-        : ${CYPRESS_TEACHERS_PASSWORD:="$(lpass show e2e-teachers-testing --password)"}
-        : ${CYPRESS_FRONTEND_BASE_URL:="http://localhost:8080"}
-        : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
-        : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
-        export CYPRESS_BACKOFFICE_BASE_URL
-        export CYPRESS_BACKOFFICE_USERNAME
-        export CYPRESS_BACKOFFICE_PASSWORD
-        export CYPRESS_TEACHERS_BASE_URL
-        export CYPRESS_TEACHERS_USERNAME
-        export CYPRESS_TEACHERS_PASSWORD
-        export CYPRESS_FRONTEND_BASE_URL
-        export CYPRESS_FRONTEND_USERNAME
-        export CYPRESS_FRONTEND_PASSWORD
-        $cypress
-        ;;
     [Tt]* )
+        : ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/teachers/protocol/openid-connect/token"}
+        : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
         : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
@@ -50,18 +31,12 @@ case $env in
         : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
         : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
-        export CYPRESS_BACKOFFICE_BASE_URL
-        export CYPRESS_BACKOFFICE_USERNAME
-        export CYPRESS_BACKOFFICE_PASSWORD
-        export CYPRESS_TEACHERS_BASE_URL
-        export CYPRESS_TEACHERS_USERNAME
-        export CYPRESS_TEACHERS_PASSWORD
-        export CYPRESS_FRONTEND_BASE_URL
-        export CYPRESS_FRONTEND_USERNAME
-        export CYPRESS_FRONTEND_PASSWORD
-        $cypress
+        : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
+        : ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
         ;;
     [Ss]* )
+        : ${CYPRESS_TOKEN_URL:="https://login.staging-boclips.com/auth/realms/teachers/protocol/openid-connect/token"}
+        : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.staging-boclips.com"}
         : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.staging-boclips.com"}
         : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
         : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
@@ -71,19 +46,28 @@ case $env in
         : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.staging-boclips.com"}
         : ${CYPRESS_FRONTEND_USERNAME:="dummy-user"}
         : ${CYPRESS_FRONTEND_PASSWORD:="BlessYou2"}
-        export CYPRESS_BACKOFFICE_BASE_URL
-        export CYPRESS_BACKOFFICE_USERNAME
-        export CYPRESS_BACKOFFICE_PASSWORD
-        export CYPRESS_TEACHERS_BASE_URL
-        export CYPRESS_TEACHERS_USERNAME
-        export CYPRESS_TEACHERS_PASSWORD
-        export CYPRESS_FRONTEND_BASE_URL
-        export CYPRESS_FRONTEND_USERNAME
-        export CYPRESS_FRONTEND_PASSWORD
-        $cypress
+        : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-staging --username)"}
+        : ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-staging --password)"}
         ;;
     * )
-        echo "Please answer [l]ocal, [t]esting or [s]taging."
+        echo "Please answer [t]esting or [s]taging."
         unknown=1
+        exit 1
         ;;
 esac
+
+export CYPRESS_VIDEOSERVICE_BASE_URL
+export CYPRESS_TOKEN_URL
+export CYPRESS_BACKOFFICE_BASE_URL
+export CYPRESS_BACKOFFICE_USERNAME
+export CYPRESS_BACKOFFICE_PASSWORD
+export CYPRESS_TEACHERS_BASE_URL
+export CYPRESS_TEACHERS_USERNAME
+export CYPRESS_TEACHERS_PASSWORD
+export CYPRESS_FRONTEND_BASE_URL
+export CYPRESS_FRONTEND_USERNAME
+export CYPRESS_FRONTEND_PASSWORD
+export CYPRESS_OPERATOR_USERNAME
+export CYPRESS_OPERATOR_PASSWORD
+
+$cypress

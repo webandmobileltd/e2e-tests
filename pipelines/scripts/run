@@ -16,6 +16,8 @@ if  [[ -z $CYPRESS_BACKOFFICE_USERNAME \
     || -z $CYPRESS_TEACHERS_PASSWORD \
     || -z $CYPRESS_FRONTEND_USERNAME \
     || -z $CYPRESS_FRONTEND_PASSWORD \
+    || -z $CYPRESS_OPERATOR_USERNAME \
+    || -z $CYPRESS_OPERATOR_PASSWORD \
     ]]
 then
     echo "Missing CYPRESS_* credentials"

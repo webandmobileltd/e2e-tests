@@ -8,12 +8,14 @@ image_resource:
     tag: "10"
 
 inputs:
-- name: source
+  - name: source
 
 outputs:
-- name: test-results
+  - name: test-results
 
 params:
+  CYPRESS_OPERATOR_USERNAME:
+  CYPRESS_OPERATOR_PASSWORD:
   CYPRESS_BACKOFFICE_USERNAME:
   CYPRESS_BACKOFFICE_PASSWORD:
   CYPRESS_TEACHERS_USERNAME:
@@ -25,5 +27,5 @@ run:
   path: source/pipelines/scripts/run
 
 caches:
-- path: ../../../root/.cache
-- path: ../../../root/.npm
+  - path: ../../../root/.cache
+  - path: ../../../root/.npm
