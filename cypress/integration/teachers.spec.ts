@@ -56,12 +56,12 @@ context("Teachers", () => {
   it("seperating news journey", () => {
     const homepage = new TeachersHomepage();
 
-    const newsQuery = "news";
+    const queryWithNewsAndNonNews = "richard";
 
     homepage
       .visit()
       .logIn()
-      .search(newsQuery)
+      .search(queryWithNewsAndNonNews)
       .showsVideo(videos => {
         expect(videos.length).to.be.greaterThan(
           0,

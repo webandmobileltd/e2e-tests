@@ -19,6 +19,8 @@ async function getToken() {
 }
 
 async function insertVideo(video, token) {
+  console.log("Publish video:", video);
+
   return await fetch(videoServiceUrl + "/v1/videos", {
     method: "POST",
     body: JSON.stringify(video),
