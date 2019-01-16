@@ -11,7 +11,7 @@ context('Teachers', () => {
         const homepage = new TeachersHomepage();
         homepage
             .visit()
-            .logIn()
+            .createAccount()
             .search(invalidSearchQuery)
             .enterEmail(email)
             .search(validSearchQuery)

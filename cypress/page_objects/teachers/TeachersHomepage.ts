@@ -13,10 +13,24 @@ export class TeachersHomepage {
     return this;
   }
 
+  public createAccount() {
+    cy.get(By.dataQa('create-account')).click();
+
+    cy.get(By.dataQa('first-name')).type('Firstname');
+    cy.get(By.dataQa('last-name')).type('Lastname');
+    cy.get(By.dataQa('subjects')).type('Subjects');
+    cy.get(By.dataQa('email')).type(Cypress.env('TEACHERS_USERNAME'));
+    cy.get(By.dataQa('password')).type(Cypress.env('TEACHERS_PASSWORD'));
+    cy.get(By.dataQa('password-confirm')).type(Cypress.env('TEACHERS_PASSWORD'));
+
+    cy.get(By.dataQa('register-button')).submit();
+    return this;
+  }
+
   public logIn() {
-    cy.get('#username').type(Cypress.env('TEACHERS_USERNAME'));
-    cy.get('#password').type(Cypress.env('TEACHERS_PASSWORD'));
-    cy.get('#kc-form-login').submit();
+    cy.get(By.dataQa('email')).type(Cypress.env('TEACHERS_USERNAME'));
+    cy.get(By.dataQa('password')).type(Cypress.env('TEACHERS_PASSWORD'));
+    cy.get(By.dataQa('login-button')).submit();
     return this;
   }
 
