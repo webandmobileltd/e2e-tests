@@ -1,5 +1,5 @@
-import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
-import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
+import {TeachersHomepage} from "../page_objects/teachers/TeachersHomepage";
+import {TeachersVideoDetailsPage} from "../page_objects/teachers/TeachersVideoDetailsPage";
 
 context("Teachers", () => {
   const validSearchQuery = "Ted";
@@ -7,11 +7,17 @@ context("Teachers", () => {
   const nonEducationalSearchQuery = "Celebrities on the red carpet";
   const email = "test@test.com";
 
+  before(function() {
+    new TeachersHomepage()
+        .visit()
+        .createAccount();
+  });
+
   it("search journey", () => {
     const homepage = new TeachersHomepage();
     homepage
       .visit()
-      .createAccount()
+      .logIn()
       .search(invalidSearchQuery)
       .enterEmail(email)
       .search(validSearchQuery)

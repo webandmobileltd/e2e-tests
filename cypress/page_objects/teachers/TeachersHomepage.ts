@@ -25,14 +25,14 @@ export class TeachersHomepage {
       Cypress.env("TEACHERS_PASSWORD")
     );
 
-    cy.get(By.dataQa("register-button")).submit();
+    cy.get(By.dataQa("register-button")).click();
     return this;
   }
 
   public logIn() {
     cy.get(By.dataQa("email")).type(Cypress.env("TEACHERS_USERNAME"));
     cy.get(By.dataQa("password")).type(Cypress.env("TEACHERS_PASSWORD"));
-    cy.get(By.dataQa("login-button")).submit();
+    cy.get(By.dataQa("login-button")).click();
     return this;
   }
 
