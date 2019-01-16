@@ -12,10 +12,15 @@ trap produce_output EXIT
 
 if  [[ -z $CYPRESS_BACKOFFICE_USERNAME \
     || -z $CYPRESS_BACKOFFICE_PASSWORD \
+    || -z $CYPRESS_BACKOFFICE_BASE_URL \
+    || -z $CYPRESS_TEACHERS_USERNAME \
+    || -z $CYPRESS_TEACHERS_PASSWORD \
+    || -z $CYPRESS_TEACHERS_BASE_URL \
     || -z $CYPRESS_FRONTEND_USERNAME \
     || -z $CYPRESS_FRONTEND_PASSWORD \
     || -z $CYPRESS_OPERATOR_USERNAME \
     || -z $CYPRESS_OPERATOR_PASSWORD \
+    || -z $CYPRESS_FRONTEND_BASE_URL \
     ]]
 then
 
@@ -55,5 +60,5 @@ then
 (
 cd source || exit 1
 npm ci || exit 1
-./run t ci
+npm run cypress:run
 )
