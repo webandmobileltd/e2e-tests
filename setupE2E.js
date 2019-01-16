@@ -123,7 +123,16 @@ function allVideos() {
       provider: "Reuters",
       providerVideoId: "reuters-13",
       title: "Gdansk Mayor Stabbed at a charity event",
-      description: "Terrible news from Poland"
+      description: "Terrible news from Poland",
+      videoType: "NEWS"
+    }),
+    video({
+      provider: "Reuters",
+      providerVideoId: "reuters-14",
+      title: "'Richard St. John: 8 secrets of success' goes viral on boclips",
+      description:
+        "Incredible news as the greatest video has exploded on the internet",
+      videoType: "NEWS"
     })
   ];
   return [...instructionalVideos, ...stockVideos, ...newsVideos];
@@ -131,7 +140,7 @@ function allVideos() {
 
 function video(params) {
   return {
-    provider: "TeD",
+    provider: params.provider || "TeD",
     providerVideoId: params.providerVideoId || "ted-123",
     title: params.title || "Richard St. John: 8 secrets of success",
     description: params.description || "Video description",
@@ -139,7 +148,7 @@ function video(params) {
     duration: 100,
     legalRestrictions: "none",
     keywords: ["k1", "k2"],
-    videoType: "INSTRUCTIONAL_CLIPS",
+    videoType: params.videoType || "INSTRUCTIONAL_CLIPS",
     playbackId: params.playbackId || "9eb02357-ed43-49ab-84c7-a0fa5699d860",
     playbackProvider: "KALTURA",
     subjects: params.subjects || ["Maths"]
