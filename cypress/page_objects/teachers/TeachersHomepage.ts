@@ -140,9 +140,4 @@ export class TeachersHomepage {
 
     return this;
   }
-
-  reload() {
-    cy.reload();
-    return this;
-  }
 }

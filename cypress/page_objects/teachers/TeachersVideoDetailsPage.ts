@@ -12,6 +12,16 @@ export class TeachersVideoDetailsPage {
     return this;
   }
 
+  public hasTitle() {
+      cy.get(By.dataQa("video-details-title")).should("not.be.empty");
+      return this;
+  }
+
+  public hasContentPartnerName() {
+      cy.get(By.dataQa("video-content-partner")).should("not.be.empty");
+      return this;
+  }
+
   public showsTitle(title: string) {
     cy.get(By.dataQa("video-details-title")).should("have.text", title);
     return this;

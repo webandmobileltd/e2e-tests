@@ -56,9 +56,8 @@ context("Teachers", () => {
       .then(videoDetailsPage => {
         videoDetailsPage
           .visit()
-          .showsTitle("Michael Shermer: Why people believe weird things")
-          .showsContentPartnerName("TeD")
-          .showsSubject("Maths");
+          .hasTitle()
+          .hasContentPartnerName()
       });
   });
 
