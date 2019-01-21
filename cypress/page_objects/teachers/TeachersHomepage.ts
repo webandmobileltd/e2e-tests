@@ -36,6 +36,7 @@ export class TeachersHomepage {
 
   public logOut() {
     this.search("test");
+    cy.get(By.dataQa("account-menu-open")).click();
     cy.get(By.dataQa("logout-button")).click();
     cy.get(".ant-modal-confirm-btns .ant-btn-primary").click();
   }
