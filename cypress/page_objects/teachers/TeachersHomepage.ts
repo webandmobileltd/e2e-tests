@@ -117,7 +117,7 @@ export class TeachersHomepage {
     cy.get(By.dataQa("link-to-details"))
       .first()
       .click();
-    expect(cy.get(By.dataQa("video-details-title")));
+    expect(cy.get(By.dataQa("video-title")));
     return this;
   }
 

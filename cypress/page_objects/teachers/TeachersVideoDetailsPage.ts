@@ -13,7 +13,7 @@ export class TeachersVideoDetailsPage {
   }
 
   public hasTitle() {
-      cy.get(By.dataQa("video-details-title")).should("not.be.empty");
+      cy.get(By.dataQa("video-title")).should("not.be.empty");
       return this;
   }
 
@@ -23,7 +23,7 @@ export class TeachersVideoDetailsPage {
   }
 
   public showsTitle(title: string) {
-    cy.get(By.dataQa("video-details-title")).should("have.text", title);
+    cy.get(By.dataQa("video-title")).should("have.text", title);
     return this;
   }
 
