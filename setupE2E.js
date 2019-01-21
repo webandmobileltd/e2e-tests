@@ -51,6 +51,14 @@ function allVideos() {
       subjects: ["Maths", "Physics"]
     }),
     video({
+      providerVideoId: "Ac_t4pNYr1g",
+      playbackProvider: "YOUTUBE",
+      title: "The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary",
+      description:
+        "The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary",
+      playbackId: "Ac_t4pNYr1g"
+    }),
+    video({
       providerVideoId: "ted-2",
       title: "Rives: If I controlled the Internet",
       description:
@@ -152,7 +160,7 @@ function video(params) {
     keywords: ["k1", "k2"],
     videoType: params.videoType || "INSTRUCTIONAL_CLIPS",
     playbackId: params.playbackId || "9eb02357-ed43-49ab-84c7-a0fa5699d860",
-    playbackProvider: "KALTURA",
+    playbackProvider: params.playbackProvider || "KALTURA",
     subjects: params.subjects || ["Maths"]
   };
 }
