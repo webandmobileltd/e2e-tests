@@ -13,6 +13,11 @@ export class TeachersHomepage {
     return this;
   }
 
+  public reload() {
+    cy.reload();
+    return this;
+  }
+
   public createAccount(username: string, password: string) {
     cy.get(By.dataQa("create-account")).click();
 
@@ -49,19 +54,55 @@ export class TeachersHomepage {
     return this;
   }
 
-  public showsVideo(callback: (videos: Video[]) => void) {
+  private searchResultsHtmlElements() {
+    return cy.get(By.dataQa("search-result"));
+  }
+
+  private extractVideosFromHtmlElements(videoCards: JQuery<HTMLElement>): Video[] {
     const videos: Video[] = [];
-    cy.get(By.dataQa("search-result"))
-      .then(videoCards =>
-        videoCards.each((idx, el: HTMLElement) => {
-          videos.push({
-            title: el.querySelector(By.dataQa("video-title"))!.textContent!,
-            description: el.querySelector(By.dataQa("video-description"))!
-              .textContent!
-          });
-        })
-      )
-      .then(() => callback(videos));
+    videoCards.each((idx, el: HTMLElement) => {
+      videos.push({
+        title: el.querySelector(By.dataQa("video-title"))!.textContent!,
+        description: el.querySelector(By.dataQa("video-description"))!
+          .textContent!
+      });
+    });
+    return videos;
+  }
+
+  public inspectResults(callback: (videos: Video[]) => void) {
+    this.searchResultsHtmlElements()
+      .then(this.extractVideosFromHtmlElements)
+      .then(callback);
+    return this;
+  }
+
+  private interactWithResult(index: number, callback: () => void) {
+    this.searchResultsHtmlElements()
+      .eq(index)
+      .scrollIntoView()
+      .within(callback);
+    return this;
+  }
+
+  public addVideoToDefaultCollection(index: number) {
+    return this.interactWithResult(index, () =>
+      cy.get(By.dataQa("add-to-default-collection")).click()
+    );
+  }
+
+  public removeVideoFromDefaultCollection(index: number) {
+    return this.interactWithResult(index, () =>
+      cy.get(By.dataQa("remove-from-default-collection")).click()
+    );
+  }
+
+  public isInDefaultCollection(index: number) {
+    this.searchResultsHtmlElements()
+      .eq(index)
+      .within(() =>
+        cy.get(By.dataQa("remove-from-default-collection"))
+      );
     return this;
   }
 

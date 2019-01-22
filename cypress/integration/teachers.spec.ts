@@ -30,7 +30,7 @@ context("Teachers", () => {
       .search(invalidSearchQuery)
       .enterEmail(email)
       .search(validSearchQuery)
-      .showsVideo(videos => {
+      .inspectResults(videos => {
         expect(videos.length).to.be.greaterThan(
           0,
           `There are no videos showing`
@@ -79,25 +79,36 @@ context("Teachers", () => {
       .visit()
       .logIn(username, password)
       .search(queryWithNewsAndNonNews)
-      .showsVideo(videos => {
+      .inspectResults(videos => {
         expect(videos.length).to.be.greaterThan(
           0,
           `There are no videos showing`
         );
       })
       .goToNewsPage()
-      .showsVideo(videos => {
+      .inspectResults(videos => {
         expect(videos.length).to.be.greaterThan(
           0,
           `There are no videos showing`
         );
       })
       .goBackToMainSearchPage()
-      .showsVideo(videos => {
+      .inspectResults(videos => {
         expect(videos.length).to.be.greaterThan(
           0,
           `There are no videos showing`
         );
       });
+  });
+
+  it('collections journey', () => {
+    const homepage = new TeachersHomepage();
+    homepage.visit()
+      .logIn(username, password)
+      .search(validSearchQuery)
+      .addVideoToDefaultCollection(0).isInDefaultCollection(0)
+      .addVideoToDefaultCollection(1).isInDefaultCollection(1)
+      .reload()
+      .removeVideoFromDefaultCollection(1)
   });
 });
