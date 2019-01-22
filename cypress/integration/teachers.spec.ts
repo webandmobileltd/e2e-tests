@@ -102,7 +102,7 @@ context("Teachers", () => {
       });
   });
 
-  it.only('collections journey', () => {
+  it('collections journey', () => {
     new TeachersHomepage().visit()
       .logIn(username, password)
       .search(validSearchQuery)
