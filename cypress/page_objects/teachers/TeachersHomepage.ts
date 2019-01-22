@@ -41,7 +41,7 @@ export class TeachersHomepage {
 
   public logOut() {
     this.search("test");
-    cy.get(By.dataQa("account-menu-open")).click();
+    this.openAccountMenu();
     cy.get(By.dataQa("logout-button")).click();
     cy.get(".ant-modal-confirm-btns .ant-btn-primary").click();
   }
@@ -181,5 +181,14 @@ export class TeachersHomepage {
       .click();
 
     return this;
+  }
+
+  goToDefaultCollection() {
+    this.openAccountMenu();
+    cy.get(By.dataQa("video-collection")).click();
+  }
+
+  private openAccountMenu() {
+    cy.get(By.dataQa('account-menu-open')).click()
   }
 }

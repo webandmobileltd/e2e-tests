@@ -1,6 +1,7 @@
-import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
-import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
+import { CollectionPage } from '../page_objects/teachers/CollectionPage';
+import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
+import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 
 context("Teachers", () => {
   const validSearchQuery = "Ted";
@@ -101,14 +102,23 @@ context("Teachers", () => {
       });
   });
 
-  it('collections journey', () => {
-    const homepage = new TeachersHomepage();
-    homepage.visit()
+  it.only('collections journey', () => {
+    new TeachersHomepage().visit()
       .logIn(username, password)
       .search(validSearchQuery)
       .addVideoToDefaultCollection(0).isInDefaultCollection(0)
       .addVideoToDefaultCollection(1).isInDefaultCollection(1)
       .reload()
       .removeVideoFromDefaultCollection(1)
+      .goToDefaultCollection();
+
+    new CollectionPage()
+      .inspectItems(videos => expect(videos).to.have.length(1))
+      .reload()
+      .inspectItems(videos => expect(videos).to.have.length(1))
+      .removeVideo(0)
+      .isEmpty()
+      .reload()
+      .isEmpty();
   });
 });
