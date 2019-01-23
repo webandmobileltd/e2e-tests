@@ -9,7 +9,7 @@ export class CollectionPage {
   }
 
   private itemsHtmlElements() {
-    return cy.get(By.dataQa("collection-video"));
+    return cy.get(By.dataQa("video-card"));
   }
 
   private extractVideosFromHtmlElements(videoCards: JQuery<HTMLElement>): Video[] {

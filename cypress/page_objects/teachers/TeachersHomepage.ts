@@ -55,7 +55,7 @@ export class TeachersHomepage {
   }
 
   private searchResultsHtmlElements() {
-    return cy.get(By.dataQa("search-result"));
+    return cy.get(By.dataQa("video-card"));
   }
 
   private extractVideosFromHtmlElements(videoCards: JQuery<HTMLElement>): Video[] {
