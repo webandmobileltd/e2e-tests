@@ -54,6 +54,8 @@ fi
 (
 cd source || exit 1
 
+npm audit || exit 1
+
 npm ci || exit 1
 
 ./run t ci
