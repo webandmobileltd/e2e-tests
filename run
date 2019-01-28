@@ -2,55 +2,24 @@
 
 set -e
 
-unknown=0
-
-if [ "$#" -eq 2 ] && [ "$2" = "ci" ]
+if [ "$1" = "ci" ]
 then
     cypress="npm run cypress:run"
 else
     cypress="npm run cypress:open"
 fi
 
-if [ "$#" -eq 0 ] || [ $unknown -eq 1 ]
-then
-    read -p "Which environment to run against? " env
-else
-    env=$1
-fi
-
-case $env in
-    [Tt]* )
-        : ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/teachers/protocol/openid-connect/token"}
-        : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
-        : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
-        : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
-        : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
-        : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
-        : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-        : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
-        : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
-        : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
-        : ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
-        ;;
-    [Ss]* )
-        : ${CYPRESS_TOKEN_URL:="https://login.staging-boclips.com/auth/realms/teachers/protocol/openid-connect/token"}
-        : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.staging-boclips.com"}
-        : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.staging-boclips.com"}
-        : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.staging-boclips.com"}
-        : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.staging-boclips.com"}
-        : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-staging --username)"}
-        : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-staging --password)"}
-        : ${CYPRESS_FRONTEND_USERNAME:="dummy-user"}
-        : ${CYPRESS_FRONTEND_PASSWORD:="BlessYou2"}
-        : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-staging --username)"}
-        : ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-staging --password)"}
-        ;;
-    * )
-        echo "Please answer [t]esting or [s]taging."
-        unknown=1
-        exit 1
-        ;;
-esac
+: ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/teachers/protocol/openid-connect/token"}
+: ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
+: ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
+: ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
+: ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
+: ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
+: ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
+: ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
+: ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
+: ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
+: ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
 
 export CYPRESS_VIDEOSERVICE_BASE_URL
 export CYPRESS_TOKEN_URL
