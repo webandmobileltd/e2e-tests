@@ -58,7 +58,9 @@ export class TeachersHomepage {
     return cy.get(By.dataQa("video-card"));
   }
 
-  private extractVideosFromHtmlElements(videoCards: JQuery<HTMLElement>): Video[] {
+  private extractVideosFromHtmlElements(
+    videoCards: JQuery<HTMLElement>
+  ): Video[] {
     const videos: Video[] = [];
     videoCards.each((idx, el: HTMLElement) => {
       videos.push({
@@ -100,9 +102,7 @@ export class TeachersHomepage {
   public isInDefaultCollection(index: number) {
     this.searchResultsHtmlElements()
       .eq(index)
-      .within(() =>
-        cy.get(By.dataQa("remove-from-default-collection"))
-      );
+      .within(() => cy.get(By.dataQa("remove-from-default-collection")));
     return this;
   }
 
@@ -189,6 +189,11 @@ export class TeachersHomepage {
   }
 
   private openAccountMenu() {
-    cy.get(By.dataQa('account-menu-open')).click()
+    cy.get(By.dataQa("account-menu-open")).click();
+  }
+
+  itShowsNotification(text: string) {
+    cy.get("body").should("contain", text);
+    return this;
   }
 }

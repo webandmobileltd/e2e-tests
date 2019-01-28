@@ -1,7 +1,7 @@
-import { v4 as uuid } from 'uuid';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
-import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
-import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
+import { v4 as uuid } from "uuid";
+import { CollectionPage } from "../page_objects/teachers/CollectionPage";
+import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
+import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
 
 context("Teachers", () => {
   const validSearchQuery = "Ted";
@@ -58,7 +58,7 @@ context("Teachers", () => {
         videoDetailsPage
           .visit()
           .hasTitle()
-          .hasContentPartnerName()
+          .hasContentPartnerName();
       });
   });
 
@@ -102,12 +102,17 @@ context("Teachers", () => {
       });
   });
 
-  it('collections journey', () => {
-    new TeachersHomepage().visit()
+  specify.only("collections journey", () => {
+    new TeachersHomepage()
+      .visit()
       .logIn(username, password)
       .search(validSearchQuery)
-      .addVideoToDefaultCollection(0).isInDefaultCollection(0)
-      .addVideoToDefaultCollection(1).isInDefaultCollection(1)
+      .addVideoToDefaultCollection(0)
+      .itShowsNotification("saved to your video collection")
+      .isInDefaultCollection(0)
+      .addVideoToDefaultCollection(1)
+      .itShowsNotification("saved to your video collection")
+      .isInDefaultCollection(1)
       .reload()
       .removeVideoFromDefaultCollection(1)
       .goToDefaultCollection();
