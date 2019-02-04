@@ -116,7 +116,7 @@ context("Teachers", () => {
     });
   });
 
-  specify.only("collections journey", () => {
+  it("collections journey", () => {
     new TeachersHomepage()
       .visit()
       .logIn(username, password)
