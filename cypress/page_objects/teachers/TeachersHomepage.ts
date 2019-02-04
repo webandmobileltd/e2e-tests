@@ -181,7 +181,7 @@ export class TeachersHomepage {
 
   goToNewsPageMobile() {
     cy.get(By.dataQa("tab"))
-      .find(By.dataState("News"))
+      .contains("News")
       .click();
 
     return this;
@@ -201,7 +201,7 @@ export class TeachersHomepage {
 
   goBackToMainSearchPageMobile() {
     cy.get(By.dataQa("tab"))
-      .find(By.dataState("Main"))
+      .contains("Main")
       .click();
 
     return this;
