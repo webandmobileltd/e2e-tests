@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { CollectionPage } from "../page_objects/teachers/CollectionPage";
 import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
 import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
-import ViewPort from "./types/ViewPort";
+import ViewPort from "../page_objects/types/ViewPort";
 
 context("Teachers", () => {
   const validSearchQuery = "Ted";
