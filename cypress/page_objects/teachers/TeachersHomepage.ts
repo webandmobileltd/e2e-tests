@@ -167,7 +167,11 @@ export class TeachersHomepage {
     return this;
   }
 
-  goToNewsPage() {
+  goToNewsPage(isMobile: boolean) {
+    if (isMobile) {
+      return this.goToNewsPageMobile();
+    }
+
     cy.get(By.dataQa("news-side-panel"))
       .find("button")
       .click();
@@ -175,9 +179,29 @@ export class TeachersHomepage {
     return this;
   }
 
-  goBackToMainSearchPage() {
+  goToNewsPageMobile() {
+    cy.get(By.dataQa("tab"))
+      .find(By.dataState("News"))
+      .click();
+
+    return this;
+  }
+
+  goBackToMainSearchPage(isMobile: boolean) {
+    if (isMobile) {
+      return this.goBackToMainSearchPageMobile();
+    }
+
     cy.get(By.dataQa("news-header"))
       .find("button")
+      .click();
+
+    return this;
+  }
+
+  goBackToMainSearchPageMobile() {
+    cy.get(By.dataQa("tab"))
+      .find(By.dataState("Main"))
       .click();
 
     return this;

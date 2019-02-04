@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 import { CollectionPage } from "../page_objects/teachers/CollectionPage";
 import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
 import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
+import ViewPort from "./types/ViewPort";
 
 context("Teachers", () => {
   const validSearchQuery = "Ted";
@@ -71,35 +72,48 @@ context("Teachers", () => {
       .noVideosShown();
   });
 
-  it("seperating news journey", () => {
-    const homepage = new TeachersHomepage();
+  const sizes: ViewPort[] = [
+    { height: 660, width: 1000, isMobile: false },
+    { height: 667, width: 375, isMobile: true }
+  ];
 
-    const queryWithNewsAndNonNews = "richard";
+  sizes.forEach((size: ViewPort) => {
+    it(`seperating news journey for: ${
+      size.isMobile ? "mobile" : "desktop"
+    } view`, () => {
+      const homepage = new TeachersHomepage();
 
-    homepage
-      .visit()
-      .logIn(username, password)
-      .search(queryWithNewsAndNonNews)
-      .inspectResults(videos => {
-        expect(videos.length).to.be.greaterThan(
-          0,
-          `There are no videos showing`
-        );
-      })
-      .goToNewsPage()
-      .inspectResults(videos => {
-        expect(videos.length).to.be.greaterThan(
-          0,
-          `There are no videos showing`
-        );
-      })
-      .goBackToMainSearchPage()
-      .inspectResults(videos => {
-        expect(videos.length).to.be.greaterThan(
-          0,
-          `There are no videos showing`
-        );
-      });
+      const queryWithNewsAndNonNews = "richard";
+
+      cy.viewport(size.width, size.height);
+
+      homepage
+        .visit()
+        .logIn(username, password)
+        .search(queryWithNewsAndNonNews)
+        .inspectResults(videos => {
+          expect(videos.length).to.be.greaterThan(
+            0,
+            `There are no videos showing`
+          );
+        })
+        .goToNewsPage(size.isMobile)
+        .inspectResults(videos => {
+          expect(videos.length).to.be.greaterThan(
+            0,
+            `There are no videos showing`
+          );
+        })
+        .goBackToMainSearchPage(size.isMobile)
+        .inspectResults(videos => {
+          expect(videos.length).to.be.greaterThan(
+            0,
+            `There are no videos showing`
+          );
+        });
+
+      cy.viewport(1000, 660);
+    });
   });
 
   specify.only("collections journey", () => {
