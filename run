@@ -9,7 +9,7 @@ else
     cypress="npm run cypress:open"
 fi
 
-: ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/teachers/protocol/openid-connect/token"}
+: ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}
 : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
 : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
 : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
