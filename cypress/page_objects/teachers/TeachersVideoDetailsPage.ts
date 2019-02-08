@@ -13,13 +13,13 @@ export class TeachersVideoDetailsPage {
   }
 
   public hasTitle() {
-      cy.get(By.dataQa("video-title")).should("not.be.empty");
-      return this;
+    cy.get(By.dataQa("video-title")).should("not.be.empty");
+    return this;
   }
 
   public hasContentPartnerName() {
-      cy.get(By.dataQa("video-content-partner")).should("not.be.empty");
-      return this;
+    cy.get(By.dataQa("video-content-partner")).should("not.be.empty");
+    return this;
   }
 
   public showsTitle(title: string) {
@@ -36,7 +36,7 @@ export class TeachersVideoDetailsPage {
   }
 
   public showsSubject(subject: string) {
-    cy.get(By.dataQa("video-details-subject")).should("have.text", subject);
+    cy.get(By.dataQa("video-subject")).should("have.text", subject);
     return this;
   }
 }
