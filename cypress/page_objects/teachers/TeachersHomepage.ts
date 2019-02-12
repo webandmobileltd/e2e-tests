@@ -80,29 +80,37 @@ export class TeachersHomepage {
   }
 
   private interactWithResult(index: number, callback: () => void) {
-    this.searchResultsHtmlElements()
+    return this.searchResultsHtmlElements()
       .eq(index)
       .scrollIntoView()
       .within(callback);
-    return this;
   }
 
   public addVideoToDefaultCollection(index: number) {
-    return this.interactWithResult(index, () =>
-      cy.get(By.dataQa("add-to-default-collection")).click()
-    );
+    this.interactWithResult(index, () => {
+      cy.get(By.dataQa("video-collection-menu")).click();
+    })
+      .get(By.dataQa("add-to-default-collection"))
+      .click();
+    return this;
   }
 
   public removeVideoFromDefaultCollection(index: number) {
-    return this.interactWithResult(index, () =>
-      cy.get(By.dataQa("remove-from-default-collection")).click()
-    );
+    this.interactWithResult(index, () => {
+      cy.get(By.dataQa("video-collection-menu")).click();
+    })
+      .get(By.dataQa("remove-from-default-collection"))
+      .click();
+    return this;
   }
 
   public isInDefaultCollection(index: number) {
     this.searchResultsHtmlElements()
       .eq(index)
-      .within(() => cy.get(By.dataQa("remove-from-default-collection")));
+      .within(() => {
+        cy.get(By.dataQa("video-collection-menu")).click();
+      })
+      .get(By.dataQa("remove-from-default-collection"));
     return this;
   }
 
