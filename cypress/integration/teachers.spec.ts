@@ -21,6 +21,7 @@ context("Teachers", () => {
   });
 
   afterEach(function() {
+    cy.viewport(1000, 660);
     new TeachersHomepage().visit().logOut();
   });
 
@@ -111,33 +112,37 @@ context("Teachers", () => {
             `There are no videos showing`
           );
         });
-
-      cy.viewport(1000, 660);
     });
   });
 
-  it("collections journey", () => {
-    new TeachersHomepage()
-      .visit()
-      .logIn(username, password)
-      .search(validSearchQuery)
-      .addVideoToDefaultCollection(0)
-      .itShowsNotification("saved to your video collection")
-      .isInDefaultCollection(0)
-      .addVideoToDefaultCollection(1)
-      .itShowsNotification("saved to your video collection")
-      .isInDefaultCollection(1)
-      .reload()
-      .removeVideoFromDefaultCollection(1)
-      .goToDefaultCollection();
+  sizes.forEach((size: ViewPort) => {
+    it(`collections journey for: ${
+      size.isMobile ? "mobile" : "desktop"
+    } view`, () => {
+      cy.viewport(size.width, size.height);
 
-    new CollectionPage()
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .reload()
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .removeVideo(0)
-      .isEmpty()
-      .reload()
-      .isEmpty();
+      new TeachersHomepage()
+        .visit()
+        .logIn(username, password)
+        .search(validSearchQuery)
+        .addVideoToDefaultCollection(0)
+        .itShowsNotification("saved to your video collection")
+        .isInDefaultCollection(0)
+        .addVideoToDefaultCollection(1)
+        .itShowsNotification("saved to your video collection")
+        .isInDefaultCollection(1)
+        .reload()
+        .removeVideoFromDefaultCollection(1)
+        .goToDefaultCollection(!size.isMobile);
+
+      new CollectionPage()
+        .inspectItems(videos => expect(videos).to.have.length(1))
+        .reload()
+        .inspectItems(videos => expect(videos).to.have.length(1))
+        .removeVideo(0)
+        .isEmpty()
+        .reload()
+        .isEmpty();
+    });
   });
 });

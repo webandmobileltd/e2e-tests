@@ -215,9 +215,12 @@ export class TeachersHomepage {
     return this;
   }
 
-  goToDefaultCollection() {
-    this.openAccountMenu();
-    cy.get(By.dataQa("video-collection")).click();
+  goToDefaultCollection(isDesktop: boolean) {
+    if (isDesktop) {
+      this.openAccountMenu();
+    }
+
+    cy.get("[data-qa='video-collection']:visible").click();
   }
 
   private openAccountMenu() {
