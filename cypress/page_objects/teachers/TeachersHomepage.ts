@@ -88,7 +88,7 @@ export class TeachersHomepage {
 
   public addVideoToDefaultCollection(index: number) {
     this.interactWithResult(index, () => {
-      cy.get(By.dataQa("video-collection-menu")).click();
+      cy.get("[data-qa='video-collection-menu']:visible").click();
     })
       .get(By.dataQa("add-to-default-collection"))
       .click();
@@ -97,7 +97,7 @@ export class TeachersHomepage {
 
   public removeVideoFromDefaultCollection(index: number) {
     this.interactWithResult(index, () => {
-      cy.get(By.dataQa("video-collection-menu")).click();
+      cy.get("[data-qa='video-collection-menu']:visible").click();
     })
       .get(By.dataQa("remove-from-default-collection"))
       .click();
@@ -108,7 +108,7 @@ export class TeachersHomepage {
     this.searchResultsHtmlElements()
       .eq(index)
       .within(() => {
-        cy.get(By.dataQa("video-collection-menu")).click();
+        cy.get("[data-qa='video-collection-menu']:visible").click();
       })
       .get(By.dataQa("remove-from-default-collection"));
     return this;
