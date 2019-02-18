@@ -150,7 +150,7 @@ function allVideos() {
 
 function video(params) {
   return {
-    provider: params.provider || "TeD",
+    provider: params.provider || "TED Talks",
     providerVideoId: params.providerVideoId || "ted-123",
     title: params.title || "Richard St. John: 8 secrets of success",
     description: params.description || "Video description",
