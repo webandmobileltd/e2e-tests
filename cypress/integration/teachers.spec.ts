@@ -25,7 +25,7 @@ context("Teachers", () => {
     new TeachersHomepage().visit().logOut();
   });
 
-  it("search journey", () => {
+  specify("search journey", () => {
     const homepage = new TeachersHomepage();
     homepage
       .visit()
@@ -79,7 +79,7 @@ context("Teachers", () => {
   ];
 
   sizes.forEach((size: ViewPort) => {
-    it(`seperating news journey for: ${
+    specify(`separating news journey for: ${
       size.isMobile ? "mobile" : "desktop"
     } view`, () => {
       const homepage = new TeachersHomepage();
