@@ -54,6 +54,19 @@ export class TeachersHomepage {
     return this;
   }
 
+  public searchWithAutocomplete(searchQuery: string, completion: string) {
+      cy.get(By.dataQa("search-input"))
+          .last()
+          .should("be.visible")
+          .clear()
+          .type(searchQuery);
+      cy.get(".search-completions").within(() => {
+          cy.contains(completion).click();
+      });
+
+      return this;
+  }
+
   private searchResultsHtmlElements() {
     return cy.get(By.dataQa("video-card"));
   }

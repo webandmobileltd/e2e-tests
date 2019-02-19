@@ -5,11 +5,6 @@ import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideo
 import ViewPort from "../page_objects/types/ViewPort";
 
 context("Teachers", () => {
-  const validSearchQuery = "Ted";
-  const invalidSearchQuery = "asdfghjklkjhgf";
-  const nonEducationalSearchQuery = "Celebrities on the red carpet";
-  const email = "test@test.com";
-
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
 
@@ -26,13 +21,16 @@ context("Teachers", () => {
   });
 
   specify("search journey", () => {
+    const email = "test@test.com";
     const homepage = new TeachersHomepage();
+    const invalidSearchQuery = "asdfghjklkjhgf";
+
     homepage
       .visit()
       .logIn(username, password)
       .search(invalidSearchQuery)
       .enterEmail(email)
-      .search(validSearchQuery)
+      .searchWithAutocomplete("ted", "TED Talks")
       .inspectResults(videos => {
         expect(videos.length).to.be.greaterThan(
           0,
@@ -65,6 +63,7 @@ context("Teachers", () => {
   });
 
   it("shows only educational videos", () => {
+    const nonEducationalSearchQuery = "Celebrities on the red carpet";
     const homepage = new TeachersHomepage();
     homepage
       .visit()
@@ -116,9 +115,11 @@ context("Teachers", () => {
   });
 
   sizes.forEach((size: ViewPort) => {
-    it(`collections journey for: ${
+    specify(`collections journey for: ${
       size.isMobile ? "mobile" : "desktop"
     } view`, () => {
+      const validSearchQuery = "Ted";
+
       cy.viewport(size.width, size.height);
 
       new TeachersHomepage()
