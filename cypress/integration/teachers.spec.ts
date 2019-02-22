@@ -79,40 +79,43 @@ context("Teachers", () => {
   ];
 
   sizes.forEach((size: ViewPort) => {
-    specify(`separating news journey for: ${
-      size.isMobile ? "mobile" : "desktop"
-    } view`, () => {
-      const homepage = new TeachersHomepage();
+    specify(
+      `separating news journey for: ${
+        size.isMobile ? "mobile" : "desktop"
+      } view`,
+      () => {
+        const homepage = new TeachersHomepage();
 
-      const queryWithNewsAndNonNews = "richard";
+        const queryWithNewsAndNonNews = "richard";
 
-      cy.viewport(size.width, size.height);
+        cy.viewport(size.width, size.height);
 
-      homepage
-        .visit()
-        .logIn(username, password)
-        .search(queryWithNewsAndNonNews)
-        .inspectResults(videos => {
-          expect(videos.length).to.be.greaterThan(
-            0,
-            `There are no videos showing`
-          );
-        })
-        .goToNewsPage(size.isMobile)
-        .inspectResults(videos => {
-          expect(videos.length).to.be.greaterThan(
-            0,
-            `There are no videos showing`
-          );
-        })
-        .goBackToMainSearchPage(size.isMobile)
-        .inspectResults(videos => {
-          expect(videos.length).to.be.greaterThan(
-            0,
-            `There are no videos showing`
-          );
-        });
-    });
+        homepage
+          .visit()
+          .logIn(username, password)
+          .search(queryWithNewsAndNonNews)
+          .inspectResults(videos => {
+            expect(videos.length).to.be.greaterThan(
+              0,
+              `There are no videos showing`
+            );
+          })
+          .goToNewsPage(size.isMobile)
+          .inspectResults(videos => {
+            expect(videos.length).to.be.greaterThan(
+              0,
+              `There are no videos showing`
+            );
+          })
+          .goBackToMainSearchPage(size.isMobile)
+          .inspectResults(videos => {
+            expect(videos.length).to.be.greaterThan(
+              0,
+              `There are no videos showing`
+            );
+          });
+      }
+    );
   });
 
   sizes.forEach((size: ViewPort) => {
@@ -122,7 +125,7 @@ context("Teachers", () => {
       const collectionTitle = uuid();
       const validSearchQuery = "TED Talks";
 
-      cy.viewport(size.width, size.height);
+        cy.viewport(size.width, size.height);
 
       new TeachersHomepage()
         .visit()
@@ -143,14 +146,20 @@ context("Teachers", () => {
         // .inspectCollections(collections => expect(collections).to.have.length(1))
         .goToCollectionDetails(collectionTitle);
 
-      new CollectionPage()
-        .inspectItems(videos => expect(videos).to.have.length(1))
-        .reload()
-        .inspectItems(videos => expect(videos).to.have.length(1))
-        .removeVideo(0)
-        .isEmpty()
-        .reload()
-        .isEmpty();
-    });
+        const newCollectionName = "New name";
+
+        new CollectionPage()
+          .setName(newCollectionName)
+          .itHasName(newCollectionName)
+          .inspectItems(videos => expect(videos).to.have.length(1))
+          .reload()
+          .itHasName(newCollectionName)
+          .inspectItems(videos => expect(videos).to.have.length(1))
+          .removeVideo(0)
+          .isEmpty()
+          .reload()
+          .isEmpty();
+      }
+    );
   });
 });
