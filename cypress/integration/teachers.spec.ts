@@ -78,72 +78,81 @@ context("Teachers", () => {
   ];
 
   sizes.forEach((size: ViewPort) => {
-    specify(`separating news journey for: ${
-      size.isMobile ? "mobile" : "desktop"
-    } view`, () => {
-      const homepage = new TeachersHomepage();
+    specify(
+      `separating news journey for: ${
+        size.isMobile ? "mobile" : "desktop"
+      } view`,
+      () => {
+        const homepage = new TeachersHomepage();
 
-      const queryWithNewsAndNonNews = "richard";
+        const queryWithNewsAndNonNews = "richard";
 
-      cy.viewport(size.width, size.height);
+        cy.viewport(size.width, size.height);
 
-      homepage
-        .visit()
-        .logIn(username, password)
-        .search(queryWithNewsAndNonNews)
-        .inspectResults(videos => {
-          expect(videos.length).to.be.greaterThan(
-            0,
-            `There are no videos showing`
-          );
-        })
-        .goToNewsPage(size.isMobile)
-        .inspectResults(videos => {
-          expect(videos.length).to.be.greaterThan(
-            0,
-            `There are no videos showing`
-          );
-        })
-        .goBackToMainSearchPage(size.isMobile)
-        .inspectResults(videos => {
-          expect(videos.length).to.be.greaterThan(
-            0,
-            `There are no videos showing`
-          );
-        });
-    });
+        homepage
+          .visit()
+          .logIn(username, password)
+          .search(queryWithNewsAndNonNews)
+          .inspectResults(videos => {
+            expect(videos.length).to.be.greaterThan(
+              0,
+              `There are no videos showing`
+            );
+          })
+          .goToNewsPage(size.isMobile)
+          .inspectResults(videos => {
+            expect(videos.length).to.be.greaterThan(
+              0,
+              `There are no videos showing`
+            );
+          })
+          .goBackToMainSearchPage(size.isMobile)
+          .inspectResults(videos => {
+            expect(videos.length).to.be.greaterThan(
+              0,
+              `There are no videos showing`
+            );
+          });
+      }
+    );
   });
 
   sizes.forEach((size: ViewPort) => {
-    specify(`collections journey for: ${
-      size.isMobile ? "mobile" : "desktop"
-    } view`, () => {
-      const validSearchQuery = "Ted";
+    specify(
+      `collections journey for: ${size.isMobile ? "mobile" : "desktop"} view`,
+      () => {
+        const validSearchQuery = "Ted";
 
-      cy.viewport(size.width, size.height);
+        cy.viewport(size.width, size.height);
 
-      new TeachersHomepage()
-        .visit()
-        .logIn(username, password)
-        .search(validSearchQuery)
-        .addVideoToDefaultCollection(0)
-        .itShowsNotification("saved to your video collection")
-        .isInDefaultCollection(0)
-        .addVideoToDefaultCollection(1)
-        .itShowsNotification("saved to your video collection")
-        .isInDefaultCollection(1)
-        .reload()
-        .removeVideoFromDefaultCollection(1)
-        .goToDefaultCollection(!size.isMobile);
+        new TeachersHomepage()
+          .visit()
+          .logIn(username, password)
+          .search(validSearchQuery)
+          .addVideoToDefaultCollection(0)
+          .itShowsNotification("saved to your video collection")
+          .isInDefaultCollection(0)
+          .addVideoToDefaultCollection(1)
+          .itShowsNotification("saved to your video collection")
+          .isInDefaultCollection(1)
+          .reload()
+          .removeVideoFromDefaultCollection(1)
+          .goToDefaultCollection(!size.isMobile);
 
-      new CollectionPage()
-        .inspectItems(videos => expect(videos).to.have.length(1))
-        .reload()
-        .inspectItems(videos => expect(videos).to.have.length(1))
-        .removeVideo(0)
-        .isEmpty()
-        .reload()
-        .isEmpty();
-    });
+        const newCollectionName = "New name";
+
+        new CollectionPage()
+          .setName(newCollectionName)
+          .itHasName(newCollectionName)
+          .inspectItems(videos => expect(videos).to.have.length(1))
+          .reload()
+          .itHasName(newCollectionName)
+          .inspectItems(videos => expect(videos).to.have.length(1))
+          .removeVideo(0)
+          .isEmpty()
+          .reload()
+          .isEmpty();
+      }
+    );
   });
 });

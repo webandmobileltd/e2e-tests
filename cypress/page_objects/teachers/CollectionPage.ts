@@ -1,10 +1,23 @@
-import { By } from '../../support/By';
-import Video from '../domain/Video';
+import { By } from "../../support/By";
+import Video from "../domain/Video";
 
 export class CollectionPage {
-
   public reload() {
     cy.reload();
+    return this;
+  }
+
+  public setName(name: string): CollectionPage {
+    cy.get(By.dataQa("collection-name-edit")).click();
+    cy.get(By.dataQa("collection-name-edit-input"))
+      .clear()
+      .type(name);
+    cy.get(By.dataQa("collection-name-edit-submit")).click();
+    return this;
+  }
+
+  public itHasName(name: string): CollectionPage {
+    cy.get(By.dataQa("collection-name")).should("contain", name);
     return this;
   }
 
@@ -12,7 +25,9 @@ export class CollectionPage {
     return cy.get(By.dataQa("video-card"));
   }
 
-  private extractVideosFromHtmlElements(videoCards: JQuery<HTMLElement>): Video[] {
+  private extractVideosFromHtmlElements(
+    videoCards: JQuery<HTMLElement>
+  ): Video[] {
     const videos: Video[] = [];
     videoCards.each((idx, el: HTMLElement) => {
       videos.push({
