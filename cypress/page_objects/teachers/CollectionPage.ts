@@ -38,7 +38,7 @@ export class CollectionPage {
 
   public removeVideo(index: number) {
     return this.interactWithItem(index, () =>
-      cy.get(By.dataQa("remove-from-default-collection")).click()
+      cy.get(By.dataQa("remove-from-collection")).click()
     );
   }
 

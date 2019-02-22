@@ -112,7 +112,7 @@ export class TeachersHomepage {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(By.dataQa("remove-from-default-collection"))
+      .get(By.dataQa("remove-from-collection"))
       .click();
     return this;
   }
@@ -123,7 +123,7 @@ export class TeachersHomepage {
       .within(() => {
         cy.get("[data-qa='video-collection-menu']:visible").click();
       })
-      .get(By.dataQa("remove-from-default-collection"));
+      .get(By.dataQa("remove-from-collection"));
     return this;
   }
 
