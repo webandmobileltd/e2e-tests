@@ -120,7 +120,7 @@ context("Teachers", () => {
       size.isMobile ? "mobile" : "desktop"
     } view`, () => {
       const collectionTitle = uuid();
-      const validSearchQuery = "Ted";
+      const validSearchQuery = "TED Talks";
 
       cy.viewport(size.width, size.height);
 
