@@ -99,31 +99,42 @@ export class TeachersHomepage {
       .within(callback);
   }
 
-  public addVideoToDefaultCollection(index: number) {
+  public createCollectionFromVideo(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(By.dataQa("add-to-default-collection"))
-      .click();
+      .get(By.dataQa("create-collection")).click()
+      .get(By.dataQa("new-collection-title")).type(collectionTitle)
+      .get(By.dataQa("create-collection-button")).click();
+
     return this;
   }
 
-  public removeVideoFromDefaultCollection(index: number) {
+  public addVideoToCollection(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(By.dataQa("remove-from-collection"))
-      .click();
+      .get(`[data-state="${collectionTitle}"][data-qa="add-to-default-collection"]`)
+  .click();
     return this;
   }
 
-  public isInDefaultCollection(index: number) {
+  public removeVideoFromCollection(index: number, collectionTitle: string) {
+    this.interactWithResult(index, () => {
+      cy.get("[data-qa='video-collection-menu']:visible").click();
+    })
+      .get(`[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`)
+  .click();
+    return this;
+  }
+
+  public isVideoInCollection(index: number, collectionTitle: string) {
     this.searchResultsHtmlElements()
       .eq(index)
       .within(() => {
-        cy.get("[data-qa='video-collection-menu']:visible").click();
+        cy.get(`[data-qa='video-collection-menu']:visible`).click();
       })
-      .get(By.dataQa("remove-from-collection"));
+      .get(`[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`);
     return this;
   }
 
@@ -228,7 +239,7 @@ export class TeachersHomepage {
     return this;
   }
 
-  goToDefaultCollection(isDesktop: boolean) {
+  goToCollections(isDesktop: boolean) {
     if (isDesktop) {
       this.openAccountMenu();
     }

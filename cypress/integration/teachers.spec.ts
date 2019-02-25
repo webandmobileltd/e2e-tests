@@ -3,6 +3,7 @@ import { CollectionPage } from "../page_objects/teachers/CollectionPage";
 import { TeachersHomepage } from "../page_objects/teachers/TeachersHomepage";
 import { TeachersVideoDetailsPage } from "../page_objects/teachers/TeachersVideoDetailsPage";
 import ViewPort from "../page_objects/types/ViewPort";
+import { CollectionsPage } from "../page_objects/teachers/CollectionsPage";
 
 context("Teachers", () => {
   const username = `${uuid()}@boclips.com`;
@@ -118,6 +119,7 @@ context("Teachers", () => {
     specify(`collections journey for: ${
       size.isMobile ? "mobile" : "desktop"
     } view`, () => {
+      const collectionTitle = uuid();
       const validSearchQuery = "Ted";
 
       cy.viewport(size.width, size.height);
@@ -126,15 +128,21 @@ context("Teachers", () => {
         .visit()
         .logIn(username, password)
         .search(validSearchQuery)
-        .addVideoToDefaultCollection(0)
+        .createCollectionFromVideo(0, collectionTitle)
+        .itShowsNotification("has been created")
+        .isVideoInCollection(0, collectionTitle)
+        .addVideoToCollection(1, collectionTitle)
         .itShowsNotification("saved to your video collection")
-        .isInDefaultCollection(0)
-        .addVideoToDefaultCollection(1)
-        .itShowsNotification("saved to your video collection")
-        .isInDefaultCollection(1)
+        .isVideoInCollection(1, collectionTitle)
         .reload()
-        .removeVideoFromDefaultCollection(1)
-        .goToDefaultCollection(!size.isMobile);
+        .removeVideoFromCollection(1, collectionTitle)
+        .goToCollections(!size.isMobile);
+
+      new CollectionsPage()
+        .inspectCollections(collections => expect(collections).to.have.length(1))
+        .reload()
+        .inspectCollections(collections => expect(collections).to.have.length(1))
+        .goToCollectionDetails(collectionTitle);
 
       new CollectionPage()
         .inspectItems(videos => expect(videos).to.have.length(1))
