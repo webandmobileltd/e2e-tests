@@ -11,8 +11,7 @@ export class CollectionPage {
     cy.get(By.dataQa("collection-name-edit")).click();
     cy.get(By.dataQa("collection-name-edit-input"))
       .clear()
-      .type(name);
-    cy.get(By.dataQa("collection-name-edit-submit")).click();
+      .type(name+"{enter}");
     return this;
   }
 
