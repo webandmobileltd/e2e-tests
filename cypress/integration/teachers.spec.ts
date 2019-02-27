@@ -147,7 +147,7 @@ context('Teachers', () => {
           )
           .goToCollectionDetails(collectionTitle);
 
-        const newCollectionName = 'New name';
+        const newCollectionName = uuid();
 
         new CollectionPage()
           .setName(newCollectionName)
@@ -163,9 +163,9 @@ context('Teachers', () => {
           .goToCollections(!size.isMobile);
 
         new CollectionsPage()
-          .deleteCollection(collectionTitle)
+          .deleteCollection(newCollectionName)
           .itShowsNotification(
-            `Your collection "${collectionTitle}" has been deleted`,
+            `Your collection "${newCollectionName}" has been deleted`,
           ).isEmpty();
       },
     );
