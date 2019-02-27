@@ -6,7 +6,9 @@
   "scripts": {
     "test": "test",
     "cypress:open": "./node_modules/.bin/cypress open",
-    "cypress:run": "./node_modules/.bin/cypress run"
+    "cypress:run": "./node_modules/.bin/cypress run",
+    "lint": "tslint -c tslint.json -p .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "author": "Boclippas",
   "license": "ISC",
@@ -19,5 +21,11 @@
     "ts-loader": "^4.4.2",
     "typescript": "^3.0.1",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4",
+    "tslint": "^5.13.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1"
   }
 }

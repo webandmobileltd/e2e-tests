@@ -1,11 +1,13 @@
-import { By } from "../../support/By";
-import Video from "../domain/Video";
+import { By } from '../../support/By';
+import Video from '../domain/Video';
+import { TeachersPage } from './TeachersPage';
 
-export class TeachersHomepage {
+export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
 
   constructor() {
-    this.url = Cypress.env("TEACHERS_BASE_URL");
+    super();
+    this.url = Cypress.env('TEACHERS_BASE_URL');
   }
 
   public visit() {
@@ -19,67 +21,52 @@ export class TeachersHomepage {
   }
 
   public createAccount(username: string, password: string) {
-    cy.get(By.dataQa("create-account")).click();
+    cy.get(By.dataQa('create-account')).click();
 
-    cy.get(By.dataQa("first-name")).type("Firstname");
-    cy.get(By.dataQa("last-name")).type("Lastname");
-    cy.get(By.dataQa("subjects")).type("Subjects");
-    cy.get(By.dataQa("email")).type(username);
-    cy.get(By.dataQa("password")).type(password);
-    cy.get(By.dataQa("password-confirm")).type(password);
+    cy.get(By.dataQa('first-name')).type('Firstname');
+    cy.get(By.dataQa('last-name')).type('Lastname');
+    cy.get(By.dataQa('subjects')).type('Subjects');
+    cy.get(By.dataQa('email')).type(username);
+    cy.get(By.dataQa('password')).type(password);
+    cy.get(By.dataQa('password-confirm')).type(password);
 
-    cy.get(By.dataQa("register-button")).click();
+    cy.get(By.dataQa('register-button')).click();
     return this;
   }
 
   public logIn(username: string, password: string) {
-    cy.get(By.dataQa("email")).type(username);
-    cy.get(By.dataQa("password")).type(password);
-    cy.get(By.dataQa("login-button")).click();
-    return this;
-  }
-
-  public logOut() {
-    this.search("test");
-    this.openAccountMenu();
-    cy.get(By.dataQa("logout-button")).click();
-    cy.get(".ant-modal-confirm-btns .ant-btn-primary").click();
-  }
-
-  public search(searchQuery: string) {
-    cy.get(By.dataQa("search-input"))
-      .clear()
-      .type(searchQuery)
-      .type("{enter}");
+    cy.get(By.dataQa('email')).type(username);
+    cy.get(By.dataQa('password')).type(password);
+    cy.get(By.dataQa('login-button')).click();
     return this;
   }
 
   public searchWithAutocomplete(searchQuery: string, completion: string) {
-      cy.get(By.dataQa("search-input"))
-          .last()
-          .should("be.visible")
-          .clear()
-          .type(searchQuery);
-      cy.get(".search-completions").within(() => {
-          cy.contains(completion).click();
-      });
+    cy.get(By.dataQa('search-input'))
+      .last()
+      .should('be.visible')
+      .clear()
+      .type(searchQuery);
+    cy.get('.search-completions').within(() => {
+      cy.contains(completion).click();
+    });
 
-      return this;
+    return this;
   }
 
   private searchResultsHtmlElements() {
-    return cy.get(By.dataQa("video-card"));
+    return cy.get(By.dataQa('video-card'));
   }
 
   private extractVideosFromHtmlElements(
-    videoCards: JQuery<HTMLElement>
+    videoCards: JQuery<HTMLElement>,
   ): Video[] {
     const videos: Video[] = [];
     videoCards.each((idx, el: HTMLElement) => {
       videos.push({
-        title: el.querySelector(By.dataQa("video-title"))!.textContent!,
-        description: el.querySelector(By.dataQa("video-description"))!
-          .textContent!
+        title: el.querySelector(By.dataQa('video-title'))!.textContent!,
+        description: el.querySelector(By.dataQa('video-description'))!
+          .textContent!,
       });
     });
     return videos;
@@ -103,9 +90,12 @@ export class TeachersHomepage {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(By.dataQa("create-collection")).click()
-      .get(By.dataQa("new-collection-title")).type(collectionTitle)
-      .get(By.dataQa("create-collection-button")).click();
+      .get(By.dataQa('create-collection'))
+      .click()
+      .get(By.dataQa('new-collection-title'))
+      .type(collectionTitle)
+      .get(By.dataQa('create-collection-button'))
+      .click();
 
     return this;
   }
@@ -114,8 +104,10 @@ export class TeachersHomepage {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(`[data-state="${collectionTitle}"][data-qa="add-to-default-collection"]`)
-  .click();
+      .get(
+        `[data-state="${collectionTitle}"][data-qa="add-to-default-collection"]`,
+      )
+      .click();
     return this;
   }
 
@@ -123,8 +115,10 @@ export class TeachersHomepage {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(`[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`)
-  .click();
+      .get(
+        `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
+      )
+      .click();
     return this;
   }
 
@@ -134,125 +128,110 @@ export class TeachersHomepage {
       .within(() => {
         cy.get(`[data-qa='video-collection-menu']:visible`).click();
       })
-      .get(`[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`);
+      .get(
+        `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
+      );
     return this;
   }
 
-  enterEmail(email: string) {
-    cy.get(By.dataQa("email-address"))
+  public enterEmail(email: string) {
+    cy.get(By.dataQa('email-address'))
       .clear()
       .type(email);
     return this;
   }
 
-  copyFirstLink() {
-    cy.get(By.dataQa("copy-link"))
+  public copyFirstLink() {
+    cy.get(By.dataQa('copy-link'))
       .first()
       .click();
     return this;
   }
 
-  visitCopiedLink() {
-    cy.get(".ant-notification-notice-message").then(message => {
+  public visitCopiedLink() {
+    cy.get('.ant-notification-notice-message').then(message => {
       cy.visit(message.text());
     });
     return this;
   }
 
-  playVideo() {
-    cy.get(".boclips-player").click();
+  public playVideo() {
+    cy.get('.boclips-player').click();
     return this;
   }
 
-  isOnPage(pageNumber: number) {
-    let activeElementInPagination =
+  public isOnPage(pageNumber: number) {
+    const activeElementInPagination =
       "[data-qa='pagination'] .ant-pagination-item-active a";
     cy.get(activeElementInPagination).then(elements => {
       elements.each((idx, element: HTMLElement) => {
-        let textContent = element!.textContent;
+        const textContent = element!.textContent;
         expect(textContent).to.eq(pageNumber.toString());
       });
     });
     return this;
   }
 
-  goToNextPage() {
-    cy.get(".ant-pagination-next").click();
+  public goToNextPage() {
+    cy.get('.ant-pagination-next').click();
     return this;
   }
 
-  goToPreviousPage() {
-    cy.get(".ant-pagination-prev").click();
+  public goToPreviousPage() {
+    cy.get('.ant-pagination-prev').click();
     return this;
   }
 
-  goToFirstVideo() {
-    cy.get(By.dataQa("link-to-details"))
+  public goToFirstVideo() {
+    cy.get(By.dataQa('link-to-details'))
       .first()
       .click();
-    expect(cy.get(By.dataQa("video-title")));
+    expect(cy.get(By.dataQa('video-title')));
     return this;
   }
 
-  noVideosShown() {
-    cy.get(By.dataQa("search-zero-results"));
+  public noVideosShown() {
+    cy.get(By.dataQa('search-zero-results'));
     return this;
   }
 
-  goToNewsPage(isMobile: boolean) {
+  public goToNewsPage(isMobile: boolean) {
     if (isMobile) {
       return this.goToNewsPageMobile();
     }
 
-    cy.get(By.dataQa("news-side-panel"))
-      .find("button")
+    cy.get(By.dataQa('news-side-panel'))
+      .find('button')
       .click();
 
     return this;
   }
 
-  goToNewsPageMobile() {
-    cy.get(By.dataQa("tab"))
-      .contains("News")
+  public goToNewsPageMobile() {
+    cy.get(By.dataQa('tab'))
+      .contains('News')
       .click();
 
     return this;
   }
 
-  goBackToMainSearchPage(isMobile: boolean) {
+  public goBackToMainSearchPage(isMobile: boolean) {
     if (isMobile) {
       return this.goBackToMainSearchPageMobile();
     }
 
-    cy.get(By.dataQa("news-header"))
-      .find("button")
+    cy.get(By.dataQa('news-header'))
+      .find('button')
       .click();
 
     return this;
   }
 
-  goBackToMainSearchPageMobile() {
-    cy.get(By.dataQa("tab"))
-      .contains("Main")
+  public goBackToMainSearchPageMobile() {
+    cy.get(By.dataQa('tab'))
+      .contains('Main')
       .click();
 
-    return this;
-  }
-
-  goToCollections(isDesktop: boolean) {
-    if (isDesktop) {
-      this.openAccountMenu();
-    }
-
-    cy.get("[data-qa='video-collection']:visible").click();
-  }
-
-  private openAccountMenu() {
-    cy.get(By.dataQa("account-menu-open")).click();
-  }
-
-  itShowsNotification(text: string) {
-    cy.get("body").should("contain", text);
     return this;
   }
 }

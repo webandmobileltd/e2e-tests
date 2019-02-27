@@ -1,11 +1,11 @@
-import { By } from "../../support/By";
+import { By } from '../../support/By';
 import Video from '../domain/Video';
 
 export class VideoManagementPage {
   private readonly url: string;
 
   constructor() {
-    this.url = Cypress.env("BACKOFFICE_BASE_URL")+"/video-management";
+    this.url = Cypress.env('BACKOFFICE_BASE_URL') + '/video-management';
   }
 
   public visit() {
@@ -14,9 +14,9 @@ export class VideoManagementPage {
   }
 
   public logIn() {
-    cy.get("#username").type(Cypress.env("BACKOFFICE_USERNAME"));
-    cy.get("#password").type(Cypress.env("BACKOFFICE_PASSWORD"));
-    cy.get("#kc-form-login").submit();
+    cy.get('#username').type(Cypress.env('BACKOFFICE_USERNAME'));
+    cy.get('#password').type(Cypress.env('BACKOFFICE_PASSWORD'));
+    cy.get('#kc-form-login').submit();
     return this;
   }
 
@@ -36,7 +36,9 @@ export class VideoManagementPage {
           videos.push({
             id: el.querySelector(By.dataQa('video-id'))!.textContent!,
             title: el.querySelector(By.dataQa('video-title'))!.textContent!,
-            contentPartner: el.querySelector(By.dataQa('video-content-partner'))!.textContent!,
+            contentPartner: el.querySelector(
+              By.dataQa('video-content-partner'),
+            )!.textContent!,
           });
         }),
       )

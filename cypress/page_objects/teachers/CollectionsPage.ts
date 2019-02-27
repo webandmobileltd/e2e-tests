@@ -1,40 +1,56 @@
 import { By } from '../../support/By';
 import Video from '../domain/Video';
-import VideoCollection from "../domain/VideoCollection";
+import VideoCollection from '../domain/VideoCollection';
+import { TeachersPage } from './TeachersPage';
 
-export class CollectionsPage {
-
+export class CollectionsPage extends TeachersPage {
   public reload() {
     cy.reload();
     return this;
   }
 
   private itemsHtmlElements() {
-    return cy.get(By.dataQa("collection-card"));
+    return cy.get(By.dataQa('collection-card'));
   }
 
-  private extractCollectionsFromHtmlElements(videoCards: JQuery<HTMLElement>): VideoCollection[] {
+  private extractCollectionsFromHtmlElements(
+    videoCards: JQuery<HTMLElement>,
+  ): VideoCollection[] {
     const collections: VideoCollection[] = [];
     videoCards.each((idx, el: HTMLElement) => {
       collections.push({
-        title: el.querySelector(By.dataQa("collection-title"))!.textContent!,
-        numberOfVideos: Number(el.querySelector(By.dataQa("collection-number-of-videos"))!
-          .textContent!)
+        title: el.querySelector(By.dataQa('collection-title'))!.textContent!,
+        numberOfVideos: Number(
+          el.querySelector(By.dataQa('collection-number-of-videos'))!
+            .textContent!,
+        ),
       });
     });
     return collections;
   }
 
   public isEmpty() {
-    cy.get(By.dataQa("collections-view-empty"));
+    cy.get(By.dataQa('collections-view-empty'));
     return this;
   }
 
   public goToCollectionDetails(collectionTitle: string) {
-    cy.get(`[data-state='${collectionTitle}'][data-qa='view-collection']:visible`).click();
+    cy.get(
+      `[data-state='${collectionTitle}'][data-qa='view-collection']:visible`,
+    ).click();
   }
 
-  public inspectCollections(callback: (collections: VideoCollection[]) => void) {
+  public deleteCollection(collectionTitle: string) {
+    cy.get(`[data-state='${collectionTitle}'][data-qa='collection-card']`)
+      .get(By.dataQa('delete-collection'))
+      .click();
+    this.acceptDialog();
+    return this;
+  }
+
+  public inspectCollections(
+    callback: (collections: VideoCollection[]) => void,
+  ) {
     this.itemsHtmlElements()
       .then(this.extractCollectionsFromHtmlElements)
       .then(callback);

@@ -1,12 +1,12 @@
-import { By } from "../../support/By";
-import MarketingCollectionSummary from "./domain/MarketingCollectionSummary";
-import Video from "../domain/Video";
-import PublicMarketingCollectionPage from "./PublicMarketingCollectionPage";
+import { By } from '../../support/By';
+import Video from '../domain/Video';
+import MarketingCollectionSummary from './domain/MarketingCollectionSummary';
+import PublicMarketingCollectionPage from './PublicMarketingCollectionPage';
 
 function updateInlineEdit(dataQa: string, text: string) {
   cy.get(By.dataQa(dataQa))
     .click()
-    .get(By.dataState("edit"))
+    .get(By.dataState('edit'))
     .focus()
     .clear()
     .type(text)
@@ -16,12 +16,12 @@ function updateInlineEdit(dataQa: string, text: string) {
 function updateVideoInlineEdit(
   dataState: string,
   dataQa: string,
-  text: string
+  text: string,
 ) {
   cy.get(By.dataState(dataState))
-    .find(By.dataQa(dataQa, ""))
+    .find(By.dataQa(dataQa, ''))
     .click()
-    .get(By.dataState("edit"))
+    .get(By.dataState('edit'))
     .focus()
     .clear()
     .type(text)
@@ -30,66 +30,66 @@ function updateVideoInlineEdit(
 
 class MarketingCollectionPage {
   public setTitle(title: string) {
-    updateInlineEdit("title", title);
+    updateInlineEdit('title', title);
     return this;
   }
 
   public setDescription(description: string) {
-    updateInlineEdit("description", description);
+    updateInlineEdit('description', description);
     return this;
   }
 
   public addVideo(video: Video) {
-    cy.get(By.dataQa("add-video")).click();
+    cy.get(By.dataQa('add-video')).click();
 
-    cy.get(By.dataQa("video-form-id")).clear();
-    cy.get(By.dataQa("video-form-id")).type(video.id!);
-    cy.get(By.dataQa("video-form-title")).clear();
-    cy.get(By.dataQa("video-form-title")).type(video.title);
-    cy.get(By.dataQa("video-form-description")).clear();
-    cy.get(By.dataQa("video-form-description")).type(video.description!);
+    cy.get(By.dataQa('video-form-id')).clear();
+    cy.get(By.dataQa('video-form-id')).type(video.id!);
+    cy.get(By.dataQa('video-form-title')).clear();
+    cy.get(By.dataQa('video-form-title')).type(video.title);
+    cy.get(By.dataQa('video-form-description')).clear();
+    cy.get(By.dataQa('video-form-description')).type(video.description!);
 
-    cy.get(By.dataQa("video-form-submit")).click();
+    cy.get(By.dataQa('video-form-submit')).click();
     return this;
   }
 
   public deleteVideo(videoId: string) {
     cy.get(By.dataState(videoId))
-      .find(By.dataQa("delete-video", "button"))
+      .find(By.dataQa('delete-video', 'button'))
       .click();
-    cy.get(".ant-popover-buttons .ant-btn-primary").click();
+    cy.get('.ant-popover-buttons .ant-btn-primary').click();
     return this;
   }
 
   public withVideos(callback: (videos: Video[]) => void) {
     const videos: Video[] = [];
-    cy.get(By.dataQa("marketing-video"))
+    cy.get(By.dataQa('marketing-video'))
       .then(videoCards =>
         videoCards.each((idx, el: HTMLElement) => {
           videos.push({
-            title: el.querySelector(By.dataQa("video-title"))!.textContent!,
-            description: el.querySelector(By.dataQa("video-description"))!
-              .textContent!
+            title: el.querySelector(By.dataQa('video-title'))!.textContent!,
+            description: el.querySelector(By.dataQa('video-description'))!
+              .textContent!,
           });
-        })
+        }),
       )
       .then(() => callback(videos));
     return this;
   }
 
   public setVideoTitle(videoId: string, videoTitle: string) {
-    updateVideoInlineEdit(videoId, "video-title-edit", videoTitle);
+    updateVideoInlineEdit(videoId, 'video-title-edit', videoTitle);
     return this;
   }
 
   public setVideoDescription(videoId: string, videoDescription: string) {
-    updateVideoInlineEdit(videoId, "video-description-edit", videoDescription);
+    updateVideoInlineEdit(videoId, 'video-description-edit', videoDescription);
     return this;
   }
 
   public goToPublicCollection() {
     cy.wait(1000)
-      .get(By.dataQa("copy-link-button"))
+      .get(By.dataQa('copy-link-button'))
       .click();
     return new PublicMarketingCollectionPage();
   }
@@ -99,11 +99,11 @@ export class MarketingCollectionListPage {
   private readonly url: string;
 
   constructor() {
-    this.url = Cypress.env("BACKOFFICE_BASE_URL")+"/marketing-collections";
+    this.url = Cypress.env('BACKOFFICE_BASE_URL') + '/marketing-collections';
   }
 
   public goToCreateCollection() {
-    cy.get(By.dataQa("create-collection-button")).click();
+    cy.get(By.dataQa('create-collection-button')).click();
     return new MarketingCollectionPage();
   }
 
@@ -113,41 +113,41 @@ export class MarketingCollectionListPage {
   }
 
   public logIn() {
-    cy.get("#username").type(Cypress.env("BACKOFFICE_USERNAME"));
-    cy.get("#password").type(Cypress.env("BACKOFFICE_PASSWORD"));
-    cy.get("#kc-form-login").submit();
+    cy.get('#username').type(Cypress.env('BACKOFFICE_USERNAME'));
+    cy.get('#password').type(Cypress.env('BACKOFFICE_PASSWORD'));
+    cy.get('#kc-form-login').submit();
     return this;
   }
 
   public withMarketingCollections(
-    callback: (collections: MarketingCollectionSummary[]) => void
+    callback: (collections: MarketingCollectionSummary[]) => void,
   ) {
-    cy.get(By.dataQa("marketing-collection-summary"))
-        .then(marketingCollections => {
+    cy.get(By.dataQa('marketing-collection-summary')).then(
+      marketingCollections => {
         const allMarketingCollections: any = marketingCollections
           .toArray()
           .map((el: any) => {
             return {
-              title: el.querySelector(By.dataQa("title"))!.textContent!,
-              description: el.querySelector(By.dataQa("description"))!
+              title: el.querySelector(By.dataQa('title'))!.textContent!,
+              description: el.querySelector(By.dataQa('description'))!
                 .textContent!,
               numberOfVideos: Number(
-                el.querySelector(By.dataQa("number-of-videos"))!.textContent!
-              )
+                el.querySelector(By.dataQa('number-of-videos'))!.textContent!,
+              ),
             };
           });
-        callback(allMarketingCollections)
-      }
+        callback(allMarketingCollections);
+      },
     );
     return this;
   }
 
   public deleteCollectionWithTitle(title: string) {
     cy.get(By.dataState(title)).within(() => {
-      cy.get(By.dataQa("delete-button")).click();
+      cy.get(By.dataQa('delete-button')).click();
     });
-    cy.get(".ant-popover-buttons .ant-btn-primary").click();
-    cy.get(By.dataState(title)).should("not.exist");
+    cy.get('.ant-popover-buttons .ant-btn-primary').click();
+    cy.get(By.dataState(title)).should('not.exist');
     return this;
   }
 }

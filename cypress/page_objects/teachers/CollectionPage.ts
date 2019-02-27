@@ -1,45 +1,46 @@
-import { By } from "../../support/By";
-import Video from "../domain/Video";
+import { By } from '../../support/By';
+import Video from '../domain/Video';
+import { TeachersPage } from './TeachersPage';
 
-export class CollectionPage {
+export class CollectionPage extends TeachersPage {
   public reload() {
     cy.reload();
     return this;
   }
 
   public setName(name: string): CollectionPage {
-    cy.get(By.dataQa("collection-name-edit")).click();
-    cy.get(By.dataQa("collection-name-edit-input"))
+    cy.get(By.dataQa('collection-name-edit')).click();
+    cy.get(By.dataQa('collection-name-edit-input'))
       .clear()
-      .type(name+"{enter}");
+      .type(name + '{enter}');
     return this;
   }
 
   public itHasName(name: string): CollectionPage {
-    cy.get(By.dataQa("collection-name")).should("contain", name);
+    cy.get(By.dataQa('collection-name')).should('contain', name);
     return this;
   }
 
   private itemsHtmlElements() {
-    return cy.get(By.dataQa("video-card"));
+    return cy.get(By.dataQa('video-card'));
   }
 
   private extractVideosFromHtmlElements(
-    videoCards: JQuery<HTMLElement>
+    videoCards: JQuery<HTMLElement>,
   ): Video[] {
     const videos: Video[] = [];
     videoCards.each((idx, el: HTMLElement) => {
       videos.push({
-        title: el.querySelector(By.dataQa("video-title"))!.textContent!,
-        description: el.querySelector(By.dataQa("video-description"))!
-          .textContent!
+        title: el.querySelector(By.dataQa('video-title'))!.textContent!,
+        description: el.querySelector(By.dataQa('video-description'))!
+          .textContent!,
       });
     });
     return videos;
   }
 
   public isEmpty() {
-    cy.get(By.dataQa("collection-empty-title"));
+    cy.get(By.dataQa('collection-empty-title'));
     return this;
   }
 
@@ -52,7 +53,7 @@ export class CollectionPage {
 
   public removeVideo(index: number) {
     return this.interactWithItem(index, () =>
-      cy.get(By.dataQa("remove-from-collection")).click()
+      cy.get(By.dataQa('remove-from-collection')).click(),
     );
   }
 
