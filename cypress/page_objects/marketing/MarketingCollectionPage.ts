@@ -100,6 +100,10 @@ class MarketingCollectionPage {
   }
 }
 
+interface VisitOptions {
+  login?: boolean
+}
+
 export class MarketingCollectionListPage {
   private readonly url: string;
 
@@ -112,8 +116,18 @@ export class MarketingCollectionListPage {
     return new MarketingCollectionPage();
   }
 
-  public visit() {
+  public visit(options: VisitOptions = {}) {
+    cy.server();
+    cy.route('GET', '**/marketing-collections').as('getCollections');
+
     cy.visit(this.url);
+
+    if (options.login) {
+      this.logIn()
+    }
+
+    cy.wait('@getCollections');
+    cy.server({ enable: false })
     return this;
   }
 

@@ -12,8 +12,7 @@ context('Marketing Collections', () => {
   it('marketing collection journey', () => {
     const marketingCollectionListPage = new MarketingCollectionListPage();
     marketingCollectionListPage
-      .visit()
-      .logIn()
+      .visit({ login: true })
       .goToCreateCollection()
       .setTitle(title)
       .setDescription('A new collection description!')
