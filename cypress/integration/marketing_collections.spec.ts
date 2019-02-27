@@ -22,11 +22,13 @@ context('Marketing Collections', () => {
         title: 'video title',
         description: 'video description',
       })
+      .expectVideoCount(1)
       .addVideo({
         id: '536',
         title: 'second video title',
         description: 'second video description',
       })
+      .expectVideoCount(2)
       .withVideos(videos =>
         expect(videos).to.deep.eq([
           { title: 'video title', description: 'video description' },
@@ -37,6 +39,7 @@ context('Marketing Collections', () => {
         ]),
       )
       .deleteVideo('536')
+      .expectVideoCount(1)
       .withVideos(videos =>
         expect(videos).to.deep.eq([
           { title: 'video title', description: 'video description' },

@@ -77,6 +77,11 @@ class MarketingCollectionPage {
     return this;
   }
 
+  public expectVideoCount(count: number) {
+    cy.get(By.dataQa("marketing-video")).should("have.length", count);
+    return this;
+  }
+
   public setVideoTitle(videoId: string, videoTitle: string) {
     updateVideoInlineEdit(videoId, 'video-title-edit', videoTitle);
     return this;
