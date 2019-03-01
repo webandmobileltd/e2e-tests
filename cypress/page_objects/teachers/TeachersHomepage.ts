@@ -105,7 +105,7 @@ export class TeachersHomepage extends TeachersPage {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
       .get(
-        `[data-state="${collectionTitle}"][data-qa="add-to-default-collection"]`,
+        `[data-state="${collectionTitle}"][data-qa="add-to-collection"]`,
       )
       .click();
     return this;
