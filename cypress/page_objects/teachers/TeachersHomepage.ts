@@ -111,6 +111,13 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
+  public itShowsConfirmation(index: number) {
+    this.searchResultsHtmlElements()
+        .eq(index)
+        .get(By.dataQa("[data-qa='saved-ack']:visible")).should('be.visible');
+    return this;
+  }
+
   public removeVideoFromCollection(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
