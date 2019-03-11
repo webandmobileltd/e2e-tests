@@ -137,7 +137,7 @@ context('Teachers', () => {
           .isVideoInCollection(1, collectionTitle)
           .reload()
           .removeVideoFromCollection(1, collectionTitle)
-          .goToCollections(!size.isMobile);
+          .goToCollections();
 
         new CollectionsPage()
           .inspectCollections(collections =>
@@ -158,7 +158,7 @@ context('Teachers', () => {
           .isEmpty()
           .reload()
           .isEmpty()
-          .goToCollections(!size.isMobile);
+          .goToCollections();
 
         new CollectionsPage()
           .deleteCollection(newCollectionName)
@@ -168,4 +168,15 @@ context('Teachers', () => {
       },
     );
   });
+
+  sizes.forEach((size: ViewPort) => {
+      specify(`logout journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`), () => {
+          cy.viewport(size.width, size.height);
+
+          new TeachersHomepage()
+              .visit()
+              .createAccount(username, password)
+              .logOut();
+      }
+  })
 });

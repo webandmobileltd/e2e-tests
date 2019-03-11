@@ -21,7 +21,7 @@ export class TeachersPage {
   }
 
   public openAccountMenu() {
-    cy.get(By.dataQa('account-menu-open')).click();
+    cy.get(By.dataQa('account-menu-open') + `:visible`).click();
   }
 
   public itShowsNotification(text: string) {
@@ -29,10 +29,8 @@ export class TeachersPage {
     return this;
   }
 
-  public goToCollections(isDesktop: boolean) {
-    if (isDesktop) {
+  public goToCollections() {
       this.openAccountMenu();
-    }
 
     cy.get("[data-qa='video-collection']:visible").click();
   }
