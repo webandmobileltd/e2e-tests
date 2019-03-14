@@ -183,8 +183,12 @@ context('Teachers', () => {
 
         new TeachersHomepage()
           .visit()
-          .createAccount(username, password)
-          .logOut();
+          .logIn(username, password)
+          .logOut()
+
+        new TeachersHomepage()
+          .visit()
+          .logIn(username, password)
       },
     );
   });
