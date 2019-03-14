@@ -104,9 +104,7 @@ export class TeachersHomepage extends TeachersPage {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible").click();
     })
-      .get(
-        `[data-state="${collectionTitle}"][data-qa="add-to-collection"]`,
-      )
+      .get(`[data-state="${collectionTitle}"][data-qa="add-to-collection"]`)
       .click();
     return this;
   }

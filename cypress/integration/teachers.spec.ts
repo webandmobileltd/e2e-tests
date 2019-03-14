@@ -150,6 +150,11 @@ context('Teachers', () => {
         new CollectionPage()
           .setName(newCollectionName)
           .itHasName(newCollectionName)
+          .itHasCorrectiVisiblity(false)
+          .setVisibility(true)
+          .itHasCorrectiVisiblity(true)
+          .setVisibility(false)
+          .itHasCorrectiVisiblity(false)
           .inspectItems(videos => expect(videos).to.have.length(1))
           .reload()
           .itHasName(newCollectionName)
@@ -164,19 +169,23 @@ context('Teachers', () => {
           .deleteCollection(newCollectionName)
           .itShowsNotification(
             `Your collection "${newCollectionName}" has been deleted`,
-          ).isEmpty();
+          )
+          .isEmpty();
       },
     );
   });
 
   sizes.forEach((size: ViewPort) => {
-      specify(`logout journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`), () => {
-          cy.viewport(size.width, size.height);
+    specify(
+      `logout journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`,
+      () => {
+        cy.viewport(size.width, size.height);
 
-          new TeachersHomepage()
-              .visit()
-              .createAccount(username, password)
-              .logOut();
-      }
-  })
+        new TeachersHomepage()
+          .visit()
+          .createAccount(username, password)
+          .logOut();
+      },
+    );
+  });
 });

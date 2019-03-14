@@ -30,7 +30,7 @@ export class TeachersPage {
   }
 
   public goToCollections() {
-      this.openAccountMenu();
+    this.openAccountMenu();
 
     cy.get("[data-qa='video-collection']:visible").click();
   }

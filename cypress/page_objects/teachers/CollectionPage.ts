@@ -9,10 +9,33 @@ export class CollectionPage extends TeachersPage {
   }
 
   public setName(name: string): CollectionPage {
-    cy.get(By.dataQa('collection-name-edit')).click();
-    cy.get(By.dataQa('collection-name-edit-input'))
+    cy.get(By.dataQa('collection-edit-button')).click();
+    cy.get(By.dataQa('title-edit'))
       .clear()
-      .type(name + '{enter}');
+      .type(name);
+    cy.contains('Save').click();
+    return this;
+  }
+
+  public setVisibility(isPublic: boolean): CollectionPage {
+    cy.get(By.dataQa('collection-edit-button')).click();
+    const visiblityCheckBox = cy.get(By.dataQa('visibility-edit'));
+
+    if (isPublic) {
+      visiblityCheckBox.check();
+    } else {
+      visiblityCheckBox.uncheck();
+    }
+
+    cy.contains('Save').click();
+
+    return this;
+  }
+
+  public itHasCorrectiVisiblity(isPublic: boolean): CollectionPage {
+    cy.get(By.dataQa('collection-visibility'))
+      .get(By.dataState(isPublic + ''))
+      .should('exist');
     return this;
   }
 

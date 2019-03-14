@@ -78,7 +78,7 @@ class MarketingCollectionPage {
   }
 
   public expectVideoCount(count: number) {
-    cy.get(By.dataQa("marketing-video")).should("have.length", count);
+    cy.get(By.dataQa('marketing-video')).should('have.length', count);
     return this;
   }
 
@@ -101,7 +101,7 @@ class MarketingCollectionPage {
 }
 
 interface VisitOptions {
-  login?: boolean
+  login?: boolean;
 }
 
 export class MarketingCollectionListPage {
@@ -123,11 +123,11 @@ export class MarketingCollectionListPage {
     cy.visit(this.url);
 
     if (options.login) {
-      this.logIn()
+      this.logIn();
     }
 
     cy.wait('@getCollections');
-    cy.server({ enable: false })
+    cy.server({ enable: false });
     return this;
   }
 
