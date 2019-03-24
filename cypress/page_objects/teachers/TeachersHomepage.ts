@@ -34,6 +34,11 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
+    public accountCreated() {
+        cy.get(By.dataQa('create-account-page')).should('be.visible');
+        return this;
+    }
+
   public logIn(username: string, password: string) {
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);

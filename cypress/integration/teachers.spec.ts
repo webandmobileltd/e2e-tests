@@ -13,7 +13,7 @@ context('Teachers', () => {
     new TeachersHomepage()
       .visit()
       .createAccount(username, password)
-      .logOut();
+      .accountCreated();
   });
 
   afterEach(() => {
@@ -184,7 +184,7 @@ context('Teachers', () => {
         new TeachersHomepage()
           .visit()
           .logIn(username, password)
-          .logOut()
+          .logOut();
 
         new TeachersHomepage()
           .visit()
