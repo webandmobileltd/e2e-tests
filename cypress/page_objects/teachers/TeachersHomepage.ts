@@ -21,8 +21,7 @@ export class TeachersHomepage extends TeachersPage {
   }
 
   public createAccount(username: string, password: string) {
-    // cy.get(By.dataQa('create-account')).click();
-    cy.visit(`${this.url}/create-account`);
+    cy.get(By.dataQa('create-account')).click();
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
     cy.get(By.dataQa('subjects')).type('Subjects');
