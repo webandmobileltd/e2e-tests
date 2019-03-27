@@ -29,14 +29,20 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('password')).type(password);
     cy.get(By.dataQa('password-confirm')).type(password);
 
+    cy.server();
+    cy.route('POST', '**/users').as('createUser');
+
     cy.get(By.dataQa('register-button')).click();
+
+    cy.wait('@createUser');
+    cy.server({ enable: false });
     return this;
   }
 
-    public accountCreated() {
-        cy.get(By.dataQa('create-account-page')).should('be.visible');
-        return this;
-    }
+  public accountCreated() {
+      cy.get(By.dataQa('create-account-page')).should('be.visible');
+      return this;
+  }
 
   public logIn(username: string, password: string) {
     cy.get(By.dataQa('email')).type(username);
