@@ -197,14 +197,18 @@ context('Teachers', () => {
 
         new CollectionPage().setVisibility(true).logOut();
 
-        new TeachersHomepage()
-          .visit()
-          .createAccount(secondUsername, password)
-          .visit()
-          .logIn(secondUsername, password)
-          .inspectPublicCollections(collections =>
-            expect(collections.map(c => c.title)).to.include(collectionTitle),
-          )
+          new TeachersHomepage()
+              .visit()
+              .createAccount(secondUsername, password)
+              .visit()
+              .logIn(secondUsername, password)
+              .inspectPublicCollections(collections =>
+                  expect(collections.map(c => c.title)).to.include(collectionTitle),
+              )
+              .bookmarkCollection(collectionTitle)
+              .inspectPublicCollections(collections =>
+                  expect(collections.filter(c => c.title === collectionTitle)[0].bookmarked).to.equal(true)
+            )
           .logOut();
 
         new TeachersHomepage()

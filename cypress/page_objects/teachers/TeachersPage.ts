@@ -51,6 +51,7 @@ export class TeachersPage {
           el.querySelector(By.dataQa('collection-number-of-videos'))!
             .textContent!,
         ),
+        bookmarked: el.querySelector(By.dataQa('bookmarked-icon')) !== null
       });
     });
     return collections;

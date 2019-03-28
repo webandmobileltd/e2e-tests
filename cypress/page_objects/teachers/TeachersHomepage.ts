@@ -252,4 +252,12 @@ export class TeachersHomepage extends TeachersPage {
       .then(callback);
     return this;
   }
+
+  public bookmarkCollection(title: string) {
+    cy.get(By.dataState(title, 'collection-card'))
+        .get(By.dataQa('bookmark'))
+        .click();
+    return this;
+  }
+
 }
