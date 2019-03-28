@@ -1,4 +1,5 @@
 import { By } from '../../support/By';
+import VideoCollection from '../domain/VideoCollection';
 
 export class TeachersPage {
   public search(searchQuery: string) {
@@ -33,5 +34,25 @@ export class TeachersPage {
     this.openAccountMenu();
 
     cy.get("[data-qa='video-collection']:visible").click();
+  }
+
+  protected getCollectionCardsFromHtmlElements() {
+    return cy.get(By.dataQa('collection-card'));
+  }
+
+  protected extractCollectionsFromHtmlElements(
+    videoCards: JQuery<HTMLElement>,
+  ): VideoCollection[] {
+    const collections: VideoCollection[] = [];
+    videoCards.each((idx, el: HTMLElement) => {
+      collections.push({
+        title: el.querySelector(By.dataQa('collection-title'))!.textContent!,
+        numberOfVideos: Number(
+          el.querySelector(By.dataQa('collection-number-of-videos'))!
+            .textContent!,
+        ),
+      });
+    });
+    return collections;
   }
 }

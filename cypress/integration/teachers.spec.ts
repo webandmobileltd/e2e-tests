@@ -8,6 +8,7 @@ import ViewPort from '../page_objects/types/ViewPort';
 context('Teachers', () => {
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
+  const validSearchQuery = 'TED Talks';
 
   before(() => {
     new TeachersHomepage()
@@ -123,7 +124,6 @@ context('Teachers', () => {
       `collections journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`,
       () => {
         const collectionTitle = uuid();
-        const validSearchQuery = 'TED Talks';
 
         cy.viewport(size.width, size.height);
 
@@ -176,19 +176,43 @@ context('Teachers', () => {
   });
 
   sizes.forEach((size: ViewPort) => {
+    const secondUsername = `${uuid()}@boclips.com`;
+
     specify(
-      `logout journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`,
+      `public collections journey for: ${
+        size.isMobile ? 'mobile' : 'desktop'
+      } view`,
       () => {
         cy.viewport(size.width, size.height);
+        const collectionTitle = uuid();
 
         new TeachersHomepage()
           .visit()
           .logIn(username, password)
+          .search(validSearchQuery)
+          .createCollectionFromVideo(0, collectionTitle)
+          .goToCollections();
+
+        new CollectionsPage().goToCollectionDetails(collectionTitle);
+
+        new CollectionPage().setVisibility(true).logOut();
+
+        new TeachersHomepage()
+          .visit()
+          .createAccount(secondUsername, password)
+          .visit()
+          .logIn(secondUsername, password)
+          .inspectPublicCollections(collections =>
+            expect(collections.map(c => c.title)).to.include(collectionTitle),
+          )
           .logOut();
 
         new TeachersHomepage()
           .visit()
           .logIn(username, password)
+          .goToCollections();
+
+        new CollectionsPage().deleteCollection(collectionTitle);
       },
     );
   });

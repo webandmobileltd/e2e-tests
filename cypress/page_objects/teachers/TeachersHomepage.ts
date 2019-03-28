@@ -1,5 +1,6 @@
 import { By } from '../../support/By';
 import Video from '../domain/Video';
+import VideoCollection from '../domain/VideoCollection';
 import { TeachersPage } from './TeachersPage';
 
 export class TeachersHomepage extends TeachersPage {
@@ -40,8 +41,8 @@ export class TeachersHomepage extends TeachersPage {
   }
 
   public accountCreated() {
-      cy.get(By.dataQa('create-account-page')).should('be.visible');
-      return this;
+    cy.get(By.dataQa('create-account-page')).should('be.visible');
+    return this;
   }
 
   public logIn(username: string, password: string) {
@@ -240,6 +241,15 @@ export class TeachersHomepage extends TeachersPage {
       .contains('Main')
       .click();
 
+    return this;
+  }
+
+  public inspectPublicCollections(
+    callback: (collections: VideoCollection[]) => void,
+  ) {
+    this.getCollectionCardsFromHtmlElements()
+      .then(this.extractCollectionsFromHtmlElements)
+      .then(callback);
     return this;
   }
 }
