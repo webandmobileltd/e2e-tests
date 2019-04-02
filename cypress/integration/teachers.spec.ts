@@ -124,6 +124,7 @@ context('Teachers', () => {
       `collections journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`,
       () => {
         const collectionTitle = uuid();
+        const validSearchQuery = 'TED Talks';
 
         cy.viewport(size.width, size.height);
 

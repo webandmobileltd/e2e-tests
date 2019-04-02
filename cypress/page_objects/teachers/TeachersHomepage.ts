@@ -13,6 +13,7 @@ export class TeachersHomepage extends TeachersPage {
 
   public visit() {
     cy.visit(this.url);
+    cy.setCookie("__hs_opt_out", "yes")
     return this;
   }
 
