@@ -18,7 +18,6 @@ context('Teachers', () => {
   });
 
   afterEach(() => {
-    cy.viewport(1000, 660);
     new TeachersHomepage().visit().logOut();
   });
 
