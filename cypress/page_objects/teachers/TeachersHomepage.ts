@@ -30,6 +30,7 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);
     cy.get(By.dataQa('password-confirm')).type(password);
+    cy.get(By.dataQa('privacy-policy')).click();
 
     cy.server();
     cy.route('POST', '**/users').as('createUser');
