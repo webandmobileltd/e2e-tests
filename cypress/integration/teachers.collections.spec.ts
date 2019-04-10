@@ -33,7 +33,7 @@ context('Bookmarked collections', () => {
     new TeachersHomepage().visit().logOut();
   });
 
-  specify.only('users can bookmark collections from other users', () => {
+  specify('users can bookmark collections from other users', () => {
     const username = `${uuid()}@boclips.com`;
     const password = uuid();
 
