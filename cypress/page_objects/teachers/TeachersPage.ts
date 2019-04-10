@@ -1,4 +1,4 @@
-import { By } from '../../support/By';
+import {By} from '../../support/By';
 import VideoCollection from '../domain/VideoCollection';
 
 export class TeachersPage {
@@ -32,7 +32,6 @@ export class TeachersPage {
 
   public goToCollections() {
     this.openAccountMenu();
-
     cy.get("[data-qa='video-collection']:visible").click();
   }
 
@@ -51,6 +50,7 @@ export class TeachersPage {
           el.querySelector(By.dataQa('collection-number-of-videos'))!
             .textContent!,
         ),
+        bookmarked: el.querySelector(By.dataQa('unbookmark-collection')) !== null
       });
     });
     return collections;

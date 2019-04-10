@@ -18,6 +18,7 @@ export class CollectionsPage extends TeachersPage {
     cy.get(
       `[data-state='${collectionTitle}'][data-qa='view-collection']:visible`,
     ).click();
+    return this;
   }
 
   public deleteCollection(collectionTitle: string) {

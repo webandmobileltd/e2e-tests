@@ -1,7 +1,7 @@
-import { By } from '../../support/By';
+import {By} from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import { TeachersPage } from './TeachersPage';
+import {TeachersPage} from './TeachersPage';
 
 export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
@@ -38,7 +38,7 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('register-button')).click();
 
     cy.wait('@createUser');
-    cy.server({ enable: false });
+    cy.server({enable: false});
     return this;
   }
 
@@ -193,6 +193,14 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
+  public goToBookmarkedCollections() {
+    this.openAccountMenu();
+
+    cy.get("[data-qa='bookmarked-collections']:visible").click();
+
+    return this;
+  }
+
   public goToFirstVideo() {
     cy.get(By.dataQa('link-to-details'))
       .first()
@@ -254,4 +262,38 @@ export class TeachersHomepage extends TeachersPage {
       .then(callback);
     return this;
   }
+
+  public inspectBookmarkedCollections(
+    callback: (collections: VideoCollection[]) => void,
+  ) {
+    this.getCollectionCardsFromHtmlElements()
+      .then(this.extractCollectionsFromHtmlElements)
+      .then(callback);
+    return this;
+  }
+
+  public bookmarkCollection(title: string) {
+    cy
+      .get(By.dataState(title, 'collection-card'))
+      .find(By.dataQa('bookmark-collection'))
+      .click();
+
+    cy.get(By.dataState(title, 'collection-card'))
+      .find(By.dataQa('unbookmark-collection')).should('be.visible');
+
+    return this;
+  }
+
+  public unbookmarkCollection(title: string) {
+    cy
+      .get(By.dataState(title, 'collection-card'))
+      .find(By.dataQa('unbookmark-collection'))
+      .click();
+
+    cy.get(By.dataState(title, 'collection-card'))
+      .find(By.dataQa('bookmark-collection')).should('be.visible');
+
+    return this;
+  }
+
 }
