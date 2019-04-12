@@ -16,7 +16,7 @@ export class CollectionsPage extends TeachersPage {
 
   public goToCollectionDetails(collectionTitle: string) {
     cy.get(
-      `[data-state='${collectionTitle}'][data-qa='view-collection']:visible`,
+      `[data-state='${collectionTitle}'][data-qa='collection-card']:visible`,
     ).click();
     return this;
   }

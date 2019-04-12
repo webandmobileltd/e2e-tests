@@ -202,7 +202,7 @@ export class TeachersHomepage extends TeachersPage {
   }
 
   public goToFirstVideo() {
-    cy.get(By.dataQa('link-to-details'))
+    cy.get(By.dataQa('video-card'))
       .first()
       .click();
     expect(cy.get(By.dataQa('video-title')));
