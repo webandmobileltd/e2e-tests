@@ -35,9 +35,33 @@ async function insertVideo(video, token) {
   });
 }
 
-async function setupE2E() {
+async function insertSubject(subject, token) {
+  return await fetch(videoServiceUrl + "/v1/subjects", {
+    method: "POST",
+    body: JSON.stringify(subject),
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  }).then(response => {
+    console.log(
+      `Subject creation status:, ${response.statusText} ${response.status}`
+    );
+  });
+}
+
+async function insertVideos() {
   const token = await getToken();
   return Promise.all(allVideos().map(video => insertVideo(video, token)));
+}
+
+async function insertSubjects() {
+  const token = await getToken();
+  return Promise.all(allSubjects().map(subject => insertSubject(subject, token)));
+}
+
+function allSubjects() {
+  return [{name: "Mathematics"}, {name: "French"}, {name: "Biology"}, {name: "Art"}]
 }
 
 function allVideos() {
@@ -165,7 +189,11 @@ function video(params) {
   };
 }
 
-setupE2E().then(() => {
-  console.log("Setup finished");
-  process.exit();
-});
+insertVideos()
+  .then(() => {
+    return insertSubjects()
+  })
+  .then(() => {
+    console.log("Setup finished");
+    process.exit();
+  });
