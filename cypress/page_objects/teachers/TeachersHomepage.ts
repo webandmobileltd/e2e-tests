@@ -26,7 +26,12 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('create-account')).click();
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
-    cy.get(By.dataQa('subjects')).type('Subjects');
+    cy.get(By.dataQa('subjects')).click();
+
+    cy.contains('Biology').click();
+
+    cy.get('body').click();
+
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);
     cy.get(By.dataQa('password-confirm')).type(password);
