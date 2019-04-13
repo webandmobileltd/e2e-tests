@@ -33,6 +33,6 @@ export CYPRESS_FRONTEND_PASSWORD
 export CYPRESS_OPERATOR_USERNAME
 export CYPRESS_OPERATOR_PASSWORD
 
-node setupE2E.js
+node setup/run.js
 
 $cypress
