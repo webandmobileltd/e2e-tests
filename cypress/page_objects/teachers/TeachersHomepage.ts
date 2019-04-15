@@ -22,15 +22,21 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
+  private clickDropDownOption(option: string) {
+    cy.contains(option).click();
+
+    cy.get('body').click();
+  }
+
   public createAccount(username: string, password: string) {
     cy.get(By.dataQa('create-account')).click();
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
     cy.get(By.dataQa('subjects')).click();
+    this.clickDropDownOption('Biology');
 
-    cy.contains('Biology').click();
-
-    cy.get('body').click();
+    cy.get(By.dataQa('ageRange')).click();
+    this.clickDropDownOption('3 - 5');
 
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);
