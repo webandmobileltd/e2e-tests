@@ -73,7 +73,7 @@ context('B2T Search', () => {
 
   sizes.forEach((size: ViewPort) => {
     specify(
-      `separating news journey for: ${
+      `viewing news results on: ${
         size.isMobile ? 'mobile' : 'desktop'
         } view`,
       () => {
@@ -99,6 +99,8 @@ context('B2T Search', () => {
               0,
               `There are no videos showing`,
             );
+            expect(videos[0].title).to.equal("Breaking news");
+            expect(videos[1].title).to.equal("'Richard St. John: 8 secrets of success' goes viral on boclips");
           })
           .goBackToMainSearchPage(size.isMobile)
           .inspectResults(videos => {

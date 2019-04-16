@@ -4,7 +4,7 @@ module.exports = function video(params) {
     providerVideoId: params.providerVideoId || "ted-123",
     title: params.title || "Richard St. John: 8 secrets of success",
     description: params.description || "Video description",
-    releasedOn: "2018-12-04T00:00:00",
+    releasedOn: params.releasedOn || "2018-12-04T00:00:00",
     duration: 100,
     legalRestrictions: "none",
     keywords: ["k1", "k2"],
