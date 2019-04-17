@@ -12,7 +12,7 @@ context('Video Management', () => {
         const [video] = videos;
         expect(video.id).to.equal('535');
         expect(video.title).to.equal('Richard St. John: 8 secrets of success');
-        expect(video.contentPartner).to.equal('TeD');
+        expect(video.contentPartner).to.equal('Minute Physics');
       });
   });
 });

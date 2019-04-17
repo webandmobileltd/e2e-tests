@@ -112,7 +112,7 @@ context('Public collections', () => {
 context('Collection management', () => {
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
-  const validSearchQuery = 'Minute Physics';
+  const validSearchQuery = 'Minute';
 
   before(() => {
     new TeachersHomepage()

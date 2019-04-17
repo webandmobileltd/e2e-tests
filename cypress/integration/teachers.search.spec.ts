@@ -29,7 +29,7 @@ context('B2T Search', () => {
       .logIn(username, password)
       .search(invalidSearchQuery)
       .enterEmail(email)
-      .searchWithAutocomplete('ted', 'Minute Physics')
+      .searchWithAutocomplete('Min', 'Minute Physics')
       .inspectResults(videos => {
         expect(videos.length).to.be.greaterThan(
           0,
