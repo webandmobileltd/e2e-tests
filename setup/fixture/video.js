@@ -1,6 +1,6 @@
 module.exports = function video(params) {
   return {
-    provider: params.provider || "TED Talks",
+    provider: params.provider || "Minute Physics",
     providerVideoId: params.providerVideoId || "ted-123",
     title: params.title || "Richard St. John: 8 secrets of success",
     description: params.description || "Video description",

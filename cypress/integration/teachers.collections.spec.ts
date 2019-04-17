@@ -9,7 +9,7 @@ context('Bookmarked collections', () => {
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
   const collectionName = uuid();
-  const validSearchQuery = 'TED Talks';
+  const validSearchQuery = 'Minute Physics';
 
   before(() => {
     new TeachersHomepage()
@@ -18,7 +18,7 @@ context('Bookmarked collections', () => {
       .accountCreated()
       .visit()
       .logIn(username, password)
-      .searchWithAutocomplete(validSearchQuery, 'TED Talks')
+      .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
       .createCollectionFromVideo(0, `${collectionName}`)
       .goToCollections();
 
@@ -89,7 +89,7 @@ context('Public collections', () => {
           new TeachersHomepage()
             .visit()
             .logIn(username, password)
-            .search('TED Talks')
+            .search('Minute Physics')
             .createCollectionFromVideo(0, collectionTitle)
             .goToCollections();
 
@@ -112,7 +112,7 @@ context('Public collections', () => {
 context('Collection management', () => {
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
-  const validSearchQuery = 'TED Talks';
+  const validSearchQuery = 'Minute Physics';
 
   before(() => {
     new TeachersHomepage()
@@ -133,7 +133,7 @@ context('Collection management', () => {
           new TeachersHomepage()
             .visit()
             .logIn(username, password)
-            .searchWithAutocomplete(validSearchQuery, 'TED Talks')
+            .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
             .createCollectionFromVideo(0, collectionTitle)
             .isVideoInCollection(0, collectionTitle)
             .addVideoToCollection(1, collectionTitle)
