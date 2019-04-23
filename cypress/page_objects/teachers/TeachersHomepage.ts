@@ -1,7 +1,7 @@
-import {By} from '../../support/By';
+import { By } from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import {TeachersPage} from './TeachersPage';
+import { TeachersPage } from './TeachersPage';
 
 export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
@@ -13,7 +13,7 @@ export class TeachersHomepage extends TeachersPage {
 
   public visit() {
     cy.visit(this.url);
-    cy.setCookie("__hs_opt_out", "yes")
+    cy.setCookie('__hs_opt_out', 'yes');
     return this;
   }
 
@@ -49,7 +49,7 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('register-button')).click();
 
     cy.wait('@createUser');
-    cy.server({enable: false});
+    cy.server({ enable: false });
     return this;
   }
 
@@ -284,27 +284,26 @@ export class TeachersHomepage extends TeachersPage {
   }
 
   public bookmarkCollection(title: string) {
-    cy
-      .get(By.dataState(title, 'collection-card'))
+    cy.get(By.dataState(title, 'collection-card'))
       .find(By.dataQa('bookmark-collection'))
       .click();
 
     cy.get(By.dataState(title, 'collection-card'))
-      .find(By.dataQa('unbookmark-collection')).should('be.visible');
+      .find(By.dataQa('unbookmark-collection'))
+      .should('be.visible');
 
     return this;
   }
 
   public unbookmarkCollection(title: string) {
-    cy
-      .get(By.dataState(title, 'collection-card'))
+    cy.get(By.dataState(title, 'collection-card'))
       .find(By.dataQa('unbookmark-collection'))
       .click();
 
     cy.get(By.dataState(title, 'collection-card'))
-      .find(By.dataQa('bookmark-collection')).should('be.visible');
+      .find(By.dataQa('bookmark-collection'))
+      .should('be.visible');
 
     return this;
   }
-
 }

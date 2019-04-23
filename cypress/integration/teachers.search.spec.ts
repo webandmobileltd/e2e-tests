@@ -1,8 +1,8 @@
-import {v4 as uuid} from 'uuid';
-import {TeachersHomepage} from '../page_objects/teachers/TeachersHomepage';
-import {TeachersVideoDetailsPage} from '../page_objects/teachers/TeachersVideoDetailsPage';
+import { v4 as uuid } from 'uuid';
+import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
+import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 import ViewPort from '../page_objects/types/ViewPort';
-import {sizes} from "./viewports";
+import { sizes } from './viewports';
 
 context('B2T Search', () => {
   const username = `${uuid()}@boclips.com`;
@@ -73,9 +73,7 @@ context('B2T Search', () => {
 
   sizes.forEach((size: ViewPort) => {
     specify(
-      `viewing news results on: ${
-        size.isMobile ? 'mobile' : 'desktop'
-        } view`,
+      `viewing news results on: ${size.isMobile ? 'mobile' : 'desktop'} view`,
       () => {
         const homepage = new TeachersHomepage();
 
@@ -99,8 +97,10 @@ context('B2T Search', () => {
               0,
               `There are no videos showing`,
             );
-            expect(videos[0].title).to.equal("Breaking news");
-            expect(videos[1].title).to.equal("'Richard St. John: 8 secrets of success' goes viral on boclips");
+            expect(videos[0].title).to.equal('Breaking news');
+            expect(videos[1].title).to.equal(
+              "'Richard St. John: 8 secrets of success' goes viral on boclips",
+            );
           })
           .goBackToMainSearchPage(size.isMobile)
           .inspectResults(videos => {

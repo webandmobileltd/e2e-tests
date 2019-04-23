@@ -32,7 +32,7 @@ export class CollectionPage extends TeachersPage {
     return this;
   }
 
-  public itHasCorrectiVisiblity(isPublic: boolean): CollectionPage {
+  public itHasCorrectVisiblity(isPublic: boolean): CollectionPage {
     cy.get(By.dataQa('collection-visibility'))
       .get(By.dataState(isPublic + ''))
       .should('exist');

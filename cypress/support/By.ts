@@ -3,6 +3,8 @@ export class By {
     return `${tag}[data-qa="${dataQa}"]`;
   }
   public static dataState(dataState: string, dataQa?: string): string {
-    return `[data-state="${dataState}"]${dataQa ? `[data-qa="${dataQa}"]`: ''}`;
+    return `[data-state="${dataState}"]${
+      dataQa ? `[data-qa="${dataQa}"]` : ''
+    }`;
   }
 }

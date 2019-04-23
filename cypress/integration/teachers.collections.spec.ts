@@ -1,9 +1,9 @@
-import {TeachersHomepage} from "../page_objects/teachers/TeachersHomepage";
-import {v4 as uuid} from 'uuid';
-import {sizes} from "./viewports";
-import ViewPort from "../page_objects/types/ViewPort";
-import {CollectionsPage} from "../page_objects/teachers/CollectionsPage";
-import {CollectionPage} from "../page_objects/teachers/CollectionPage";
+import { v4 as uuid } from 'uuid';
+import { CollectionPage } from '../page_objects/teachers/CollectionPage';
+import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
+import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
+import ViewPort from '../page_objects/types/ViewPort';
+import { sizes } from './viewports';
 
 context('Bookmarked collections', () => {
   const username = `${uuid()}@boclips.com`;
@@ -34,9 +34,6 @@ context('Bookmarked collections', () => {
   });
 
   specify('users can bookmark collections from other users', () => {
-    const username = `${uuid()}@boclips.com`;
-    const password = uuid();
-
     new TeachersHomepage()
       .visit()
       .createAccount(username, password)
@@ -48,20 +45,28 @@ context('Bookmarked collections', () => {
       )
       .bookmarkCollection(collectionName)
       .inspectPublicCollections(collections =>
-        expect(collections.filter(c => c.title === collectionName)[0].bookmarked).to.equal(true)
+        expect(
+          collections.filter(c => c.title === collectionName)[0].bookmarked,
+        ).to.equal(true),
       )
       .unbookmarkCollection(collectionName)
       .inspectBookmarkedCollections(collections => {
-        expect(collections.filter(c => c.title === collectionName)[0].bookmarked).to.equal(false)
+        expect(
+          collections.filter(c => c.title === collectionName)[0].bookmarked,
+        ).to.equal(false);
       })
       .bookmarkCollection(collectionName)
       .inspectPublicCollections(collections =>
-        expect(collections.filter(c => c.title === collectionName)[0].bookmarked).to.equal(true)
+        expect(
+          collections.filter(c => c.title === collectionName)[0].bookmarked,
+        ).to.equal(true),
       )
       .goToBookmarkedCollections()
       .inspectBookmarkedCollections(collections => {
-        expect(collections.filter(c => c.title === collectionName)[0].bookmarked).to.equal(true)
-      })
+        expect(
+          collections.filter(c => c.title === collectionName)[0].bookmarked,
+        ).to.equal(true);
+      });
   });
 });
 
@@ -81,7 +86,7 @@ context('Public collections', () => {
       specify(
         `public collections journey for: ${
           size.isMobile ? 'mobile' : 'desktop'
-          } view`,
+        } view`,
         () => {
           cy.viewport(size.width, size.height);
           const collectionTitle = uuid();
@@ -153,11 +158,11 @@ context('Collection management', () => {
           new CollectionPage()
             .setName(newCollectionName)
             .itHasName(newCollectionName)
-            .itHasCorrectiVisiblity(false)
+            .itHasCorrectVisiblity(false)
             .setVisibility(true)
-            .itHasCorrectiVisiblity(true)
+            .itHasCorrectVisiblity(true)
             .setVisibility(false)
-            .itHasCorrectiVisiblity(false)
+            .itHasCorrectVisiblity(false)
             .inspectItems(videos => expect(videos).to.have.length(1))
             .reload()
             .itHasName(newCollectionName)
@@ -176,6 +181,6 @@ context('Collection management', () => {
             .isEmpty();
         },
       );
-    })
+    });
   });
 });
