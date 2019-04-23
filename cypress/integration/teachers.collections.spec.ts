@@ -5,11 +5,13 @@ import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
 
+const validSearchQuery = 'Minute';
+const expectedCompletion = 'Minute Physics';
+
 context('Bookmarked collections', () => {
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
   const collectionName = uuid();
-  const validSearchQuery = 'Minute Physics';
 
   before(() => {
     new TeachersHomepage()
@@ -18,15 +20,13 @@ context('Bookmarked collections', () => {
       .accountCreated()
       .visit()
       .logIn(username, password)
-      .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
+      .searchWithAutocomplete(validSearchQuery, expectedCompletion)
       .createCollectionFromVideo(0, `${collectionName}`)
       .goToCollections();
 
     new CollectionsPage().goToCollectionDetails(collectionName);
 
-    new CollectionPage().setVisibility(true);
-
-    new TeachersHomepage().visit().logOut();
+    new CollectionPage().setVisibility(true).logOut();
   });
 
   afterEach(() => {
@@ -43,33 +43,15 @@ context('Bookmarked collections', () => {
       .accountCreated()
       .visit()
       .logIn(newUsername, newPassword)
-      .inspectPublicCollections(collections =>
-        expect(collections.map(c => c.title)).to.include(collectionName),
-      )
+      .checkCollectionBookmarkStatus(collectionName, false)
       .bookmarkCollection(collectionName)
-      .inspectPublicCollections(collections =>
-        expect(
-          collections.filter(c => c.title === collectionName)[0].bookmarked,
-        ).to.equal(true),
-      )
+      .checkCollectionBookmarkStatus(collectionName, true)
       .unbookmarkCollection(collectionName)
-      .inspectBookmarkedCollections(collections => {
-        expect(
-          collections.filter(c => c.title === collectionName)[0].bookmarked,
-        ).to.equal(false);
-      })
+      .checkCollectionBookmarkStatus(collectionName, false)
       .bookmarkCollection(collectionName)
-      .inspectPublicCollections(collections =>
-        expect(
-          collections.filter(c => c.title === collectionName)[0].bookmarked,
-        ).to.equal(true),
-      )
+      .checkCollectionBookmarkStatus(collectionName, true)
       .goToBookmarkedCollections()
-      .inspectBookmarkedCollections(collections => {
-        expect(
-          collections.filter(c => c.title === collectionName)[0].bookmarked,
-        ).to.equal(true);
-      });
+      .checkCollectionBookmarkStatus(collectionName, true);
   });
 });
 
@@ -97,7 +79,7 @@ context('Public collections', () => {
           new TeachersHomepage()
             .visit()
             .logIn(username, password)
-            .search('Minute Physics')
+            .search(expectedCompletion)
             .createCollectionFromVideo(0, collectionTitle)
             .goToCollections();
 
@@ -115,7 +97,6 @@ context('Public collections', () => {
 context('Collection management', () => {
   const username = `${uuid()}@boclips.com`;
   const password = uuid();
-  const validSearchQuery = 'Minute';
 
   before(() => {
     new TeachersHomepage()
@@ -136,12 +117,11 @@ context('Collection management', () => {
           new TeachersHomepage()
             .visit()
             .logIn(username, password)
-            .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
+            .searchWithAutocomplete(validSearchQuery, expectedCompletion)
             .createCollectionFromVideo(0, collectionTitle)
             .isVideoInCollection(0, collectionTitle)
             .addVideoToCollection(1, collectionTitle)
             .isVideoInCollection(1, collectionTitle)
-            .reload()
             .removeVideoFromCollection(1, collectionTitle)
             .goToCollections();
 
@@ -162,7 +142,6 @@ context('Collection management', () => {
             .setVisibility(false)
             .itHasCorrectVisiblity(false)
             .inspectItems(videos => expect(videos).to.have.length(1))
-            .reload()
             .itHasName(newCollectionName)
             .inspectItems(videos => expect(videos).to.have.length(1))
             .removeVideo(0)

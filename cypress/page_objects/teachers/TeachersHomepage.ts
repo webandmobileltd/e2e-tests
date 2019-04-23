@@ -274,12 +274,25 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
-  public inspectBookmarkedCollections(
+  private inspectBookmarkedCollections(
     callback: (collections: VideoCollection[]) => void,
   ) {
     this.getCollectionCardsFromHtmlElements()
       .then(this.extractCollectionsFromHtmlElements)
       .then(callback);
+    return this;
+  }
+
+  public checkCollectionBookmarkStatus(
+    collectionName: string,
+    expectedState: boolean,
+  ) {
+    this.inspectBookmarkedCollections(collections => {
+      expect(
+        collections.filter(c => c.title === collectionName)[0].bookmarked,
+      ).to.equal(expectedState);
+    });
+
     return this;
   }
 
@@ -292,6 +305,10 @@ export class TeachersHomepage extends TeachersPage {
       .find(By.dataQa('unbookmark-collection'))
       .should('be.visible');
 
+    cy.get(By.dataState(title, 'collection-card'))
+      .find(By.dataQa('bookmark-collection'))
+      .should('not.be.visible');
+
     return this;
   }
 
@@ -303,6 +320,10 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataState(title, 'collection-card'))
       .find(By.dataQa('bookmark-collection'))
       .should('be.visible');
+
+    cy.get(By.dataState(title, 'collection-card'))
+      .find(By.dataQa('unbookmark-collection'))
+      .should('not.be.visible');
 
     return this;
   }
