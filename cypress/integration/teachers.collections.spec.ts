@@ -122,6 +122,7 @@ context('Collection management', () => {
             .isVideoInCollection(0, collectionTitle)
             .addVideoToCollection(1, collectionTitle)
             .isVideoInCollection(1, collectionTitle)
+            .reload()
             .removeVideoFromCollection(1, collectionTitle)
             .goToCollections();
 
@@ -142,6 +143,7 @@ context('Collection management', () => {
             .setVisibility(false)
             .itHasCorrectVisiblity(false)
             .inspectItems(videos => expect(videos).to.have.length(1))
+            .reload()
             .itHasName(newCollectionName)
             .inspectItems(videos => expect(videos).to.have.length(1))
             .removeVideo(0)
