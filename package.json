@@ -8,7 +8,8 @@
     "cypress:open": "./node_modules/.bin/cypress open",
     "cypress:run": "./node_modules/.bin/cypress run",
     "lint": "tslint -c tslint.json -p .",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "compile": "tsc -p . --noEmit"
   },
   "author": "Boclippas",
   "license": "ISC",
