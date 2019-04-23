@@ -36,7 +36,7 @@ context('Bookmarked collections', () => {
   specify('users can bookmark collections from other users', () => {
     new TeachersHomepage()
       .visit()
-      .createAccount(username, password)
+      .createAccount(`${uuid()}@boclips.com`, uuid())
       .accountCreated()
       .visit()
       .logIn(username, password)
