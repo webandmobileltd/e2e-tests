@@ -34,12 +34,15 @@ context('Bookmarked collections', () => {
   });
 
   specify('users can bookmark collections from other users', () => {
+    const newUsername = `${uuid()}@boclips.com`;
+    const newPassword = uuid();
+
     new TeachersHomepage()
       .visit()
-      .createAccount(`${uuid()}@boclips.com`, uuid())
+      .createAccount(newUsername, newPassword)
       .accountCreated()
       .visit()
-      .logIn(username, password)
+      .logIn(newUsername, newPassword)
       .inspectPublicCollections(collections =>
         expect(collections.map(c => c.title)).to.include(collectionName),
       )
@@ -100,12 +103,7 @@ context('Public collections', () => {
 
           new CollectionsPage().goToCollectionDetails(collectionTitle);
 
-          new CollectionPage().setVisibility(true).logOut();
-
-          new TeachersHomepage()
-            .visit()
-            .logIn(username, password)
-            .goToCollections();
+          new CollectionPage().setVisibility(true).goToCollections();
 
           new CollectionsPage().deleteCollection(collectionTitle);
         },
@@ -168,8 +166,6 @@ context('Collection management', () => {
             .itHasName(newCollectionName)
             .inspectItems(videos => expect(videos).to.have.length(1))
             .removeVideo(0)
-            .isEmpty()
-            .reload()
             .isEmpty()
             .goToCollections();
 

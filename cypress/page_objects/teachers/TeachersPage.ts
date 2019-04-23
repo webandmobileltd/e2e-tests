@@ -11,7 +11,6 @@ export class TeachersPage {
   }
 
   public logOut() {
-    this.search('test');
     this.openAccountMenu();
     cy.get(By.dataQa('logout-button')).click();
     this.acceptDialog();
