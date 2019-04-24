@@ -17,6 +17,7 @@ context('Bookmarked collections', () => {
 
     new TeachersHomepage()
       .visit()
+      .goToRegistrationPage()
       .createAccount(username, password)
       .accountCreated()
       .visit()
@@ -40,6 +41,7 @@ context('Bookmarked collections', () => {
 
     new TeachersHomepage()
       .visit()
+      .goToRegistrationPage()
       .createAccount(username, password)
       .accountCreated()
       .visit()
@@ -64,6 +66,7 @@ context('Public collections', () => {
   before(() => {
     new TeachersHomepage()
       .visit()
+      .goToRegistrationPage()
       .createAccount(username, password)
       .accountCreated();
   });
@@ -103,6 +106,7 @@ context('Collection management', () => {
   before(() => {
     new TeachersHomepage()
       .visit()
+      .goToRegistrationPage()
       .createAccount(username, password)
       .accountCreated();
   });

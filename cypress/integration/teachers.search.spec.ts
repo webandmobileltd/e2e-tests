@@ -11,6 +11,7 @@ context('B2T Search', () => {
   before(() => {
     new TeachersHomepage()
       .visit()
+      .goToRegistrationPage()
       .createAccount(username, password)
       .accountCreated();
   });
