@@ -52,6 +52,7 @@ context('Bookmarked collections', () => {
       .bookmarkCollection(collectionName)
       .checkCollectionBookmarkStatus(collectionName, true)
       .goToBookmarkedCollections()
+      .reload()
       .checkCollectionBookmarkStatus(collectionName, true);
   });
 });
