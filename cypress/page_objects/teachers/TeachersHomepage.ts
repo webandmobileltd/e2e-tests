@@ -13,7 +13,31 @@ export class TeachersHomepage extends TeachersPage {
 
   public visit() {
     cy.visit(this.url);
-    cy.setCookie('__hs_opt_out', 'yes');
+    cy.setCookie("__hs_opt_out", "yes");
+    return this;
+  }
+
+  public checkA11yOnLoginPage(threshold: number) {
+    cy.get(By.dataQa('email'));
+    cy.checkA11y(threshold);
+    return this;
+  }
+
+  public checkA11yOnRegistrationPage(threshold: number) {
+    cy.get(By.dataQa('first-name'));
+    cy.checkA11y(threshold);
+    return this;
+  }
+
+  public checkA11yOnHomePage(threshold: number) {
+    cy.get('.home-page');
+    cy.checkA11y(threshold);
+    return this;
+  }
+
+  public checkA11yOnSearchPage(threshold: number) {
+    cy.get(By.dataQa('search-page'));
+    cy.checkA11y(threshold);
     return this;
   }
 

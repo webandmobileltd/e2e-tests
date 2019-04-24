@@ -5,11 +5,13 @@
     "skipLibCheck": true,
     "strict": true,
     "types": [
-      "cypress"
+      "cypress",
+      "cypress-axe"
     ]
   },
   "include": [
     "../../node_modules/cypress",
-    "cypress/*/*.ts"
+    "cypress/**/*.ts"
+
   ]
 }

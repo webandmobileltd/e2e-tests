@@ -44,6 +44,12 @@ export class CollectionPage extends TeachersPage {
     return this;
   }
 
+  public checkA11yOnCollectionPage(threshold: number) {
+    cy.get(By.dataQa('collection-name'));
+    cy.checkA11y(threshold);
+    return this;
+  }
+
   private itemsHtmlElements() {
     return cy.get(By.dataQa('video-card'));
   }

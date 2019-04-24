@@ -41,4 +41,10 @@ export class TeachersVideoDetailsPage extends TeachersPage {
     cy.get(By.dataQa('video-subject')).should('have.text', subject);
     return this;
   }
+
+  public checkA11yOnVideoPage(threshold: number) {
+    cy.get(By.dataQa('video-details'));
+    cy.checkA11y(threshold);
+    return this;
+  }
 }
