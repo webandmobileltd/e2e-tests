@@ -147,6 +147,7 @@ context('Collection management', () => {
             .itHasName(newCollectionName)
             .inspectItems(videos => expect(videos).to.have.length(1))
             .removeVideo(0)
+            .reload()
             .isEmpty()
             .goToCollections();
 
