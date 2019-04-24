@@ -9,11 +9,12 @@ const validSearchQuery = 'Minute';
 const expectedCompletion = 'Minute Physics';
 
 context('Bookmarked collections', () => {
-  const username = `${uuid()}@boclips.com`;
-  const password = uuid();
   const collectionName = uuid();
 
   before(() => {
+    const username = `${uuid()}@boclips.com`;
+    const password = uuid();
+
     new TeachersHomepage()
       .visit()
       .createAccount(username, password)
@@ -34,15 +35,15 @@ context('Bookmarked collections', () => {
   });
 
   specify('users can bookmark collections from other users', () => {
-    const newUsername = `${uuid()}@boclips.com`;
-    const newPassword = uuid();
+    const username = `${uuid()}@boclips.com`;
+    const password = uuid();
 
     new TeachersHomepage()
       .visit()
-      .createAccount(newUsername, newPassword)
+      .createAccount(username, password)
       .accountCreated()
       .visit()
-      .logIn(newUsername, newPassword)
+      .logIn(username, password)
       .checkCollectionBookmarkStatus(collectionName, false)
       .bookmarkCollection(collectionName)
       .checkCollectionBookmarkStatus(collectionName, true)
