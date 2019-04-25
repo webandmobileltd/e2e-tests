@@ -58,7 +58,7 @@ Cypress.Commands.add('checkA11y', (threshold = 0, context = undefined, options =
       return cy.wrap(violations, {log: false})
     })
     .then(violations => {
-      assert.equal(
+      assert.isAtMost(
         violations.length,
         threshold,
         `${violations.length} accessibility violation${
