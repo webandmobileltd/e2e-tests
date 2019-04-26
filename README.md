@@ -1,6 +1,6 @@
-[![concourse](https://concourse.devboclips.net/api/v1/pipelines/boclips/jobs/end-to-end-tests/badge)]()
-
 # E2E tests
+
+[![concourse](https://concourse.devboclips.net/api/v1/pipelines/boclips/jobs/end-to-end-tests/badge)]()
 
 One day we will [do without them](https://medium.com/@bengro/end-to-end-test-are-dead-long-lives-testing-in-production-fdff46f6eefe), because we test in production and we have the most amazing canary releasing.
 
