@@ -2,12 +2,20 @@
 
 set -e
 
-if [ "$1" = "ci" ]
-then
-    cypress="npm run cypress:run"
-else
-    cypress="npm run cypress:open"
-fi
+case "$1-$2" in
+"ci-frontend")
+  cypress="npm run cypress:run -- --spec=cypress/integration/frontend.spec.ts"
+  ;;
+"ci-")
+  cypress="npm run cypress:run"
+  ;;
+"-")
+  cypress="npm run cypress:open"
+  ;;
+"ci-"*)
+  echo "Usage: run [ci] [SPEC]"
+  exit 1
+esac
 
 : ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}
 : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
