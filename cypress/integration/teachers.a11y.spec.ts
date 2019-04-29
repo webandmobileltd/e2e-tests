@@ -1,9 +1,9 @@
-import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
 import { v4 as uuid } from 'uuid';
-import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
-import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 import Video from '../page_objects/domain/Video';
+import { CollectionPage } from '../page_objects/teachers/CollectionPage';
+import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
+import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
+import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 
 context('Accessibility Checks for Teachers', () => {
   specify('Boclips Teachers is accessible', () => {
