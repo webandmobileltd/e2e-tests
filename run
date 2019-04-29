@@ -9,6 +9,9 @@ case "$1-$2" in
 "ci-marketing")
   cypress="npm run cypress:run -- --spec=cypress/integration/marketing_collections.spec.ts"
   ;;
+"ci-teachers")
+  cypress="npm run cypress:run -- --spec=cypress/integration/teachers.search.spec.ts,cypress/integration/teachers.a11y.spec.ts,cypress/integration/teachers.collections.spec.ts"
+  ;;
 "ci-")
   cypress="npm run cypress:run"
   ;;
