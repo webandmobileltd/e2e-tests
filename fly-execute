@@ -8,11 +8,15 @@ CYPRESS_BACKOFFICE_USERNAME="$(lpass show e2e-backoffice-testing --username)"
 CYPRESS_BACKOFFICE_PASSWORD="$(lpass show e2e-backoffice-testing --password)"
 CYPRESS_FRONTEND_USERNAME="$(lpass show e2e-frontend-testing --username)"
 CYPRESS_FRONTEND_PASSWORD="$(lpass show e2e-frontend-testing --password)"
+CYPRESS_OPERATOR_USERNAME="$(lpass show operator-testing --username)"
+CYPRESS_OPERATOR_PASSWORD="$(lpass show operator-testing --password)"
 
 export CYPRESS_BACKOFFICE_USERNAME
 export CYPRESS_BACKOFFICE_PASSWORD
 export CYPRESS_FRONTEND_USERNAME
 export CYPRESS_FRONTEND_PASSWORD
+export CYPRESS_OPERATOR_USERNAME
+export CYPRESS_OPERATOR_PASSWORD
 
 fly --target ci \
     execute \
