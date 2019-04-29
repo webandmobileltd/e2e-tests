@@ -29,6 +29,8 @@ params:
   CYPRESS_FRONTEND_USERNAME:
   CYPRESS_FRONTEND_PASSWORD:
 
+  SPEC:
+
 run:
   path: source/pipelines/scripts/run
 

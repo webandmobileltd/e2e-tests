@@ -56,5 +56,5 @@ cd source || exit 1
 
 npm ci || exit 1
 
-./run ci
+./run ci "$SPEC"
 )
