@@ -39,9 +39,10 @@ Cypress.on('window:before:load', window => {
   // Frankly I'm surprised this works given the src of the target iframe is on a different domain.... #cypressmagic
   ['log', 'info', 'error', 'warn', 'debug'].forEach(consoleProperty => {
     appWindow.console[consoleProperty] = function(...args) {
+      args.unshift(consoleProperty);
       if (['error', 'warn'].includes(consoleProperty)) {
         const error = Error();
-        args.push({stack: error.stack})
+        args.push({ stack: error.stack });
       }
 
       try {
