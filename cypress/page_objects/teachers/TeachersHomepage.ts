@@ -302,24 +302,17 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
-  private inspectBookmarkedCollections(
-    callback: (collections: VideoCollection[]) => void,
-  ) {
-    this.getCollectionCardsFromHtmlElements()
-      .then(this.extractCollectionsFromHtmlElements)
-      .then(callback);
-    return this;
-  }
-
   public checkCollectionBookmarkStatus(
     collectionName: string,
     expectedState: boolean,
   ) {
-    this.inspectBookmarkedCollections(collections => {
-      expect(
-        collections.filter(c => c.title === collectionName)[0].bookmarked,
-      ).to.equal(expectedState);
-    });
+    cy.get(By.dataState(collectionName, 'collection-card'))
+      .find(
+        By.dataQa(
+          `${expectedState ? 'unbookmark-collection' : 'bookmark-collection'}`,
+        ),
+      )
+      .should('be.visible');
 
     return this;
   }

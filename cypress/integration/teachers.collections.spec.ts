@@ -46,13 +46,9 @@ context('Bookmarked collections', () => {
       .accountCreated()
       .visit()
       .logIn(username, password)
-      .checkCollectionBookmarkStatus(collectionName, false)
       .bookmarkCollection(collectionName)
-      .checkCollectionBookmarkStatus(collectionName, true)
       .unbookmarkCollection(collectionName)
-      .checkCollectionBookmarkStatus(collectionName, false)
       .bookmarkCollection(collectionName)
-      .checkCollectionBookmarkStatus(collectionName, true)
       .goToBookmarkedCollections()
       .reload()
       .checkCollectionBookmarkStatus(collectionName, true);
