@@ -2,5 +2,6 @@
   "chromeWebSecurity": false,
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
-  "numTestsKeptInMemory": 0
+  "numTestsKeptInMemory": 0,
+  "viewportWidth": 1280
 }
