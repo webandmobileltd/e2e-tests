@@ -35,6 +35,7 @@ context('Bookmarked collections', () => {
     new TeachersHomepage().visit().logOut();
   });
 
+
   specify('users can bookmark collections from other users', () => {
     const username = `${uuid()}@boclips.com`;
     const password = uuid();
@@ -67,32 +68,33 @@ context('Public collections', () => {
       .accountCreated();
   });
 
-  context('users can make collections public and private', () => {
-    sizes.forEach((size: ViewPort) => {
-      specify(
-        `public collections journey for: ${
-          size.isMobile ? 'mobile' : 'desktop'
-        } view`,
-        () => {
-          cy.viewport(size.width, size.height);
-          const collectionTitle = uuid();
-
-          new TeachersHomepage()
-            .visit()
-            .logIn(username, password)
-            .search(expectedCompletion)
-            .createCollectionFromVideo(0, collectionTitle)
-            .goToCollections();
-
-          new CollectionsPage().goToCollectionDetails(collectionTitle);
-
-          new CollectionPage().setVisibility(true).goToCollections();
-
-          new CollectionsPage().deleteCollection(collectionTitle);
-        },
-      );
-    });
-  });
+  // TODO: address flicker before reintroducing
+  // context('users can make collections public and private', () => {
+  //   sizes.forEach((size: ViewPort) => {
+  //     specify(
+  //       `public collections journey for: ${
+  //         size.isMobile ? 'mobile' : 'desktop'
+  //       } view`,
+  //       () => {
+  //         cy.viewport(size.width, size.height);
+  //         const collectionTitle = uuid();
+  //
+  //         new TeachersHomepage()
+  //           .visit()
+  //           .logIn(username, password)
+  //           .search(expectedCompletion)
+  //           .createCollectionFromVideo(0, collectionTitle)
+  //           .goToCollections();
+  //
+  //         new CollectionsPage().goToCollectionDetails(collectionTitle);
+  //
+  //         new CollectionPage().setVisibility(true).goToCollections();
+  //
+  //         new CollectionsPage().deleteCollection(collectionTitle);
+  //       },
+  //     );
+  //   });
+  // });
 });
 
 context('Collection management', () => {
