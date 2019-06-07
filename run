@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 case "$1-$2" in
 "ci-frontend")
@@ -23,17 +23,26 @@ case "$1-$2" in
   exit 1
 esac
 
+extract () {
+    echo "$1" | awk -F'=' "/^$2/ { print \$2 }"
+}
+
 : ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}
 : ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
 : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
 : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
 : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
+: ${CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL:="https://ltiapps.net/test/tc.php"}
+: ${CYPRESS_LTI_LAUNCH_URL:="https://lti.testing-boclips.com/lti/v1p1"}
 : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
 : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
 : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
 : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
 : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
 : ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
+: ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
+: ${CYPRESS_LTI_CONSUMER_KEY:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_KEY)"}
+: ${CYPRESS_LTI_CONSUMER_SECRET:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_SECRET)"}
 
 export CYPRESS_VIDEOSERVICE_BASE_URL
 export CYPRESS_TOKEN_URL
@@ -46,6 +55,10 @@ export CYPRESS_FRONTEND_USERNAME
 export CYPRESS_FRONTEND_PASSWORD
 export CYPRESS_OPERATOR_USERNAME
 export CYPRESS_OPERATOR_PASSWORD
+export CYPRESS_LTI_CONSUMER_KEY
+export CYPRESS_LTI_CONSUMER_SECRET
+export CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL
+export CYPRESS_LTI_LAUNCH_URL
 
 node setup/run.js
 

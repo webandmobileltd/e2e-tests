@@ -14,8 +14,11 @@ module.exports = async function insertVideo(video, token) {
       "Content-Type": "application/json"
     }
   }).then(response => {
+    console.log(response);
     console.log(
       `Video creation status:, ${response.statusText} ${response.status}`
     );
   });
 }
+
+
