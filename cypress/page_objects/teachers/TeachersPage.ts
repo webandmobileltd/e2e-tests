@@ -16,6 +16,11 @@ export class TeachersPage {
     this.acceptDialog();
   }
 
+  public log(message: string) {
+    cy.log(message);
+    return this;
+  }
+
   public acceptDialog() {
     cy.get('.ant-modal-confirm-btns .ant-btn-primary').click();
   }
@@ -34,8 +39,19 @@ export class TeachersPage {
     cy.get("[data-qa='video-collection']:visible").click();
   }
 
-  protected getCollectionCardsFromHtmlElements() {
-    return cy.get(By.dataQa('collection-card'));
+  public inspectCollections(
+    callback: (collections: VideoCollection[]) => void,
+  ) {
+    this.getCollectionCardsFromHtmlElements(
+      cy.get(By.dataQa('collections-side-panel')),
+    )
+      .then(this.extractCollectionsFromHtmlElements)
+      .then(callback);
+    return this;
+  }
+
+  protected getCollectionCardsFromHtmlElements(from = cy.get('body')) {
+    return from.get(By.dataQa('collection-card'));
   }
 
   protected extractCollectionsFromHtmlElements(

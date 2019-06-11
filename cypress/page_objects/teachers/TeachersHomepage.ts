@@ -147,7 +147,8 @@ export class TeachersHomepage extends TeachersPage {
       .get(By.dataQa('new-collection-title'))
       .type(collectionTitle)
       .get(By.dataQa('create-collection-button'))
-      .click();
+      .click()
+      .wait(2000);
 
     return this;
   }

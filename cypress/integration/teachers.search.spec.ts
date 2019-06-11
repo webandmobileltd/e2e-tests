@@ -3,6 +3,8 @@ import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
 import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
+import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
+import { CollectionPage } from '../page_objects/teachers/CollectionPage';
 
 context('B2T Search', () => {
   const username = `${uuid()}@boclips.com`;
@@ -10,6 +12,7 @@ context('B2T Search', () => {
 
   before(() => {
     new TeachersHomepage()
+      .log('creating an account')
       .visit()
       .goToRegistrationPage()
       .createAccount(username, password)
@@ -17,15 +20,18 @@ context('B2T Search', () => {
   });
 
   afterEach(() => {
-    new TeachersHomepage().visit().logOut();
+    new TeachersHomepage()
+      .visit()
+      .logOut();
   });
 
-  specify('search journey', () => {
+  specify.only('search journey', () => {
     const email = 'test@test.com';
     const homepage = new TeachersHomepage();
     const invalidSearchQuery = 'asdfghjklkjhgf';
 
     homepage
+      .log('searching videos')
       .visit()
       .logIn(username, password)
       .search(invalidSearchQuery)
@@ -59,6 +65,29 @@ context('B2T Search', () => {
           .visit()
           .hasTitle()
           .hasContentPartnerName();
+      });
+
+    const collectionTitle = 'Minute Physics';
+    new TeachersHomepage()
+      .log('searching collections')
+      .visit()
+      .searchWithAutocomplete('Min', 'Minute Physics')
+      .createCollectionFromVideo(0, collectionTitle)
+      .goToCollections();
+
+    new CollectionsPage().goToCollectionDetails(collectionTitle);
+
+    new CollectionPage().setVisibility(true).goToCollections();
+
+    new TeachersHomepage()
+      .visit()
+      .search(collectionTitle)
+      .inspectCollections(collections => {
+        expect(collections.length).to.be.greaterThan(
+          0,
+          `There are no collections showing`,
+        );
+        expect(collections[0].title).to.equal(collectionTitle);
       });
   });
 
