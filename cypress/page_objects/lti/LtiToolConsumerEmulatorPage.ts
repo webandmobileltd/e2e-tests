@@ -13,17 +13,13 @@ export class LtiToolConsumerEmulatorPage {
   public provideLaunchRequestData(videoId: string) {
     cy.get('[name="endpoint"]')
       .clear()
-      .type(Cypress.env('LTI_LAUNCH_URL'));
+      .type(`${Cypress.env('LTI_VIDEO_LAUNCH_URL')}/${videoId}`);
     cy.get('[name="key"]')
       .clear()
       .type(Cypress.env('LTI_CONSUMER_KEY'));
     cy.get('[name="secret"]')
       .clear()
       .type(Cypress.env('LTI_CONSUMER_SECRET'));
-    cy.get('.required')
-      .find('[name="resource_link_id"]')
-      .clear()
-      .type(videoId);
 
     return this;
   }

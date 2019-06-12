@@ -1,10 +1,10 @@
 import { v4 as uuid } from 'uuid';
+import { CollectionPage } from '../page_objects/teachers/CollectionPage';
+import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
 import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
 import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
-import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
 
 context('B2T Search', () => {
   const username = `${uuid()}@boclips.com`;
@@ -20,9 +20,7 @@ context('B2T Search', () => {
   });
 
   afterEach(() => {
-    new TeachersHomepage()
-      .visit()
-      .logOut();
+    new TeachersHomepage().visit().logOut();
   });
 
   specify.only('search journey', () => {
