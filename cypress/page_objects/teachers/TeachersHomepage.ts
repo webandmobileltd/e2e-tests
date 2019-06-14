@@ -47,6 +47,8 @@ export class TeachersHomepage extends TeachersPage {
   }
 
   private clickDropDownOption(option: string) {
+    cy.get('[data-qa="subjects"]').should('be.visible');
+
     cy.contains(option).click();
 
     cy.get('body').click();
@@ -140,7 +142,9 @@ export class TeachersHomepage extends TeachersPage {
 
   public createCollectionFromVideo(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
-      cy.get("[data-qa='video-collection-menu']:visible").click();
+      cy.get("[data-qa='video-collection-menu']:visible")
+        .should('be.visible')
+        .click();
     })
       .get(By.dataQa('create-collection'))
       .click()
@@ -155,20 +159,26 @@ export class TeachersHomepage extends TeachersPage {
 
   public addVideoToCollection(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
-      cy.get("[data-qa='video-collection-menu']:visible").click();
+      cy.get("[data-qa='video-collection-menu']:visible")
+        .should('be.visible')
+        .click();
     })
       .get(`[data-state="${collectionTitle}"][data-qa="add-to-collection"]`)
+      .should('be.visible')
       .click();
     return this;
   }
 
   public removeVideoFromCollection(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
-      cy.get("[data-qa='video-collection-menu']:visible").click();
+      cy.get("[data-qa='video-collection-menu']:visible")
+        .should('be.visible')
+        .click();
     })
       .get(
         `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
       )
+      .should('be.visible')
       .click();
     return this;
   }
@@ -177,11 +187,15 @@ export class TeachersHomepage extends TeachersPage {
     this.searchResultsHtmlElements()
       .eq(index)
       .within(() => {
-        cy.get(`[data-qa='video-collection-menu']:visible`).click();
+        cy.get(`[data-qa='video-collection-menu']:visible`)
+          .should('be.visible')
+          .click();
       })
+      .should('be.visible')
       .get(
         `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
-      );
+      )
+      .should('be.visible');
     return this;
   }
 

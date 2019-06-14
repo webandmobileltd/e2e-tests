@@ -26,7 +26,11 @@ export class TeachersPage {
   }
 
   public openAccountMenu() {
-    cy.get(By.dataQa('account-menu-open') + `:visible`).click();
+    cy.get(By.dataQa('account-menu-open') + `:visible`)
+      .should('be.visible')
+      .click();
+
+    return this;
   }
 
   public itShowsNotification(text: string) {
@@ -36,7 +40,12 @@ export class TeachersPage {
 
   public goToCollections() {
     this.openAccountMenu();
-    cy.get("[data-qa='video-collection']:visible").click();
+
+    cy.get("[data-qa='video-collection']:visible")
+      .should('be.visible')
+      .click();
+
+    return this;
   }
 
   public inspectCollections(

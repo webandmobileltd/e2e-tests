@@ -82,7 +82,10 @@ export class CollectionPage extends TeachersPage {
 
   public removeVideo(index: number) {
     return this.interactWithItem(index, () =>
-      cy.get('[data-qa="remove-from-collection"]:visible').click(),
+      cy
+        .get('[data-qa="remove-from-collection"]:visible')
+        .should('be.visible')
+        .click(),
     );
   }
 
