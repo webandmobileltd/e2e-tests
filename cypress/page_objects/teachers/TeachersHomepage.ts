@@ -1,7 +1,7 @@
-import { By } from '../../support/By';
+import {By} from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import { TeachersPage } from './TeachersPage';
+import {TeachersPage} from './TeachersPage';
 
 export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
@@ -47,8 +47,6 @@ export class TeachersHomepage extends TeachersPage {
   }
 
   private clickDropDownOption(option: string) {
-    cy.get('[data-qa="subjects"]').should('be.visible');
-
     cy.contains(option).click();
 
     cy.get('body').click();
@@ -62,10 +60,11 @@ export class TeachersHomepage extends TeachersPage {
   public createAccount(username: string, password: string) {
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
-    cy.get(By.dataQa('subjects')).click();
+    cy.get(By.dataQa('subjects')).click().should('be.visible');
     this.clickDropDownOption('Biology');
+    cy.get('footer').click();
 
-    cy.get(By.dataQa('ageRange')).click();
+    cy.get(By.dataQa('ageRange')).click().should('be.visible');
     this.clickDropDownOption('3 - 5');
 
     cy.get(By.dataQa('email')).type(username);
@@ -79,7 +78,7 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('register-button')).click();
 
     cy.wait('@createUser');
-    cy.server({ enable: false });
+    cy.server({enable: false});
     return this;
   }
 
@@ -172,7 +171,6 @@ export class TeachersHomepage extends TeachersPage {
   public removeVideoFromCollection(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
       cy.get("[data-qa='video-collection-menu']:visible")
-        .should('be.visible')
         .click();
     })
       .get(
@@ -188,14 +186,13 @@ export class TeachersHomepage extends TeachersPage {
       .eq(index)
       .within(() => {
         cy.get(`[data-qa='video-collection-menu']:visible`)
-          .should('be.visible')
           .click();
       })
-      .should('be.visible')
       .get(
         `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
       )
       .should('be.visible');
+
     return this;
   }
 

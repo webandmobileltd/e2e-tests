@@ -1,9 +1,9 @@
-import { v4 as uuid } from 'uuid';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
-import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
-import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
+import {v4 as uuid} from 'uuid';
+import {CollectionPage} from '../page_objects/teachers/CollectionPage';
+import {CollectionsPage} from '../page_objects/teachers/CollectionsPage';
+import {TeachersHomepage} from '../page_objects/teachers/TeachersHomepage';
 import ViewPort from '../page_objects/types/ViewPort';
-import { sizes } from './viewports';
+import {sizes} from './viewports';
 
 const validSearchQuery = 'Minute';
 const expectedCompletion = 'Minute Physics';
@@ -57,26 +57,23 @@ context('Bookmarked collections', () => {
 });
 
 context('Public collections', () => {
-  const username = `${uuid()}@boclips.com`;
-  const password = uuid();
-
-  before(() => {
-    new TeachersHomepage()
-      .visit()
-      .goToRegistrationPage()
-      .createAccount(username, password)
-      .accountCreated();
-  });
-
   context('users can make collections public and private', () => {
     sizes.forEach((size: ViewPort) => {
       specify(
         `public collections journey for: ${
           size.isMobile ? 'mobile' : 'desktop'
-        } view`,
+          } view`,
         () => {
           cy.viewport(size.width, size.height);
           const collectionTitle = uuid();
+          const username = `${uuid()}@boclips.com`;
+          const password = uuid();
+
+          new TeachersHomepage()
+            .visit()
+            .goToRegistrationPage()
+            .createAccount(username, password)
+            .accountCreated();
 
           new TeachersHomepage()
             .visit()
@@ -97,43 +94,40 @@ context('Public collections', () => {
 });
 
 context('Collection management', () => {
-  const username = `${uuid()}@boclips.com`;
-  const password = uuid();
-
-  before(() => {
-    new TeachersHomepage()
-      .visit()
-      .goToRegistrationPage()
-      .createAccount(username, password)
-      .accountCreated();
-  });
-
   context('users can edit collections', () => {
     sizes.forEach((size: ViewPort) => {
       specify(
         `collections journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`,
         () => {
-          const collectionTitle = uuid();
-
           cy.viewport(size.width, size.height);
+
+          let username = `${uuid()}@teacher.com`;
+          let password = uuid();
+          let collectionName = uuid();
+
+          new TeachersHomepage()
+            .visit()
+            .goToRegistrationPage()
+            .createAccount(username, password)
+            .accountCreated();
 
           new TeachersHomepage()
             .visit()
             .logIn(username, password)
             .searchWithAutocomplete(validSearchQuery, expectedCompletion)
-            .createCollectionFromVideo(0, collectionTitle)
-            .isVideoInCollection(0, collectionTitle)
-            .addVideoToCollection(1, collectionTitle)
-            .isVideoInCollection(1, collectionTitle)
+            .createCollectionFromVideo(0, collectionName)
+            .isVideoInCollection(0, collectionName)
+            .addVideoToCollection(1, collectionName)
+            .isVideoInCollection(1, collectionName)
             .reload()
-            .removeVideoFromCollection(1, collectionTitle)
+            .removeVideoFromCollection(1, collectionName)
             .goToCollections();
 
           new CollectionsPage()
             .inspectCollections(collections =>
               expect(collections).to.have.length(1),
             )
-            .goToCollectionDetails(collectionTitle);
+            .goToCollectionDetails(collectionName);
 
           const newCollectionName = uuid();
 

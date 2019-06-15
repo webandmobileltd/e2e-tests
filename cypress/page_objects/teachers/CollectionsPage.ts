@@ -37,12 +37,4 @@ export class CollectionsPage extends TeachersPage {
       .then(callback);
     return this;
   }
-
-  private interactWithCollections(index: number, callback: () => void) {
-    this.getCollectionCardsFromHtmlElements()
-      .eq(index)
-      .scrollIntoView()
-      .within(callback);
-    return this;
-  }
 }
