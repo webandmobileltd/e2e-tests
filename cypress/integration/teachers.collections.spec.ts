@@ -151,7 +151,7 @@ context('Collection management', () => {
           new CollectionsPage()
             .deleteCollection(newCollectionName)
             .itShowsNotification(
-              `Your collection "${newCollectionName}" has been deleted`,
+              `has been deleted`,
             )
             .isEmpty();
         },
