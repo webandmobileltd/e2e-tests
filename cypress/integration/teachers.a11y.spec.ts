@@ -5,7 +5,7 @@ import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
 import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
 import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
 
-context('Accessibility Checks for Teachers', () => {
+context.skip('Accessibility Checks for Teachers', () => {
   specify('Boclips Teachers is accessible', () => {
     const username = `${uuid()}@boclips.com`;
     const password = uuid();
