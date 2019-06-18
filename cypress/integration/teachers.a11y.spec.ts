@@ -22,14 +22,14 @@ context('Accessibility Checks for Teachers', () => {
       .logIn(username, password)
       .checkA11yOnHomePage(9)
       .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
-      .checkA11yOnSearchPage(8)
+      .checkA11yOnSearchPage(9)
       .createCollectionFromVideo(0, `${collectionName}`)
       .goToCollections();
 
     new CollectionsPage().goToCollectionDetails(collectionName);
 
     new CollectionPage()
-      .checkA11yOnCollectionPage(8)
+      .checkA11yOnCollectionPage(9)
       .inspectItems((videos: Video[]) => {
         expect(videos.length).to.be.greaterThan(0);
         const video: Video = videos[0];
