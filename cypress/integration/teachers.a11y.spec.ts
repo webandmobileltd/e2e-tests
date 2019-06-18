@@ -14,15 +14,15 @@ context('Accessibility Checks for Teachers', () => {
 
     new TeachersHomepage()
       .visit()
-      .checkA11yOnLoginPage(6)
+      .checkA11yOnLoginPage(7)
       .goToRegistrationPage()
-      .checkA11yOnRegistrationPage(5)
+      .checkA11yOnRegistrationPage(6)
       .createAccount(username, password)
       .visit()
       .logIn(username, password)
-      .checkA11yOnHomePage(8)
+      .checkA11yOnHomePage(9)
       .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
-      .checkA11yOnSearchPage(6)
+      .checkA11yOnSearchPage(8)
       .createCollectionFromVideo(0, `${collectionName}`)
       .goToCollections();
 
