@@ -15,25 +15,41 @@ module.exports = [
     title: "The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary",
     description:
       "The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary",
-    playbackId: "Ac_t4pNYr1g"
+    playbackId: "Ac_t4pNYr1g",
+    subjects: ["Biology", "Physics"],
+    duration: "PT1M30S",
+    ageRangeMin: 4,
+    ageRangeMax: 8,
   }),
   video({
     providerVideoId: "minute-physics-2",
     title: "Rives: If I controlled the Internet",
     description:
-      "How many poets could cram eBay, Friendster and Monster.com into 3-minute poem worthy of a standing ovation? Enjoy Rives' unique talent."
+      "How many poets could cram eBay, Friendster and Monster.com into 3-minute poem worthy of a standing ovation? Enjoy Rives' unique talent.",
+    subjects: ["Biology", "Physics"],
+    duration: "PT1M30S",
+    ageRangeMin: 10,
+    ageRangeMax: 13,
   }),
   video({
     providerVideoId: "minute-physics-3",
     title: 'Steven Johnson: How the "ghost map" helped end a killer disease',
     description:
-      "Author Steven Johnson takes us on a 10-minute tour of The Ghost Map, his book about a cholera outbreak in 1854 London and the impact it had on science, cities and modern society."
+      "Author Steven Johnson takes us on a 10-minute tour of The Ghost Map, his book about a cholera outbreak in 1854 London and the impact it had on science, cities and modern society.",
+    subjects: ["Biology", "Physics"],
+    duration: "PT5M30S",
+    ageRangeMin: 4,
+    ageRangeMax: 10,
   }),
   video({
     providerVideoId: "minute-physics-4",
     title: "Jeff Han: The radical promise of the multi-touch interface",
     description:
-      "Jeff Han shows off a cheap, scalable multi-touch and pressure-sensitive computer screen interface that may spell the end of point-and-click."
+      "Jeff Han shows off a cheap, scalable multi-touch and pressure-sensitive computer screen interface that may spell the end of point-and-click.",
+    subjects: ["Maths", "Physics"],
+    duration: "PT1M30S",
+    ageRangeMin: 4,
+    ageRangeMax: 10,
   }),
   video({
     providerVideoId: "minute-physics-5",

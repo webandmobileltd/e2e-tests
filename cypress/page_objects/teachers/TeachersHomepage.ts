@@ -1,7 +1,8 @@
-import {By} from '../../support/By';
+import * as queryString from 'query-string';
+import { By } from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import {TeachersPage} from './TeachersPage';
+import { TeachersPage } from './TeachersPage';
 
 export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
@@ -46,10 +47,15 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
-  private clickDropDownOption(option: string) {
-    cy.contains(option).click();
+  private clickDropDownOption(dropdown: string, option: string) {
+    cy.get(dropdown)
+      .click()
+      .should('be.visible');
 
-    cy.get('body').click();
+    cy.contains(option)
+      .scrollIntoView()
+      .should('be.visible')
+      .click();
   }
 
   public goToRegistrationPage() {
@@ -60,12 +66,11 @@ export class TeachersHomepage extends TeachersPage {
   public createAccount(username: string, password: string) {
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
-    cy.get(By.dataQa('subjects')).click().should('be.visible');
-    this.clickDropDownOption('Biology');
+    this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
     cy.get('footer').click();
 
-    cy.get(By.dataQa('ageRange')).click().should('be.visible');
-    this.clickDropDownOption('3 - 5');
+    this.clickDropDownOption(By.dataQa('ageRange'), '3 - 5');
+    cy.get('footer').click();
 
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);
@@ -78,7 +83,7 @@ export class TeachersHomepage extends TeachersPage {
     cy.get(By.dataQa('register-button')).click();
 
     cy.wait('@createUser');
-    cy.server({enable: false});
+    cy.server({ enable: false });
     return this;
   }
 
@@ -105,6 +110,44 @@ export class TeachersHomepage extends TeachersPage {
     });
 
     return this;
+  }
+
+  public applyAgeRangeFilter(minAge: number, maxAge: number) {
+    this.changeQueryParams({
+      age_range_min: '' + minAge,
+      age_range_max: '' + maxAge,
+    });
+    return this;
+  }
+
+  public applySubjectFilter(subject: string) {
+    cy.get(By.dataQa('open-filter-modal')).click();
+    this.clickDropDownOption(By.dataQa('subjects'), subject);
+    cy.get('.ant-modal-title').click();
+    cy.contains('OK').click();
+    cy.get(By.dataQa('open-filter-modal')).should('not.be.visible');
+    return this;
+  }
+
+  public applyDurationFilter(minDuration: number, maxDuration: number) {
+    this.changeQueryParams({
+      duration_min: '' + minDuration,
+      duration_max: '' + maxDuration,
+    });
+
+    return this;
+  }
+  private changeQueryParams(newParameters: { [key: string]: string }) {
+    cy.location().then(location => {
+      const parsedUrl = queryString.parseUrl(location.href);
+
+      const parsedParams = {
+        ...parsedUrl.query,
+        ...newParameters,
+      };
+
+      cy.visit(`${parsedUrl.url}?${queryString.stringify(parsedParams)}`);
+    });
   }
 
   private searchResultsHtmlElements() {
@@ -170,8 +213,7 @@ export class TeachersHomepage extends TeachersPage {
 
   public removeVideoFromCollection(index: number, collectionTitle: string) {
     this.interactWithResult(index, () => {
-      cy.get("[data-qa='video-collection-menu']:visible")
-        .click();
+      cy.get("[data-qa='video-collection-menu']:visible").click();
     })
       .get(
         `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
@@ -185,8 +227,7 @@ export class TeachersHomepage extends TeachersPage {
     this.searchResultsHtmlElements()
       .eq(index)
       .within(() => {
-        cy.get(`[data-qa='video-collection-menu']:visible`)
-          .click();
+        cy.get(`[data-qa='video-collection-menu']:visible`).click();
       })
       .get(
         `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,

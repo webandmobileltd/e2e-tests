@@ -25,9 +25,11 @@
   },
   "devDependencies": {
     "@types/cypress-axe": "^0.4.0",
+    "@types/query-string": "^6.3.0",
     "axe-core": "^3.2.2",
     "cypress-axe": "^0.4.1",
     "prettier": "^1.16.4",
+    "query-string": "^6.8.1",
     "raw-loader": "^2.0.0",
     "tslint": "^5.13.0",
     "tslint-config-prettier": "^1.18.0",

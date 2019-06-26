@@ -23,7 +23,7 @@ context('B2T Search', () => {
     new TeachersHomepage().visit().logOut();
   });
 
-  specify.only('search journey', () => {
+  specify('search journey', () => {
     const email = 'test@test.com';
     const homepage = new TeachersHomepage();
     const invalidSearchQuery = 'asdfghjklkjhgf';
@@ -46,6 +46,18 @@ context('B2T Search', () => {
       .isOnPage(2)
       .goToPreviousPage()
       .isOnPage(1)
+      .applySubjectFilter('Biology')
+      .inspectResults(videos => {
+        expect(videos.length).to.be.eq(3, `There are three videos showing`);
+      })
+      .applyDurationFilter(60, 120)
+      .inspectResults(videos => {
+        expect(videos.length).to.be.eq(2, `There are two videos showing`);
+      })
+      .applyAgeRangeFilter(3, 9)
+      .inspectResults(videos => {
+        expect(videos.length).to.be.eq(1, `There are one videos showing`);
+      })
       .goToFirstVideo();
 
     cy.location()
