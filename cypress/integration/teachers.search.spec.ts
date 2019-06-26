@@ -19,10 +19,6 @@ context('B2T Search', () => {
       .accountCreated();
   });
 
-  afterEach(() => {
-    new TeachersHomepage().visit().logOut();
-  });
-
   specify('search journey', () => {
     const email = 'test@test.com';
     const homepage = new TeachersHomepage();

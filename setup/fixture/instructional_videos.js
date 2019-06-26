@@ -27,6 +27,7 @@ module.exports = [
     description:
       "How many poets could cram eBay, Friendster and Monster.com into 3-minute poem worthy of a standing ovation? Enjoy Rives' unique talent.",
     subjects: ["Biology", "Physics"],
+    playbackId: '0_o0nnso1z',
     duration: "PT1M30S",
     ageRangeMin: 10,
     ageRangeMax: 13,
@@ -38,6 +39,7 @@ module.exports = [
       "Author Steven Johnson takes us on a 10-minute tour of The Ghost Map, his book about a cholera outbreak in 1854 London and the impact it had on science, cities and modern society.",
     subjects: ["Biology", "Physics"],
     duration: "PT5M30S",
+    playbackId: '0_in8dv3xq',
     ageRangeMin: 4,
     ageRangeMax: 10,
   }),
@@ -47,6 +49,7 @@ module.exports = [
     description:
       "Jeff Han shows off a cheap, scalable multi-touch and pressure-sensitive computer screen interface that may spell the end of point-and-click.",
     subjects: ["Maths", "Physics"],
+    playbackId: '0_o0nnso1z',
     duration: "PT1M30S",
     ageRangeMin: 4,
     ageRangeMax: 10,
