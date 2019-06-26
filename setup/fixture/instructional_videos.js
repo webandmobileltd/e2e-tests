@@ -10,12 +10,12 @@ module.exports = [
     subjects: ["Maths", "Physics"]
   }),
   video({
-    providerVideoId: "Ac_t4pNYr1g",
+    providerVideoId: "s3Gl6T0CC2I",
     playbackProvider: "YOUTUBE",
     title: "The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary",
     description:
-      "The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary",
-    playbackId: "Ac_t4pNYr1g",
+      "This is now about dogs.",
+    playbackId: "s3Gl6T0CC2I",
     subjects: ["Biology", "Physics"],
     duration: "PT1M30S",
     ageRangeMin: 4,
@@ -27,7 +27,7 @@ module.exports = [
     description:
       "How many poets could cram eBay, Friendster and Monster.com into 3-minute poem worthy of a standing ovation? Enjoy Rives' unique talent.",
     subjects: ["Biology", "Physics"],
-    playbackId: '0_o0nnso1z',
+    playbackId: 'b6d3a962-a013-4fff-9cc2-0ef7ee7a7afe',
     duration: "PT1M30S",
     ageRangeMin: 10,
     ageRangeMax: 13,
@@ -39,7 +39,7 @@ module.exports = [
       "Author Steven Johnson takes us on a 10-minute tour of The Ghost Map, his book about a cholera outbreak in 1854 London and the impact it had on science, cities and modern society.",
     subjects: ["Biology", "Physics"],
     duration: "PT5M30S",
-    playbackId: '0_in8dv3xq',
+    playbackId: 'b6d3a962-a013-4fff-9cc2-0ef7ee7a7afe',
     ageRangeMin: 4,
     ageRangeMax: 10,
   }),
@@ -49,7 +49,7 @@ module.exports = [
     description:
       "Jeff Han shows off a cheap, scalable multi-touch and pressure-sensitive computer screen interface that may spell the end of point-and-click.",
     subjects: ["Maths", "Physics"],
-    playbackId: '0_o0nnso1z',
+    playbackId: 'b6d3a962-a013-4fff-9cc2-0ef7ee7a7afe',
     duration: "PT1M30S",
     ageRangeMin: 4,
     ageRangeMax: 10,
