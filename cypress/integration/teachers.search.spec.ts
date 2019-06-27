@@ -51,7 +51,7 @@ context('B2T Search', () => {
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are three videos showing`);
       })
-      .applyAgeRangeFilter(3, 9)
+      .applyAgeRangeFilter(4, 10)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(2, `There are two videos showing`);
       })
