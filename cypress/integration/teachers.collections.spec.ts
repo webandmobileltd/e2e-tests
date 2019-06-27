@@ -1,9 +1,9 @@
-import {v4 as uuid} from 'uuid';
-import {CollectionPage} from '../page_objects/teachers/CollectionPage';
-import {CollectionsPage} from '../page_objects/teachers/CollectionsPage';
-import {TeachersHomepage} from '../page_objects/teachers/TeachersHomepage';
+import { v4 as uuid } from 'uuid';
+import { CollectionPage } from '../page_objects/teachers/CollectionPage';
+import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
+import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
 import ViewPort from '../page_objects/types/ViewPort';
-import {sizes} from './viewports';
+import { sizes } from './viewports';
 
 const validSearchQuery = 'Minute';
 const expectedCompletion = 'Minute Physics';
@@ -62,7 +62,7 @@ context('Public collections', () => {
       specify(
         `public collections journey for: ${
           size.isMobile ? 'mobile' : 'desktop'
-          } view`,
+        } view`,
         () => {
           cy.viewport(size.width, size.height);
           const collectionTitle = uuid();
@@ -101,9 +101,9 @@ context('Collection management', () => {
         () => {
           cy.viewport(size.width, size.height);
 
-          let username = `${uuid()}@teacher.com`;
-          let password = uuid();
-          let collectionName = uuid();
+          const username = `${uuid()}@teacher.com`;
+          const password = uuid();
+          const collectionName = uuid();
 
           new TeachersHomepage()
             .visit()
@@ -150,9 +150,7 @@ context('Collection management', () => {
 
           new CollectionsPage()
             .deleteCollection(newCollectionName)
-            .itShowsNotification(
-              `has been deleted`,
-            )
+            .itShowsNotification(`has been deleted`)
             .isEmpty();
         },
       );

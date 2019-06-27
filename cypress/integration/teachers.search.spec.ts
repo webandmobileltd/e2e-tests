@@ -47,13 +47,13 @@ context('B2T Search', () => {
       // .inspectResults(videos => {
       //   expect(videos.length).to.be.eq(3, `There are three videos showing`);
       // })
-      .applyDurationFilter(60, 120)
+      .applyDurationFilter(0, 240)
       .inspectResults(videos => {
-        expect(videos.length).to.be.eq(3, `There are three videos showing`);
+        expect(videos.length).to.be.eq(9, `There is one video showing`);
       })
-      .applyAgeRangeFilter(4, 10)
+      .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
-        expect(videos.length).to.be.eq(2, `There are two videos showing`);
+        expect(videos.length).to.be.eq(1, `There are two videos showing`);
       })
       .goToFirstVideo();
 
