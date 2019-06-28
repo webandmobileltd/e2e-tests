@@ -28,7 +28,7 @@ extract () {
 }
 
 : ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}
-: ${CYPRESS_VIDEOSERVICE_BASE_URL:="https://video-service.testing-boclips.com"}
+: ${CYPRESS_API_BASE_URL:="https://api.testing-boclips.com"}
 : ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
 : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
 : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
@@ -44,7 +44,7 @@ extract () {
 : ${CYPRESS_LTI_CONSUMER_KEY:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_KEY)"}
 : ${CYPRESS_LTI_CONSUMER_SECRET:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_SECRET)"}
 
-export CYPRESS_VIDEOSERVICE_BASE_URL
+export CYPRESS_API_BASE_URL
 export CYPRESS_TOKEN_URL
 export CYPRESS_BACKOFFICE_BASE_URL
 export CYPRESS_BACKOFFICE_USERNAME

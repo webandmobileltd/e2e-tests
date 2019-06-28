@@ -2,9 +2,9 @@ const fetch = require("node-fetch");
 const Constants = require('./Constants');
 
 module.exports = async function insertVideo(query, token) {
-  console.log(Constants.VIDEO_SERVICE_URL);
+  console.log(Constants.API_URL);
 
-  return await fetch(Constants.VIDEO_SERVICE_URL + `/v1/videos?query=${query}&page=0&size=1`, {
+  return await fetch(Constants.API_URL + `/v1/videos?query=${query}&page=0&size=1`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

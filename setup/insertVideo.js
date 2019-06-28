@@ -4,9 +4,9 @@ const Constants = require('./Constants');
 module.exports = async function insertVideo(video, token) {
   console.log("Publish video:", video);
 
-  console.log(Constants.VIDEO_SERVICE_URL);
+  console.log(Constants.API_URL);
 
-  return await fetch(Constants.VIDEO_SERVICE_URL + "/v1/videos", {
+  return await fetch(Constants.API_URL + "/v1/videos", {
     method: "POST",
     body: JSON.stringify(video),
     headers: {

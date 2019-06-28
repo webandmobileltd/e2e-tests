@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const Constants = require('./Constants');
 
 module.exports = async function insertSubject(subject, token) {
-  return await fetch(Constants.VIDEO_SERVICE_URL + "/v1/subjects", {
+  return await fetch(Constants.API_URL + "/v1/subjects", {
     method: "POST",
     body: JSON.stringify(subject),
     headers: {
