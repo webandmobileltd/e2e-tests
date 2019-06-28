@@ -13,7 +13,7 @@ module.exports = async function generateToken() {
     }
   });
   const body = await response.json();
-  console.log("Generated user token");
+  console.log(`Generated user token for user ${Constants.OPERATOR_USERNAME}`);
 
   return body.access_token;
 };

@@ -11,8 +11,9 @@ let videoId: string;
 
 beforeEach(() => {
   return generateToken()
-    .then((token: string) => {
-      return findOneVideo(instructionalVideos[0].title, token);
+    .then(async (token: string) => {
+      const allInstructionalVideos = await instructionalVideos();
+      return findOneVideo(allInstructionalVideos[0].title, token);
     })
     .then((returnedVideoId: string) => {
       videoId = returnedVideoId;

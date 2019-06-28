@@ -13,7 +13,8 @@ module.exports = async function insertVideo(query, token) {
   }).then(response => {
     return response.json();
   }).then(json => {
-      const video = json._embedded.videos[0];
-      return video.id;
+    console.log('JSON', json);
+    const video = json._embedded.videos[0];
+    return video.id;
   });
 };

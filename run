@@ -40,7 +40,6 @@ extract () {
 : ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
 : ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
 : ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
-: ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
 : ${CYPRESS_LTI_CONSUMER_KEY:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_KEY)"}
 : ${CYPRESS_LTI_CONSUMER_SECRET:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_SECRET)"}
 

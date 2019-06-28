@@ -28,4 +28,4 @@ module.exports = [
   {name: "Sociology"},
   {name: "Spanish"},
   {name: "Teacher Training"}
-]
+];

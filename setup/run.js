@@ -1,25 +1,30 @@
 const Constants = require('./Constants');
 
 const generateToken = require('./generateToken');
-const insertSubject = require('./insertSubject');
-const insertVideo = require('./insertVideo');
-const findOneVideo = require('./findOneVideo');
+const subjectsApi = require('./subjectApi');
+const insertVideo = require('./videoApi');
 
-const subjects = require('./fixture/subjects');
+const subjectFixtures = require('./fixture/subjects');
 const instructionalVideos = require('./fixture/instructional_videos');
 const stockVideos = require('./fixture/stock_videos');
 const newsVideos = require('./fixture/news_videos');
 
 async function insertVideos(token) {
-  return Promise.all(allVideos().map(video => insertVideo(video, token)));
+  const videoPromises = await allVideos();
+
+  return Promise.all(videoPromises.map(async (video) => {
+    await insertVideo(video, token)
+  }));
 }
 
 async function insertSubjects(token) {
-  return Promise.all(subjects.map(subject => insertSubject(subject, token)));
+  return Promise.all(subjectFixtures.map(subject => subjectsApi.insertSubject(subject, token)));
 }
 
-function allVideos() {
-  return [...instructionalVideos, ...stockVideos, ...newsVideos];
+async function allVideos() {
+  const allInterpolatedVideos = await instructionalVideos();
+
+  return [...allInterpolatedVideos, ...stockVideos, ...newsVideos];
 }
 
 if (
@@ -29,18 +34,28 @@ if (
 ) {
   throw 'Environment variables not set properly.';
 }
+
 let token = null;
 
 generateToken()
   .then(returnedToken => {
     token = returnedToken;
-    return insertVideos(token);
+  })
+  .then(async () => {
+    console.log('delete all subjects');
+    const subjects = await subjectsApi.getSubjects();
+
+    if (!subjects) return;
+
+    return Promise.all(subjects.map(subject => subjectsApi.deleteSubject(subject.id, token)))
   })
   .then(() => {
+    console.log('insert all subjects');
     return insertSubjects(token);
   })
-  .then(() => {
-    return findOneVideo(instructionalVideos[0].title, token);
+  .then(async () => {
+    console.log('insert all videos');
+    await insertVideos(token);
   })
   .then(() => {
     console.log('Setup finished');
