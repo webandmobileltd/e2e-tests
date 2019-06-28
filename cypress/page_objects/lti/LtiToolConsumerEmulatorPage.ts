@@ -38,7 +38,7 @@ export class LtiToolConsumerEmulatorPage {
 
   public hasLoadedBoclipsPlayer() {
     cy.get('iframe')
-      .then(iframe => {
+      .then({ timeout: 30000 }, iframe => {
         return new Promise(resolve => {
           const intervalHandle = setInterval(() => {
             const isPlayerRendered =
