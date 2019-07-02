@@ -32,6 +32,13 @@ export class CollectionPage extends TeachersPage {
     return this;
   }
 
+  public setSubject(subject: string): CollectionPage {
+    cy.get(By.dataQa('collection-edit-button')).click();
+    this.clickDropDownOption(By.dataQa('subjects'), subject);
+    cy.contains('Save').click();
+    return this;
+  }
+
   public itHasCorrectVisiblity(isPublic: boolean): CollectionPage {
     cy.get(By.dataQa('collection-visibility'))
       .get(By.dataState(isPublic + ''))

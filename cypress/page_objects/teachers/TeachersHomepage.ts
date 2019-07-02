@@ -2,6 +2,7 @@ import * as queryString from 'query-string';
 import { By } from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
+import { DiscoverPage } from './DiscoverPage';
 import { TeachersPage } from './TeachersPage';
 
 export class TeachersHomepage extends TeachersPage {
@@ -47,17 +48,6 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
-  private clickDropDownOption(dropdown: string, option: string) {
-    cy.get(dropdown)
-      .click()
-      .should('be.visible');
-
-    cy.contains(option)
-      .scrollIntoView()
-      .should('be.visible')
-      .click();
-  }
-
   public goToRegistrationPage() {
     cy.get(By.dataQa('create-account')).click();
     return this;
@@ -66,8 +56,8 @@ export class TeachersHomepage extends TeachersPage {
   public createAccount(username: string, password: string) {
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
-    this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
-    cy.get('footer').click();
+    // this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
+    // cy.get('footer').click();
 
     this.clickDropDownOption(By.dataQa('ageRange'), '3 - 5');
     cy.get('footer').click();
@@ -425,5 +415,12 @@ export class TeachersHomepage extends TeachersPage {
       .should('not.be.visible');
 
     return this;
+  }
+
+  public goToDiscoverBySubject(subject: string) {
+    cy.get(By.dataQa('discipline-subject'))
+      .contains(subject)
+      .click();
+    return new DiscoverPage();
   }
 }
