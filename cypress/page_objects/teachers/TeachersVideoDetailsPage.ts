@@ -49,7 +49,7 @@ export class TeachersVideoDetailsPage extends TeachersPage {
   }
 
   public assertRating(rating: number) {
-    cy.find(By.dataQa('rating-score'))
+    cy.get(By.dataQa('rating-score'))
       .invoke('attr', 'data-state')
       .should('contain', rating);
   }
