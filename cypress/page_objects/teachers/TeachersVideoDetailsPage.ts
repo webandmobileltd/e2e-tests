@@ -47,4 +47,11 @@ export class TeachersVideoDetailsPage extends TeachersPage {
     cy.checkA11y(threshold);
     return this;
   }
+
+  public assertRating(rating: number) {
+    cy.find(By.dataQa('rating-score'))
+      .invoke('attr', 'data-state')
+      .should('contain', rating);
+  }
+
 }

@@ -47,14 +47,19 @@ context('B2T Search', () => {
       // .inspectResults(videos => {
       //   expect(videos.length).to.be.eq(3, `There are three videos showing`);
       // })
+      .log('Testing duration filter')
       .applyDurationFilter(0, 240)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(9, `There is one video showing`);
       })
+      .log('Testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(1, `There are two videos showing`);
       })
+      .log('Testing video rating')
+      .rateFirstVideo(2)
+      .assertRatingOnFirstVideo(2)
       .goToFirstVideo();
 
     cy.location()
@@ -71,7 +76,8 @@ context('B2T Search', () => {
         videoDetailsPage
           .visit()
           .hasTitle()
-          .hasContentPartnerName();
+          .hasContentPartnerName()
+          .assertRating(2);
       });
 
     const collectionTitle = 'Minute Physics';

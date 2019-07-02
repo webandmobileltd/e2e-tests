@@ -301,6 +301,31 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
+  public assertRatingOnFirstVideo(rating: number) {
+    cy.get(By.dataQa('video-card'))
+      .first()
+      .find(By.dataQa('rating-score'))
+      .invoke('attr', 'data-state')
+      .should('contain', rating);
+    return this;
+  }
+
+  public rateFirstVideo(rating: number) {
+    cy.get(By.dataQa('video-card'))
+      .first()
+      .find(By.dataQa('rating-video-button'))
+      .click();
+
+    cy.get(By.dataQa('rate-video'))
+      .find('.ant-rate-star')
+      .eq(rating - 1)
+      .click();
+
+    cy.get(By.dataQa('rate-button')).click();
+    cy.get(By.dataQa('rate-video')).should('not.exist');
+    return this;
+  }
+
   public noVideosShown() {
     cy.get(By.dataQa('search-zero-results'));
     return this;
