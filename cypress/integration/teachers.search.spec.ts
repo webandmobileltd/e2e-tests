@@ -19,15 +19,39 @@ context('B2T Search', () => {
       .accountCreated();
   });
 
-  specify('search journey', () => {
+  it('search & rate journey', () => {
     const email = 'test@test.com';
     const homepage = new TeachersHomepage();
     const invalidSearchQuery = 'asdfghjklkjhgf';
+    const collectionTitle = 'Minute Physics';
 
     homepage
-      .log('searching videos')
+      .log('log in')
       .visit()
       .logIn(username, password)
+
+      .log('creating searchable collection')
+      .visit()
+      .searchWithAutocomplete('Min', 'Minute Physics')
+      .createCollectionFromVideo(0, collectionTitle)
+      .goToCollections();
+    new CollectionsPage()
+      .goToCollectionDetails(collectionTitle)
+      .setVisibility(true)
+      .goToHomepage();
+
+    homepage
+      .log('searching collections')
+      .search(collectionTitle)
+      .inspectCollections(collections => {
+        expect(collections.length).to.be.greaterThan(
+          0,
+          `There are no collections showing`,
+        );
+        expect(collections[0].title).to.equal(collectionTitle);
+      })
+
+      .log('searching videos')
       .search(invalidSearchQuery)
       .enterEmail(email)
       .searchWithAutocomplete('Min', 'Minute Physics')
@@ -67,47 +91,13 @@ context('B2T Search', () => {
       .log('Testing video rating')
       .rateFirstVideo(2)
       .assertRatingOnFirstVideo(2)
-      .goToFirstVideo();
-
-    cy.location()
-      .then(location => {
-        const pathname = location.pathname;
-        const parts = pathname.split('/');
-        const id = parts[parts.length - 1];
-        return id;
-      })
-      .then(id => {
-        return new TeachersVideoDetailsPage(id);
-      })
+      .goToFirstVideo()
       .then(videoDetailsPage => {
         videoDetailsPage
           .visit()
           .hasTitle()
           .hasContentPartnerName()
           .assertRating(2);
-      });
-
-    const collectionTitle = 'Minute Physics';
-    new TeachersHomepage()
-      .log('searching collections')
-      .visit()
-      .searchWithAutocomplete('Min', 'Minute Physics')
-      .createCollectionFromVideo(0, collectionTitle)
-      .goToCollections();
-
-    new CollectionsPage().goToCollectionDetails(collectionTitle);
-
-    new CollectionPage().setVisibility(true).goToCollections();
-
-    new TeachersHomepage()
-      .visit()
-      .search(collectionTitle)
-      .inspectCollections(collections => {
-        expect(collections.length).to.be.greaterThan(
-          0,
-          `There are no collections showing`,
-        );
-        expect(collections[0].title).to.equal(collectionTitle);
       });
   });
 
@@ -122,44 +112,43 @@ context('B2T Search', () => {
   });
 
   sizes.forEach((size: ViewPort) => {
-    specify(
-      `viewing news results on: ${size.isMobile ? 'mobile' : 'desktop'} view`,
-      () => {
-        const homepage = new TeachersHomepage();
+    it(`viewing news results on: ${
+      size.isMobile ? 'mobile' : 'desktop'
+    } view`, () => {
+      const homepage = new TeachersHomepage();
 
-        const queryWithNewsAndNonNews = 'richard';
+      const queryWithNewsAndNonNews = 'richard';
 
-        cy.viewport(size.width, size.height);
+      cy.viewport(size.width, size.height);
 
-        homepage
-          .visit()
-          .logIn(username, password)
-          .search(queryWithNewsAndNonNews)
-          .inspectResults(videos => {
-            expect(videos.length).to.be.greaterThan(
-              0,
-              `There are no videos showing`,
-            );
-          })
-          .goToNewsPage(size.isMobile)
-          .inspectResults(videos => {
-            expect(videos.length).to.be.greaterThan(
-              0,
-              `There are no videos showing`,
-            );
-            expect(videos[0].title).to.equal('Breaking news');
-            expect(videos[1].title).to.equal(
-              "'Richard St. John: 8 secrets of success' goes viral on boclips",
-            );
-          })
-          .goBackToMainSearchPage(size.isMobile)
-          .inspectResults(videos => {
-            expect(videos.length).to.be.greaterThan(
-              0,
-              `There are no videos showing`,
-            );
-          });
-      },
-    );
+      homepage
+        .visit()
+        .logIn(username, password)
+        .search(queryWithNewsAndNonNews)
+        .inspectResults(videos => {
+          expect(videos.length).to.be.greaterThan(
+            0,
+            `There are no videos showing`,
+          );
+        })
+        .goToNewsPage(size.isMobile)
+        .inspectResults(videos => {
+          expect(videos.length).to.be.greaterThan(
+            0,
+            `There are no videos showing`,
+          );
+          expect(videos[0].title).to.equal('Breaking news');
+          expect(videos[1].title).to.equal(
+            "'Richard St. John: 8 secrets of success' goes viral on boclips",
+          );
+        })
+        .goBackToMainSearchPage(size.isMobile)
+        .inspectResults(videos => {
+          expect(videos.length).to.be.greaterThan(
+            0,
+            `There are no videos showing`,
+          );
+        });
+    });
   });
 });

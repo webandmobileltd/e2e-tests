@@ -1,6 +1,6 @@
 import { By } from '../../support/By';
-import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
+import {CollectionPage} from "./CollectionPage";
 import { TeachersPage } from './TeachersPage';
 
 export class CollectionsPage extends TeachersPage {
@@ -18,7 +18,7 @@ export class CollectionsPage extends TeachersPage {
     cy.get(
       `[data-state='${collectionTitle}'][data-qa='collection-card']:visible`,
     ).click();
-    return this;
+    return new CollectionPage();
   }
 
   public deleteCollection(collectionTitle: string) {

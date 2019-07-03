@@ -3,6 +3,7 @@ import { By } from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
 import { TeachersPage } from './TeachersPage';
+import { TeachersVideoDetailsPage } from './TeachersVideoDetailsPage';
 
 export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
@@ -318,7 +319,18 @@ export class TeachersHomepage extends TeachersPage {
       .first()
       .click();
     expect(cy.get(By.dataQa('video-title')));
-    return this;
+
+    return cy
+      .location()
+      .then(location => {
+        const pathname = location.pathname;
+        const parts = pathname.split('/');
+        const id = parts[parts.length - 1];
+        return id;
+      })
+      .then(id => {
+        return new TeachersVideoDetailsPage(id);
+      });
   }
 
   public assertRatingOnFirstVideo(rating: number) {

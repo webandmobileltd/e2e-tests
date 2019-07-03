@@ -38,14 +38,16 @@ export class TeachersPage {
     return this;
   }
 
+  public goToHomepage() {
+    cy.get(By.dataQa('boclips-logo')).click();
+  }
+
   public goToCollections() {
     this.openAccountMenu();
 
     cy.get("[data-qa='video-collection']:visible")
       .should('be.visible')
       .click();
-
-    return this;
   }
 
   public inspectCollections(
