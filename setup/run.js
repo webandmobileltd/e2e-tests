@@ -9,6 +9,14 @@ const instructionalVideos = require('./fixture/instructional_videos');
 const stockVideos = require('./fixture/stock_videos');
 const newsVideos = require('./fixture/news_videos');
 
+if (
+  !Constants.TOKEN_URL ||
+  !Constants.OPERATOR_USERNAME ||
+  !Constants.OPERATOR_PASSWORD
+) {
+  throw 'Environment variables not set properly.';
+}
+
 async function insertVideos(token) {
   const videoPromises = await allVideos();
 
@@ -27,35 +35,21 @@ async function allVideos() {
   return [...allInterpolatedVideos, ...stockVideos, ...newsVideos];
 }
 
-if (
-  !Constants.TOKEN_URL ||
-  !Constants.OPERATOR_USERNAME ||
-  !Constants.OPERATOR_PASSWORD
-) {
-  throw 'Environment variables not set properly.';
+async function setUp() {
+  const token = await generateToken();
+  const subjects = await subjectsApi.getSubjects();
+
+  if (!subjects) {
+    await insertSubjects(token);
+  } else {
+    console.log('Subjects already exist, did not update subjects');
+  }
+
+  console.log('insert all videos');
+  await insertVideos(token);
+
+  console.log('Setup finished');
+  process.exit();
 }
 
-let token = null;
-
-// TODO Rewrite with async/await
-generateToken()
-  .then(returnedToken => {
-    token = returnedToken;
-  })
-  .then(async () => {
-    const subjects = await subjectsApi.getSubjects();
-
-    if (!subjects) {
-      await insertSubjects(token);
-    } else {
-      console.log('Subjects already exist, did not update subjects')
-    }
-  })
-  .then(async () => {
-    console.log('insert all videos');
-    await insertVideos(token);
-  })
-  .then(() => {
-    console.log('Setup finished');
-    process.exit();
-  });
+setUp();
