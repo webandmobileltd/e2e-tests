@@ -2,8 +2,122 @@ import * as queryString from 'query-string';
 import { By } from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import { TeachersPage } from './TeachersPage';
-import { TeachersVideoDetailsPage } from './TeachersVideoDetailsPage';
+import { acceptDialog } from './AntUtils';
+
+class TeachersPage {
+  public log(message: string) {
+    cy.log(message);
+    return this;
+  }
+
+  public itShowsNotification(text: string) {
+    cy.get('body').should('contain', text);
+    return this;
+  }
+
+  public menu() {
+    return new MenuPage();
+  }
+
+  public inspectCollections(
+    callback: (collections: VideoCollection[]) => void,
+  ) {
+    this.getCollectionCardsFromHtmlElements(
+      cy.get(By.dataQa('collections-side-panel')),
+    )
+      .then(this.extractCollectionsFromHtmlElements)
+      .then(callback);
+    return this;
+  }
+
+  public goToFirstVideo() {
+    cy.get(By.dataQa('video-card'))
+      .first()
+      .click();
+    expect(cy.get(By.dataQa('video-title')));
+
+    return cy
+      .location()
+      .then(location => {
+        const pathname = location.pathname;
+        const parts = pathname.split('/');
+        const id = parts[parts.length - 1];
+        return id;
+      })
+      .then(id => {
+        return new TeachersVideoDetailsPage(id);
+      });
+  }
+
+  protected getCollectionCardsFromHtmlElements(from = cy.get('body')) {
+    return from.get(By.dataQa('collection-card'));
+  }
+
+  protected extractCollectionsFromHtmlElements(
+    videoCards: JQuery<HTMLElement>,
+  ): VideoCollection[] {
+    const collections: VideoCollection[] = [];
+    videoCards.each((idx, el: HTMLElement) => {
+      collections.push({
+        title: el.querySelector(By.dataQa('collection-title'))!.textContent!,
+        numberOfVideos: Number(
+          el.querySelector(By.dataQa('collection-number-of-videos'))!
+            .textContent!,
+        ),
+        bookmarked:
+          el.querySelector(By.dataQa('unbookmark-collection')) !== null,
+      });
+    });
+    return collections;
+  }
+}
+
+class MenuPage {
+  public search(searchQuery: string) {
+    cy.get(By.dataQa('search-input'))
+      .clear()
+      .type(searchQuery)
+      .type('{enter}');
+    return new TeachersHomepage();
+  }
+
+  public goToHomepage() {
+    cy.get(By.dataQa('boclips-logo')).click();
+    return new TeachersHomepage();
+  }
+
+  public goToCollections() {
+    this.openAccountMenu();
+
+    cy.get("[data-qa='video-collection']:visible")
+      .should('be.visible')
+      .click();
+
+    return new CollectionsPage();
+  }
+
+  public goToBookmarkedCollections() {
+    this.openAccountMenu();
+
+    cy.get("[data-qa='bookmarked-collections']:visible").click();
+
+    return this;
+  }
+
+  private openAccountMenu() {
+    cy.get(By.dataQa('account-menu-open') + `:visible`)
+      .should('be.visible')
+      .click();
+
+    return this;
+  }
+
+  public logOut() {
+    this.openAccountMenu();
+    cy.get(By.dataQa('logout-button')).click();
+    acceptDialog();
+  }
+}
 
 export class TeachersHomepage extends TeachersPage {
   private readonly url: string;
@@ -306,33 +420,6 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
-  public goToBookmarkedCollections() {
-    this.openAccountMenu();
-
-    cy.get("[data-qa='bookmarked-collections']:visible").click();
-
-    return this;
-  }
-
-  public goToFirstVideo() {
-    cy.get(By.dataQa('video-card'))
-      .first()
-      .click();
-    expect(cy.get(By.dataQa('video-title')));
-
-    return cy
-      .location()
-      .then(location => {
-        const pathname = location.pathname;
-        const parts = pathname.split('/');
-        const id = parts[parts.length - 1];
-        return id;
-      })
-      .then(id => {
-        return new TeachersVideoDetailsPage(id);
-      });
-  }
-
   public assertRatingOnFirstVideo(rating: number) {
     cy.get(By.dataQa('video-card'))
       .first()
@@ -457,5 +544,191 @@ export class TeachersHomepage extends TeachersPage {
       .should('not.be.visible');
 
     return this;
+  }
+}
+
+export class CollectionsPage extends TeachersPage {
+  public reload() {
+    cy.reload();
+    return this;
+  }
+
+  public isEmpty() {
+    cy.get(By.dataQa('collections-view-empty'));
+    return this;
+  }
+
+  public goToCollectionDetails(collectionTitle: string) {
+    cy.get(
+      `[data-state='${collectionTitle}'][data-qa='collection-card']:visible`,
+    ).click();
+    return new CollectionPage();
+  }
+
+  public deleteCollection(collectionTitle: string) {
+    cy.get(`[data-state='${collectionTitle}'][data-qa='collection-card']`)
+      .get(By.dataQa('delete-collection'))
+      .click();
+    acceptDialog();
+    return this;
+  }
+
+  public inspectCollections(
+    callback: (collections: VideoCollection[]) => void,
+  ) {
+    this.getCollectionCardsFromHtmlElements()
+      .then(this.extractCollectionsFromHtmlElements)
+      .then(callback);
+    return this;
+  }
+}
+
+export class CollectionPage extends TeachersPage {
+  public reload() {
+    cy.reload();
+    return this;
+  }
+
+  public setName(name: string): CollectionPage {
+    cy.get(By.dataQa('collection-edit-button')).click();
+    cy.get(By.dataQa('title-edit'))
+      .clear()
+      .type(name);
+    cy.contains('Save').click();
+    return this;
+  }
+
+  public setVisibility(isPublic: boolean): CollectionPage {
+    cy.get(By.dataQa('collection-edit-button')).click();
+    const visiblityCheckBox = cy.get(By.dataQa('visibility-edit'));
+
+    if (isPublic) {
+      visiblityCheckBox.check();
+    } else {
+      visiblityCheckBox.uncheck();
+    }
+
+    cy.contains('Save').click();
+
+    return this;
+  }
+
+  public itHasCorrectVisiblity(isPublic: boolean): CollectionPage {
+    cy.get(By.dataQa('collection-visibility'))
+      .get(By.dataState(isPublic + ''))
+      .should('exist');
+    return this;
+  }
+
+  public itHasName(name: string): CollectionPage {
+    cy.get(By.dataQa('collection-name')).should('contain', name);
+    return this;
+  }
+
+  public checkA11yOnCollectionPage(threshold: number) {
+    cy.get(By.dataQa('collection-name'));
+    cy.checkA11y(threshold);
+    return this;
+  }
+
+  private itemsHtmlElements() {
+    return cy.get(By.dataQa('video-card'));
+  }
+
+  private extractVideosFromHtmlElements(
+    videoCards: JQuery<HTMLElement>,
+  ): Video[] {
+    const videos: Video[] = [];
+    videoCards.each((idx, el: HTMLElement) => {
+      videos.push({
+        title: el.querySelector(By.dataQa('video-title'))!.textContent!,
+        description: el.querySelector(By.dataQa('video-description'))!
+          .textContent!,
+      });
+    });
+    return videos;
+  }
+
+  public isEmpty() {
+    cy.get(By.dataQa('collection-empty-title'));
+    return this;
+  }
+
+  public inspectItems(callback: (videos: Video[]) => void) {
+    this.itemsHtmlElements()
+      .then(this.extractVideosFromHtmlElements)
+      .then(callback);
+    return this;
+  }
+
+  public removeVideo(index: number) {
+    return this.interactWithItem(index, () =>
+      cy
+        .get('[data-qa="remove-from-collection"]:visible')
+        .should('be.visible')
+        .click(),
+    );
+  }
+
+  private interactWithItem(index: number, callback: () => void) {
+    this.itemsHtmlElements()
+      .eq(index)
+      .scrollIntoView()
+      .within(callback);
+    return this;
+  }
+}
+
+export class TeachersVideoDetailsPage extends TeachersPage {
+  private readonly url: string;
+
+  constructor(id: string) {
+    super();
+    this.url = Cypress.env('TEACHERS_BASE_URL') + '/videos/' + id;
+  }
+
+  public visit() {
+    cy.visit(this.url);
+    return this;
+  }
+
+  public hasTitle() {
+    cy.get(By.dataQa('video-title')).should('not.be.empty');
+    return this;
+  }
+
+  public hasContentPartnerName() {
+    cy.get(By.dataQa('video-content-partner')).should('not.be.empty');
+    return this;
+  }
+
+  public showsTitle(title: string) {
+    cy.get(By.dataQa('video-title')).should('have.text', title);
+    return this;
+  }
+
+  public showsContentPartnerName(contentPartnerName: string) {
+    cy.get(By.dataQa('video-content-partner')).should(
+      'have.text',
+      contentPartnerName,
+    );
+    return this;
+  }
+
+  public showsSubject(subject: string) {
+    cy.get(By.dataQa('video-subject')).should('have.text', subject);
+    return this;
+  }
+
+  public checkA11yOnVideoPage(threshold: number) {
+    cy.get(By.dataQa('video-details'));
+    cy.checkA11y(threshold);
+    return this;
+  }
+
+  public assertRating(rating: number) {
+    cy.get(By.dataQa('rating-score'))
+      .invoke('attr', 'data-state')
+      .should('contain', rating);
   }
 }

@@ -1,8 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
-import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
-import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
-import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
+import { TeachersHomepage } from '../page_objects/teachers/TeacherPages';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
 
@@ -34,14 +31,15 @@ context('B2T Search', () => {
       .visit()
       .searchWithAutocomplete('Min', 'Minute Physics')
       .createCollectionFromVideo(0, collectionTitle)
-      .goToCollections();
-    new CollectionsPage()
+      .menu()
+      .goToCollections()
       .goToCollectionDetails(collectionTitle)
       .setVisibility(true)
-      .goToHomepage();
+      .menu()
+      .goToHomepage()
 
-    homepage
       .log('searching collections')
+      .menu()
       .search(collectionTitle)
       .inspectCollections(collections => {
         expect(collections.length).to.be.greaterThan(
@@ -52,6 +50,7 @@ context('B2T Search', () => {
       })
 
       .log('searching videos')
+      .menu()
       .search(invalidSearchQuery)
       .enterEmail(email)
       .searchWithAutocomplete('Min', 'Minute Physics')
@@ -107,6 +106,7 @@ context('B2T Search', () => {
     homepage
       .visit()
       .logIn(username, password)
+      .menu()
       .search(nonEducationalSearchQuery)
       .noVideosShown();
   });
@@ -124,6 +124,7 @@ context('B2T Search', () => {
       homepage
         .visit()
         .logIn(username, password)
+        .menu()
         .search(queryWithNewsAndNonNews)
         .inspectResults(videos => {
           expect(videos.length).to.be.greaterThan(

@@ -1,9 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import Video from '../page_objects/domain/Video';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
-import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
-import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
-import { TeachersVideoDetailsPage } from '../page_objects/teachers/TeachersVideoDetailsPage';
+import { TeachersHomepage } from '../page_objects/teachers/TeacherPages';
 
 context.skip('Accessibility Checks for Teachers', () => {
   specify('Boclips Teachers is accessible', () => {
@@ -24,18 +20,13 @@ context.skip('Accessibility Checks for Teachers', () => {
       .searchWithAutocomplete(validSearchQuery, 'Minute Physics')
       .checkA11yOnSearchPage(9)
       .createCollectionFromVideo(0, `${collectionName}`)
-      .goToCollections();
-
-    new CollectionsPage().goToCollectionDetails(collectionName);
-
-    new CollectionPage()
+      .menu()
+      .goToCollections()
+      .goToCollectionDetails(collectionName)
       .checkA11yOnCollectionPage(9)
-      .inspectItems((videos: Video[]) => {
-        expect(videos.length).to.be.greaterThan(0);
-        const video: Video = videos[0];
-        new TeachersVideoDetailsPage(video.id as string)
-          .visit()
-          .checkA11yOnVideoPage(6);
-      });
+      .goToFirstVideo()
+      .then(videoDetailsPage =>
+        videoDetailsPage.visit().checkA11yOnVideoPage(6),
+      );
   });
 });

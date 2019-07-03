@@ -1,7 +1,9 @@
 import { v4 as uuid } from 'uuid';
-import { CollectionPage } from '../page_objects/teachers/CollectionPage';
-import { CollectionsPage } from '../page_objects/teachers/CollectionsPage';
-import { TeachersHomepage } from '../page_objects/teachers/TeachersHomepage';
+import {
+  CollectionPage,
+  CollectionsPage,
+  TeachersHomepage,
+} from '../page_objects/teachers/TeacherPages';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
 
@@ -24,15 +26,19 @@ context('Bookmarked collections', () => {
       .logIn(username, password)
       .searchWithAutocomplete(validSearchQuery, expectedCompletion)
       .createCollectionFromVideo(0, `${collectionName}`)
-      .goToCollections();
-
-    new CollectionsPage().goToCollectionDetails(collectionName);
-
-    new CollectionPage().setVisibility(true).logOut();
+      .menu()
+      .goToCollections()
+      .goToCollectionDetails(collectionName)
+      .setVisibility(true)
+      .menu()
+      .logOut();
   });
 
   afterEach(() => {
-    new TeachersHomepage().visit().logOut();
+    new TeachersHomepage()
+      .visit()
+      .menu()
+      .logOut();
   });
 
   // TODO: address flicker before reintroducing
@@ -73,20 +79,19 @@ context('Public collections', () => {
             .visit()
             .goToRegistrationPage()
             .createAccount(username, password)
-            .accountCreated();
-
-          new TeachersHomepage()
+            .accountCreated()
             .visit()
             .logIn(username, password)
+            .menu()
             .search(expectedCompletion)
             .createCollectionFromVideo(0, collectionTitle)
-            .goToCollections();
-
-          new CollectionsPage().goToCollectionDetails(collectionTitle);
-
-          new CollectionPage().setVisibility(true).goToCollections();
-
-          new CollectionsPage().deleteCollection(collectionTitle);
+            .menu()
+            .goToCollections()
+            .goToCollectionDetails(collectionTitle)
+            .setVisibility(true)
+            .menu()
+            .goToCollections()
+            .deleteCollection(collectionTitle);
         },
       );
     });
@@ -104,14 +109,13 @@ context('Collection management', () => {
           const username = `${uuid()}@teacher.com`;
           const password = uuid();
           const collectionName = uuid();
+          const newCollectionName = uuid();
 
           new TeachersHomepage()
             .visit()
             .goToRegistrationPage()
             .createAccount(username, password)
-            .accountCreated();
-
-          new TeachersHomepage()
+            .accountCreated()
             .visit()
             .logIn(username, password)
             .searchWithAutocomplete(validSearchQuery, expectedCompletion)
@@ -121,17 +125,12 @@ context('Collection management', () => {
             .isVideoInCollection(1, collectionName)
             .reload()
             .removeVideoFromCollection(1, collectionName)
-            .goToCollections();
-
-          new CollectionsPage()
+            .menu()
+            .goToCollections()
             .inspectCollections(collections =>
               expect(collections).to.have.length(1),
             )
-            .goToCollectionDetails(collectionName);
-
-          const newCollectionName = uuid();
-
-          new CollectionPage()
+            .goToCollectionDetails(collectionName)
             .setName(newCollectionName)
             .itHasName(newCollectionName)
             .itHasCorrectVisiblity(false)
@@ -146,9 +145,8 @@ context('Collection management', () => {
             .removeVideo(0)
             .reload()
             .isEmpty()
-            .goToCollections();
-
-          new CollectionsPage()
+            .menu()
+            .goToCollections()
             .deleteCollection(newCollectionName)
             .itShowsNotification(`has been deleted`)
             .isEmpty();
