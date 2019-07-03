@@ -37,26 +37,33 @@ context('B2T Search', () => {
           `There are no videos showing`,
         );
       })
+
+      .log('Testing paging')
       .isOnPage(1)
       .goToNextPage()
       .isOnPage(2)
       .goToPreviousPage()
       .isOnPage(1)
-      // Since we're unable to add the subject to the video, we cannot assert the search count
-      // .applySubjectFilter('Biology')
-      // .inspectResults(videos => {
-      //   expect(videos.length).to.be.eq(3, `There are three videos showing`);
-      // })
+
+      .log('Testing duration filter')
+      .applySubjectFilter('Biology')
+      .inspectResults(videos => {
+        expect(videos.length).to.be.eq(3, `There are two videos showing`);
+      })
+      .removeFilterTag('Biology')
+
       .log('Testing duration filter')
       .applyDurationFilter(0, 240)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(9, `There is one video showing`);
       })
+
       .log('Testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(1, `There are two videos showing`);
       })
+
       .log('Testing video rating')
       .rateFirstVideo(2)
       .assertRatingOnFirstVideo(2)

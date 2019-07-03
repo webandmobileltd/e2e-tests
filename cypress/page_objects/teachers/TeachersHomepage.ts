@@ -120,10 +120,20 @@ export class TeachersHomepage extends TeachersPage {
     return this;
   }
 
-  public applySubjectFilter(subject: string) {
+  public applySubjectFilter(subjectName: string) {
     cy.get(By.dataQa('open-filter-modal')).click();
-    this.clickDropDownOption(By.dataQa('subjects'), subject);
-    cy.get('.ant-modal-title').click();
+
+    cy.get('[data-qa="subjects"]')
+      .click()
+      .should('be.visible');
+
+    cy.get(`.ant-select-dropdown-menu-item`)
+      .contains(subjectName)
+      .scrollIntoView()
+      .click();
+
+    cy.get('footer').click();
+
     cy.contains('OK').click();
     cy.get(By.dataQa('open-filter-modal')).should('not.be.visible');
     return this;
@@ -137,6 +147,16 @@ export class TeachersHomepage extends TeachersPage {
 
     return this;
   }
+
+  public removeFilterTag(filterName: string) {
+    cy.get(By.dataQa(`subject-filter-tag`))
+      .contains(filterName)
+      .get(By.dataQa('close-tag'))
+      .click();
+
+    return this;
+  }
+
   private changeQueryParams(newParameters: { [key: string]: string }) {
     cy.location().then(location => {
       const parsedUrl = queryString.parseUrl(location.href);

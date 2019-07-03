@@ -37,21 +37,19 @@ if (
 
 let token = null;
 
+// TODO Rewrite with async/await
 generateToken()
   .then(returnedToken => {
     token = returnedToken;
   })
   .then(async () => {
-    console.log('delete all subjects');
     const subjects = await subjectsApi.getSubjects();
 
-    if (!subjects) return;
-
-    return Promise.all(subjects.map(subject => subjectsApi.deleteSubject(subject.id, token)))
-  })
-  .then(() => {
-    console.log('insert all subjects');
-    return insertSubjects(token);
+    if (!subjects) {
+      await insertSubjects(token);
+    } else {
+      console.log('Subjects already exist, did not update subjects')
+    }
   })
   .then(async () => {
     console.log('insert all videos');
