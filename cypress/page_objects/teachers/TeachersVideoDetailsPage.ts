@@ -53,5 +53,4 @@ export class TeachersVideoDetailsPage extends TeachersPage {
       .invoke('attr', 'data-state')
       .should('contain', rating);
   }
-
 }
