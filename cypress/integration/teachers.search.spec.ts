@@ -45,7 +45,7 @@ context('B2T Search', () => {
       .goToPreviousPage()
       .isOnPage(1)
 
-      .log('Testing duration filter')
+      .log('Testing subject filter')
       .applySubjectFilter('Biology')
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are two videos showing`);
