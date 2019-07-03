@@ -3,7 +3,7 @@ import {
   CollectionPage,
   CollectionsPage,
   TeachersHomepage,
-} from '../page_objects/teachers/TeacherPages';
+} from '../page_objects/teachers';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
 

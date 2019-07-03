@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { TeachersHomepage } from '../page_objects/teachers/TeacherPages';
+import { TeachersHomepage } from '../page_objects/teachers';
 
 context.skip('Accessibility Checks for Teachers', () => {
   specify('Boclips Teachers is accessible', () => {

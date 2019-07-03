@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { TeachersHomepage } from '../page_objects/teachers/TeacherPages';
+import { TeachersHomepage } from '../page_objects/teachers';
 import ViewPort from '../page_objects/types/ViewPort';
 import { sizes } from './viewports';
 
