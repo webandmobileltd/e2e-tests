@@ -20,6 +20,7 @@ context('B2T Search', () => {
     const email = 'test@test.com';
     const homepage = new TeachersHomepage();
     const invalidSearchQuery = 'asdfghjklkjhgf';
+    const nonEducationalSearchQuery = 'Celebrities on the red carpet';
     const collectionTitle = 'Minute Physics';
 
     homepage
@@ -61,6 +62,11 @@ context('B2T Search', () => {
         );
       })
 
+      .log('searching non educational videos')
+      .menu()
+      .search(nonEducationalSearchQuery)
+      .noVideosShown()
+
       .log('testing paging')
       .isOnPage(1)
       .goToNextPage()
@@ -98,17 +104,6 @@ context('B2T Search', () => {
           .hasContentPartnerName()
           .assertRating(2);
       });
-  });
-
-  it('shows only educational videos', () => {
-    const nonEducationalSearchQuery = 'Celebrities on the red carpet';
-    const homepage = new TeachersHomepage();
-    homepage
-      .visit()
-      .logIn(username, password)
-      .menu()
-      .search(nonEducationalSearchQuery)
-      .noVideosShown();
   });
 
   sizes.forEach((size: ViewPort) => {
