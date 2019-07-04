@@ -4,7 +4,8 @@ const Constants = require('./Constants');
 module.exports = {
   insertSubject: insertSubject,
   deleteSubject: deleteSubject,
-  getSubjects: getSubjects
+  getSubjects: getSubjects,
+  getSubjectByName
 };
 
 async function insertSubject(subject, token) {
@@ -47,4 +48,9 @@ async function getSubjects() {
   } else {
     return undefined;
   }
+}
+
+async function getSubjectByName(subjectName) {
+  const subjects = await getSubjects();
+  return subjects.find(s => s.name === subjectName);
 }

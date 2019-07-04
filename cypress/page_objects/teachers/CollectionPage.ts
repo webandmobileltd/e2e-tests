@@ -32,6 +32,24 @@ export class CollectionPage extends TeacherPage {
     return this;
   }
 
+  public setSubject(subject: string): CollectionPage {
+    cy.get(By.dataQa('collection-edit-button')).click();
+
+    cy.get('[data-qa="subjects"]')
+      .click()
+      .should('be.visible');
+
+    cy.get(`.ant-select-dropdown-menu-item`)
+      .contains(subject)
+      .scrollIntoView()
+      .click();
+
+    cy.get('.ant-modal-title').click();
+    cy.contains('Save').click();
+    cy.get('.ant-modal-title').should('not.be.visible');
+    return this;
+  }
+
   public itHasCorrectVisiblity(isPublic: boolean): CollectionPage {
     cy.get(By.dataQa('collection-visibility'))
       .get(By.dataState(isPublic + ''))

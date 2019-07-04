@@ -4,3 +4,4 @@ export * from './TeacherHomepage';
 export * from './CollectionsPage';
 export * from './CollectionPage';
 export * from './TeachersVideoDetailsPage';
+export * from './DiscoverPage';

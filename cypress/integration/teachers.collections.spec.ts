@@ -13,33 +13,33 @@ const expectedCompletion = 'Minute Physics';
 context('Bookmarked collections', () => {
   const collectionName = uuid();
 
-  before(() => {
-    const username = `${uuid()}@boclips.com`;
-    const password = uuid();
+  // before(() => {
+  //   const username = `${uuid()}@boclips.com`;
+  //   const password = uuid();
+  //
+  //   new TeachersHomepage()
+  //     .visit()
+  //     .goToRegistrationPage()
+  //     .createAccount(username, password)
+  //     .accountCreated()
+  //     .visit()
+  //     .logIn(username, password)
+  //     .searchWithAutocomplete(validSearchQuery, expectedCompletion)
+  //     .createCollectionFromVideo(0, `${collectionName}`)
+  //     .menu()
+  //     .goToCollections()
+  //     .goToCollectionDetails(collectionName)
+  //     .setVisibility(true)
+  //     .menu()
+  //     .logOut();
+  // });
 
-    new TeachersHomepage()
-      .visit()
-      .goToRegistrationPage()
-      .createAccount(username, password)
-      .accountCreated()
-      .visit()
-      .logIn(username, password)
-      .searchWithAutocomplete(validSearchQuery, expectedCompletion)
-      .createCollectionFromVideo(0, `${collectionName}`)
-      .menu()
-      .goToCollections()
-      .goToCollectionDetails(collectionName)
-      .setVisibility(true)
-      .menu()
-      .logOut();
-  });
-
-  afterEach(() => {
-    new TeachersHomepage()
-      .visit()
-      .menu()
-      .logOut();
-  });
+  // afterEach(() => {
+  //   new TeachersHomepage()
+  //     .visit()
+  //     .menu()
+  //     .logOut();
+  // });
 
   // TODO: address flicker before reintroducing
   // specify('users can bookmark collections from other users', () => {
@@ -62,39 +62,34 @@ context('Bookmarked collections', () => {
   // });
 });
 
-context('Public collections', () => {
-  context('users can make collections public and private', () => {
-    sizes.forEach((size: ViewPort) => {
-      specify(
-        `public collections journey for: ${
-          size.isMobile ? 'mobile' : 'desktop'
-        } view`,
-        () => {
-          cy.viewport(size.width, size.height);
-          const collectionTitle = uuid();
-          const username = `${uuid()}@boclips.com`;
-          const password = uuid();
+context('Discover collections', () => {
+  specify('public collections can be discovered', () => {
+    const collectionTitle = uuid();
+    const username = `${uuid()}@boclips.com`;
+    const password = uuid();
 
-          new TeachersHomepage()
-            .visit()
-            .goToRegistrationPage()
-            .createAccount(username, password)
-            .accountCreated()
-            .visit()
-            .logIn(username, password)
-            .menu()
-            .search(expectedCompletion)
-            .createCollectionFromVideo(0, collectionTitle)
-            .menu()
-            .goToCollections()
-            .goToCollectionDetails(collectionTitle)
-            .setVisibility(true)
-            .menu()
-            .goToCollections()
-            .deleteCollection(collectionTitle);
-        },
-      );
-    });
+    new TeachersHomepage()
+      .visit()
+      .goToRegistrationPage()
+      .createAccount(username, password)
+      .accountCreated()
+      .visit()
+      .logIn(username, password)
+      .menu()
+      .search(expectedCompletion)
+      .createCollectionFromVideo(0, collectionTitle)
+      .menu()
+      .goToCollections()
+      .goToCollectionDetails(collectionTitle)
+      .setVisibility(true)
+      .setSubject('Biology')
+      .menu()
+      .goToHomepage()
+      .goToDiscoverBySubject('Biology')
+      .hasCollectionTitle(collectionTitle)
+      .menu()
+      .goToCollections()
+      .deleteCollection(collectionTitle);
   });
 });
 

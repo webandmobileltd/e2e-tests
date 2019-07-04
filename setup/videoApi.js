@@ -11,7 +11,7 @@ module.exports = async function insertVideo(video, token) {
     }
   });
 
-  console.log(`Video creation status:, ${response.statusText} ${response.status}`);
+  console.log(`Video creation status: ${response.status}`);
 };
 
 

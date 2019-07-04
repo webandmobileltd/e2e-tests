@@ -68,4 +68,15 @@ export class TeacherPage {
     });
     return collections;
   }
+
+  protected clickDropDownOption(dropdown: string, option: string) {
+    cy.get(dropdown)
+      .click()
+      .should('be.visible');
+
+    cy.contains(option)
+      .scrollIntoView()
+      .should('be.visible')
+      .click();
+  }
 }

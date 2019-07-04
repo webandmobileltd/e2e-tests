@@ -2,7 +2,7 @@ import * as queryString from 'query-string';
 import { By } from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import { TeacherPage } from './index';
+import { DiscoverPage, TeacherPage } from './index';
 
 export class TeachersHomepage extends TeacherPage {
   private readonly url: string;
@@ -45,17 +45,6 @@ export class TeachersHomepage extends TeacherPage {
   public reload() {
     cy.reload();
     return this;
-  }
-
-  private clickDropDownOption(dropdown: string, option: string) {
-    cy.get(dropdown)
-      .click()
-      .should('be.visible');
-
-    cy.contains(option)
-      .scrollIntoView()
-      .should('be.visible')
-      .click();
   }
 
   public goToRegistrationPage() {
@@ -429,5 +418,12 @@ export class TeachersHomepage extends TeacherPage {
       .should('not.be.visible');
 
     return this;
+  }
+
+  public goToDiscoverBySubject(subject: string) {
+    cy.get(By.dataQa('discipline-subject'))
+      .contains(subject)
+      .click();
+    return new DiscoverPage();
   }
 }

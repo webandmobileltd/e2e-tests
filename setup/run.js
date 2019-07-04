@@ -2,9 +2,11 @@ const Constants = require('./Constants');
 
 const generateToken = require('./generateToken');
 const subjectsApi = require('./subjectApi');
+const disciplinesApi = require('./disciplineApi');
 const insertVideo = require('./videoApi');
 
 const subjectFixtures = require('./fixture/subjects');
+const disciplineFixtures = require('./fixture/disciplines');
 const instructionalVideos = require('./fixture/instructional_videos');
 const stockVideos = require('./fixture/stock_videos');
 const newsVideos = require('./fixture/news_videos');
@@ -29,6 +31,10 @@ async function insertSubjects(token) {
   return Promise.all(subjectFixtures.map(subject => subjectsApi.insertSubject(subject, token)));
 }
 
+async function insertDisciplines(token) {
+  return Promise.all(disciplineFixtures.map(discipline => disciplinesApi.insertDiscipline(discipline, token)));
+}
+
 async function allVideos() {
   const allInterpolatedVideos = await instructionalVideos();
 
@@ -37,12 +43,19 @@ async function allVideos() {
 
 async function setUp() {
   const token = await generateToken();
-  const subjects = await subjectsApi.getSubjects();
 
+  const subjects = await subjectsApi.getSubjects();
   if (!subjects) {
     await insertSubjects(token);
   } else {
     console.log('Subjects already exist, did not update subjects');
+  }
+
+  const disciplines = await disciplinesApi.getDisciplines(token);
+  if (!disciplines) {
+    await insertDisciplines(token);
+  } else {
+    console.log('Disciplines already exist, did not update disciplines');
   }
 
   console.log('insert all videos');
