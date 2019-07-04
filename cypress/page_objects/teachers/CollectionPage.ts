@@ -47,6 +47,8 @@ export class CollectionPage extends TeacherPage {
     cy.get('.ant-modal-title').click();
     cy.contains('Save').click();
     cy.get('.ant-modal-title').should('not.be.visible');
+
+    cy.get(By.dataQa('subject')).should('contain', subject);
     return this;
   }
 

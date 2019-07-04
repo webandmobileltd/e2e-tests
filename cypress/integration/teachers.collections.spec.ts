@@ -96,11 +96,11 @@ context('Collections', () => {
       .goToCollections()
       .inspectCollections(collections => expect(collections).to.have.length(1))
       .goToCollectionDetails(collectionTitle)
-      .setName(newCollectionTitle)
       .setVisibility(true)
       .setSubject('Biology')
-      .itHasName(newCollectionTitle)
+      .setName(newCollectionTitle)
       .itHasCorrectVisiblity(true)
+      .itHasName(newCollectionTitle)
 
       .log('verifying and managing videos')
       .inspectItems(videos => expect(videos).to.have.length(1))
