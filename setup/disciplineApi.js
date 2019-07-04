@@ -33,7 +33,7 @@ async function insertDiscipline(discipline, token) {
       }
     }).then(response => {
       console.log(
-        `Subjects associated to discipline: ${response.status}`
+        `Subjects associated with discipline: ${response.status}`
       );
     });
   });

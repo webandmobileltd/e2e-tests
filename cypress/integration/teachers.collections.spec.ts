@@ -62,91 +62,65 @@ context('Bookmarked collections', () => {
   // });
 });
 
-context('Discover collections', () => {
-  specify('public collections can be discovered', () => {
+context('Collections', () => {
+  specify('collection journey', () => {
     const collectionTitle = uuid();
+    const newCollectionTitle = uuid();
     const username = `${uuid()}@boclips.com`;
     const password = uuid();
 
     new TeachersHomepage()
+      .log('creating an account')
       .visit()
       .goToRegistrationPage()
       .createAccount(username, password)
       .accountCreated()
+
+      .log('logging in')
       .visit()
       .logIn(username, password)
+
+      .log('creating a collection')
       .menu()
       .search(expectedCompletion)
       .createCollectionFromVideo(0, collectionTitle)
+
+      .log('managing collection videos')
+      .addVideoToCollection(1, collectionTitle)
+      .isVideoInCollection(1, collectionTitle)
+      .reload()
+      .removeVideoFromCollection(1, collectionTitle)
+
+      .log('editing a collection')
       .menu()
       .goToCollections()
+      .inspectCollections(collections => expect(collections).to.have.length(1))
       .goToCollectionDetails(collectionTitle)
+      .setName(newCollectionTitle)
       .setVisibility(true)
       .setSubject('Biology')
+      .itHasName(newCollectionTitle)
+      .itHasCorrectVisiblity(true)
+
+      .log('verifying and managing videos')
+      .inspectItems(videos => expect(videos).to.have.length(1))
+      .reload()
+      .itHasName(newCollectionTitle)
+      .inspectItems(videos => expect(videos).to.have.length(1))
+      .removeVideo(0)
+      .isEmpty()
+      .reload()
+      .isEmpty()
+
+      .log('verifying collection in discipline subject page')
       .menu()
       .goToHomepage()
       .goToDiscoverBySubject('Biology')
-      .hasCollectionTitle(collectionTitle)
+      .hasCollectionTitle(newCollectionTitle)
+
+      .log('deleting a collection')
       .menu()
       .goToCollections()
-      .deleteCollection(collectionTitle);
-  });
-});
-
-context('Collection management', () => {
-  context('users can edit collections', () => {
-    sizes.forEach((size: ViewPort) => {
-      specify(
-        `collections journey for: ${size.isMobile ? 'mobile' : 'desktop'} view`,
-        () => {
-          cy.viewport(size.width, size.height);
-
-          const username = `${uuid()}@teacher.com`;
-          const password = uuid();
-          const collectionName = uuid();
-          const newCollectionName = uuid();
-
-          new TeachersHomepage()
-            .visit()
-            .goToRegistrationPage()
-            .createAccount(username, password)
-            .accountCreated()
-            .visit()
-            .logIn(username, password)
-            .searchWithAutocomplete(validSearchQuery, expectedCompletion)
-            .createCollectionFromVideo(0, collectionName)
-            .isVideoInCollection(0, collectionName)
-            .addVideoToCollection(1, collectionName)
-            .isVideoInCollection(1, collectionName)
-            .reload()
-            .removeVideoFromCollection(1, collectionName)
-            .menu()
-            .goToCollections()
-            .inspectCollections(collections =>
-              expect(collections).to.have.length(1),
-            )
-            .goToCollectionDetails(collectionName)
-            .setName(newCollectionName)
-            .itHasName(newCollectionName)
-            .itHasCorrectVisiblity(false)
-            .setVisibility(true)
-            .itHasCorrectVisiblity(true)
-            .setVisibility(false)
-            .itHasCorrectVisiblity(false)
-            .inspectItems(videos => expect(videos).to.have.length(1))
-            .reload()
-            .itHasName(newCollectionName)
-            .inspectItems(videos => expect(videos).to.have.length(1))
-            .removeVideo(0)
-            .reload()
-            .isEmpty()
-            .menu()
-            .goToCollections()
-            .deleteCollection(newCollectionName)
-            .itShowsNotification(`has been deleted`)
-            .isEmpty();
-        },
-      );
-    });
+      .deleteCollection(newCollectionTitle);
   });
 });

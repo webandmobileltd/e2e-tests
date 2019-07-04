@@ -23,7 +23,7 @@ context('B2T Search', () => {
     const collectionTitle = 'Minute Physics';
 
     homepage
-      .log('log in')
+      .log('logging in')
       .visit()
       .logIn(username, password)
 
@@ -61,33 +61,33 @@ context('B2T Search', () => {
         );
       })
 
-      .log('Testing paging')
+      .log('testing paging')
       .isOnPage(1)
       .goToNextPage()
       .isOnPage(2)
       .goToPreviousPage()
       .isOnPage(1)
 
-      .log('Testing subject filter')
+      .log('testing subject filter')
       .applySubjectFilter('Biology')
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are two videos showing`);
       })
       .removeFilterTag('Biology')
 
-      .log('Testing duration filter')
+      .log('testing duration filter')
       .applyDurationFilter(0, 240)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(9, `There is one video showing`);
       })
 
-      .log('Testing age range filter')
+      .log('testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(1, `There are two videos showing`);
       })
 
-      .log('Testing video rating')
+      .log('testing video rating')
       .rateFirstVideo(2)
       .assertRatingOnFirstVideo(2)
       .goToFirstVideo()
