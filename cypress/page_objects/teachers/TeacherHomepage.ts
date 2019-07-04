@@ -121,7 +121,7 @@ export class TeachersHomepage extends TeacherPage {
       .scrollIntoView()
       .click();
 
-    cy.get('footer').click();
+    cy.get('.ant-modal-title').click();
 
     cy.contains('OK').click();
     cy.get(By.dataQa('open-filter-modal')).should('not.be.visible');
