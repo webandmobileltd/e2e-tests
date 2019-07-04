@@ -62,17 +62,17 @@ context('B2T Search', () => {
         );
       })
 
-      .log('searching non educational videos')
-      .menu()
-      .search(nonEducationalSearchQuery)
-      .noVideosShown()
-
       .log('testing paging')
       .isOnPage(1)
       .goToNextPage()
       .isOnPage(2)
       .goToPreviousPage()
       .isOnPage(1)
+
+      .log('searching non educational videos')
+      .menu()
+      .search(nonEducationalSearchQuery)
+      .noVideosShown()
 
       .log('testing subject filter')
       .applySubjectFilter('Biology')
