@@ -58,7 +58,7 @@ export class TeachersHomepage extends TeacherPage {
     this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
     cy.get('footer').click();
 
-    this.clickDropDownOption(By.dataQa('ageRange'), '3 - 5');
+    this.clickDropDownOption(By.dataQa('ageRange'), '3-5');
     cy.get('footer').click();
 
     cy.get(By.dataQa('email')).type(username);
