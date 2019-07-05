@@ -138,7 +138,7 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public removeFilterTag(filterName: string) {
-    cy.get(By.dataQa(`subject-filter-tag`))
+    cy.get(By.dataQa(`filter-tag`))
       .contains(filterName)
       .get(By.dataQa('close-tag'))
       .click();
