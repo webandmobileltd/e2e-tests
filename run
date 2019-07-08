@@ -33,7 +33,7 @@ extract () {
 : ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
 : ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
 : ${CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL:="https://ltiapps.net/test/tc.php"}
-: ${CYPRESS_LTI_VIDEO_LAUNCH_URL:="https://lti.testing-boclips.com/v1p1/videos"}
+: ${CYPRESS_LTI_LAUNCH_URL:="https://lti.testing-boclips.com/v1p1"}
 : ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
 : ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
 : ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
@@ -57,7 +57,7 @@ export CYPRESS_OPERATOR_PASSWORD
 export CYPRESS_LTI_CONSUMER_KEY
 export CYPRESS_LTI_CONSUMER_SECRET
 export CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL
-export CYPRESS_LTI_VIDEO_LAUNCH_URL
+export CYPRESS_LTI_LAUNCH_URL
 
 node setup/run.js
 

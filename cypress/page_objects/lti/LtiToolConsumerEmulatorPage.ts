@@ -1,3 +1,5 @@
+import { By } from '../../support/By';
+
 export class LtiToolConsumerEmulatorPage {
   private readonly url: string;
 
@@ -10,10 +12,10 @@ export class LtiToolConsumerEmulatorPage {
     return this;
   }
 
-  public provideLaunchRequestData(videoId: string) {
+  public provideLaunchRequestData(resourcePath: string) {
     cy.get('[name="endpoint"]')
       .clear()
-      .type(`${Cypress.env('LTI_VIDEO_LAUNCH_URL')}/${videoId}`);
+      .type(`${Cypress.env('LTI_LAUNCH_URL')}${resourcePath}`);
     cy.get('[name="key"]')
       .clear()
       .type(Cypress.env('LTI_CONSUMER_KEY'));
@@ -37,14 +39,44 @@ export class LtiToolConsumerEmulatorPage {
   }
 
   public hasLoadedBoclipsPlayer() {
+    this.withinIframe(
+      By.dataBoclipsPlayerInitialised(),
+      (initialisedPlayer: Cypress.Chainable) =>
+        initialisedPlayer.should('be.visible'),
+    );
+
+    return this;
+  }
+
+  public hasLoadedCollectionsPage() {
+    this.withinIframe(
+      By.dataQa('collectionTitle'),
+      (collectionTitle: Cypress.Chainable) =>
+        collectionTitle.should('be.visible'),
+    );
+
+    return this;
+  }
+
+  public selectFirstVideoTile() {
+    this.withinIframe(By.dataQa('videoTile'), (videoTile: Cypress.Chainable) =>
+      videoTile.click(),
+    );
+
+    return this;
+  }
+
+  private withinIframe(
+    selector: string,
+    handleElement: (element: Cypress.Chainable) => void,
+  ) {
     cy.get('iframe')
       .then({ timeout: 30000 }, iframe => {
         return new Promise(resolve => {
           const intervalHandle = setInterval(() => {
-            const isPlayerRendered =
-              iframe.contents().find('[data-boclips-player-initialised=true]')
-                .length > 0;
-            if (isPlayerRendered) {
+            const isElementRendered =
+              iframe.contents().find(selector).length > 0;
+            if (isElementRendered) {
               clearInterval(intervalHandle);
               resolve(iframe.contents().find('body')[0]);
             }
@@ -52,9 +84,7 @@ export class LtiToolConsumerEmulatorPage {
         });
       })
       .then(loadedIframeBody => {
-        cy.wrap(loadedIframeBody)
-          .find('[data-boclips-player-initialised=true]')
-          .should('be.visible');
+        handleElement(cy.wrap(loadedIframeBody).find(selector));
       });
 
     return this;
