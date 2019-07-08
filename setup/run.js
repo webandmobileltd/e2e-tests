@@ -4,11 +4,14 @@ const generateToken = require('./generateToken');
 const subjectsApi = require('./subjectApi');
 const disciplinesApi = require('./disciplineApi');
 const collectionsApi = require('./collectionApi');
-const insertVideo = require('./videoApi');
+const { insertVideo, findVideos } = require('./videoApi');
+
+const { insertCollection, findOneCollectionId, addVideoToCollection } = require('./collectionApi');
 
 const subjectFixtures = require('./fixture/subjects');
 const disciplineFixtures = require('./fixture/disciplines');
 const collectionFixtures = require('./fixture/collections');
+const ltiCollectionFixture = require('./fixture/lti_collection');
 const instructionalVideos = require('./fixture/instructional_videos');
 const stockVideos = require('./fixture/stock_videos');
 const newsVideos = require('./fixture/news_videos');
@@ -38,7 +41,17 @@ async function insertDisciplines(token) {
 }
 
 async function insertCollections(token) {
-  return Promise.all(collectionFixtures.map(collection => collectionsApi.insertCollection(collection, token)));
+  await Promise.all(collectionFixtures.map(collection => insertCollection(collection, token)));
+  await insertLtiCollection(token)
+}
+
+async function insertLtiCollection(token) {
+  await insertCollection(ltiCollectionFixture, token);
+  const ltiCollectionId = await findOneCollectionId(ltiCollectionFixture.title, token);
+  return findVideos('Minute Physics', token)
+    .then(videos => {
+      return Promise.all(videos.map(video => addVideoToCollection(ltiCollectionId, video.id, token)))
+    })
 }
 
 async function allVideos() {
@@ -73,6 +86,8 @@ async function setUp() {
 
   console.log('insert all videos');
   await insertVideos(token);
+
+  await insertCollections(token);
 
   console.log('Setup finished');
   process.exit();
