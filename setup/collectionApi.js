@@ -31,6 +31,7 @@ async function getCollections(token) {
     }
   });
   const payload = await response.json();
+
   if (payload && payload._embedded && payload._embedded.collections) {
     return payload._embedded.collections;
   } else {

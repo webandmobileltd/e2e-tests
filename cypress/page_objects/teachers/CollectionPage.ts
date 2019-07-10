@@ -48,7 +48,9 @@ export class CollectionPage extends TeacherPage {
     cy.contains('Save').click();
     cy.get('.ant-modal-title').should('not.be.visible');
 
-    cy.get(By.dataQa('subject')).should('contain', subject);
+    cy.get(By.dataQa('subject'))
+      .get(By.dataQa('filter-tag'))
+      .should('contain', subject);
     return this;
   }
 
