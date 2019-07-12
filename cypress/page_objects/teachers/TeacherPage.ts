@@ -32,7 +32,7 @@ export class TeacherPage {
     cy.get(By.dataQa('video-card'))
       .first()
       .click();
-    expect(cy.get(By.dataQa('video-title')));
+    cy.get(By.dataQa('video-details-page')).should('exist');
 
     return cy
       .location()
