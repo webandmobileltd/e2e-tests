@@ -31,6 +31,7 @@ export class TeacherPage {
   public goToFirstVideo() {
     cy.get(By.dataQa('video-card'))
       .first()
+      .find(By.dataQa('video-title'))
       .click();
     cy.get(By.dataQa('video-details-page')).should('exist');
 

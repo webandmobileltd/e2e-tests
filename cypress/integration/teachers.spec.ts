@@ -106,7 +106,7 @@ context('Teachers App', () => {
       .removeFilterTag('3-11')
 
       .log('testing video rating')
-      .rateFirstVideo(2)
+      .rateVideo(2)
       .assertRatingOnFirstVideo(2)
       .goToFirstVideo()
       .then(videoDetailsPage => {

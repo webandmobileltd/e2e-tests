@@ -303,10 +303,9 @@ export class TeachersHomepage extends TeacherPage {
     return this;
   }
 
-  public rateFirstVideo(rating: number) {
-    cy.get(By.dataQa('video-card'))
+  public rateVideo(rating: number) {
+    cy.get(By.dataQa('rating-video-button'))
       .first()
-      .find(By.dataQa('rating-video-button'))
       .click();
 
     cy.get(By.dataQa('rate-video'))
