@@ -77,17 +77,15 @@ async function setUp() {
     console.log('Disciplines already exist, did not update disciplines');
   }
 
+  console.log('insert all videos');
+  await insertVideos(token);
+
   const collections = await collectionsApi.getCollections(token);
   if(!collections) {
     await insertCollections(token)
   } else {
     console.log('Collections already exist, did not update collections');
   }
-
-  console.log('insert all videos');
-  await insertVideos(token);
-
-  await insertCollections(token);
 
   console.log('Setup finished');
   process.exit();
