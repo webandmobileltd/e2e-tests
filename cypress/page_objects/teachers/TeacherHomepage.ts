@@ -388,15 +388,15 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public bookmarkCollection(title: string) {
-    cy.get(By.dataState(title, 'collection-card'))
+    this.getFirstCollectionCardBy(title)
       .find(By.dataQa('bookmark-collection'))
       .click();
 
-    cy.get(By.dataState(title, 'collection-card'))
+    this.getFirstCollectionCardBy(title)
       .find(By.dataQa('unbookmark-collection'))
       .should('be.visible');
 
-    cy.get(By.dataState(title, 'collection-card'))
+    this.getFirstCollectionCardBy(title)
       .find(By.dataQa('bookmark-collection'))
       .should('not.be.visible');
 
@@ -404,15 +404,15 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public unbookmarkCollection(title: string) {
-    cy.get(By.dataState(title, 'collection-card'))
+    this.getFirstCollectionCardBy(title)
       .find(By.dataQa('unbookmark-collection'))
       .click();
 
-    cy.get(By.dataState(title, 'collection-card'))
+    this.getFirstCollectionCardBy(title)
       .find(By.dataQa('bookmark-collection'))
       .should('be.visible');
 
-    cy.get(By.dataState(title, 'collection-card'))
+    this.getFirstCollectionCardBy(title)
       .find(By.dataQa('unbookmark-collection'))
       .should('not.be.visible');
 
@@ -424,5 +424,9 @@ export class TeachersHomepage extends TeacherPage {
       .contains(subject)
       .click();
     return new DiscoverPage();
+  }
+
+  private getFirstCollectionCardBy(title: string): Cypress.Chainable {
+    return cy.get(By.dataState(title, 'collection-card')).first();
   }
 }
