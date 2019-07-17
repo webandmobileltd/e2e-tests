@@ -17,7 +17,7 @@ export class MenuPage {
   }
 
   public goToCollections() {
-    cy.get("[data-qa='my-videos']").click();
+    cy.get("[data-qa='my-videos']:visible").click();
 
     return new CollectionsPage();
   }
