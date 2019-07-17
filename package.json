@@ -9,7 +9,8 @@
     "cypress:run": "./node_modules/.bin/cypress run",
     "lint": "tslint -c tslint.json -p .",
     "lint:fix": "npm run lint -- --fix",
-    "compile": "tsc -p . --noEmit"
+    "compile": "tsc -p . --noEmit",
+    "audit-ci": "audit-ci --config audit-ci.json"
   },
   "author": "Boclippas",
   "license": "ISC",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/cypress-axe": "^0.4.0",
     "@types/query-string": "^6.3.0",
+    "audit-ci": "^2.2.0",
     "axe-core": "^3.2.2",
     "cypress-axe": "^0.4.1",
     "prettier": "^1.16.4",

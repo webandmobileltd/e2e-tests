@@ -5,7 +5,7 @@ set -e
 git pull -r
 
 npm i
-npm audit --audit-level moderate
+npm run audit-ci
 npm run compile
 npm run lint
 
