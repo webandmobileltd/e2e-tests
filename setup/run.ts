@@ -110,10 +110,9 @@ async function setUp() {
   } else {
     console.log('Collections already exist, did not update collections');
   }
-
-  process.exit();
 }
 
 setUp().then(() => {
   console.log('Setup finished');
+  process.exit();
 });
