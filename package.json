@@ -5,6 +5,7 @@
   "main": "test.js",
   "scripts": {
     "test": "test",
+    "cypress:setup": "ts-node setup/run.ts",
     "cypress:open": "./node_modules/.bin/cypress open",
     "cypress:run": "./node_modules/.bin/cypress run",
     "lint": "tslint -c tslint.json -p .",
@@ -16,16 +17,18 @@
   "license": "ISC",
   "dependencies": {
     "@cypress/webpack-preprocessor": "^2.0.1",
-    "@types/node-fetch": "^2.1.4",
     "@types/uuid": "^3.4.4",
     "cypress": "^3.4.0",
     "node-fetch": "^2.3.0",
     "ts-loader": "^4.4.2",
+    "ts-node": "^8.3.0",
     "typescript": "^3.0.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/cypress-axe": "^0.4.0",
+    "@types/node": "^12.6.6",
+    "@types/node-fetch": "^2.3.7",
     "@types/query-string": "^6.3.0",
     "audit-ci": "^2.2.0",
     "axe-core": "^3.2.2",

@@ -1,13 +1,8 @@
-// @ts-ignore
 import { findOneCollectionId } from '../../setup/collectionApi';
-// @ts-ignore
-import * as instructionalVideos from '../../setup/fixture/instructional_videos';
-// @ts-ignore
-import * as ltiCollection from '../../setup/fixture/lti_collection';
-// @ts-ignore
-import * as generateToken from '../../setup/generateToken';
-// @ts-ignore
-import { findOneVideo } from '../../setup/videoApi';
+import { ltiCollectionFixture } from '../../setup/fixture/collections';
+import { getInstructionalVideoFixtures } from '../../setup/fixture/videos';
+import { generateToken } from '../../setup/generateToken';
+import { findOneVideoId } from '../../setup/videoApi';
 
 import { LtiToolConsumerEmulatorPage } from '../page_objects/lti/LtiToolConsumerEmulatorPage';
 
@@ -20,19 +15,22 @@ beforeEach(() => {
   return generateToken()
     .then(async (freshToken: string) => {
       token = freshToken;
-      const allInstructionalVideos = await instructionalVideos();
-      return findOneVideo(allInstructionalVideos[0].title, token);
+      const allInstructionalVideos = await getInstructionalVideoFixtures();
+      return findOneVideoId(allInstructionalVideos[0].title, token);
     })
     .then((returnedVideoId: string) => {
       videoId = returnedVideoId;
     })
     .then(async () => {
-      collectionId = await findOneCollectionId(ltiCollection.title, token);
+      collectionId = await findOneCollectionId(
+        ltiCollectionFixture.title,
+        token,
+      );
     });
 });
 
 context('LTI', () => {
-  it('Launching a single video', () => {
+  it('Launching a single videos', () => {
     new LtiToolConsumerEmulatorPage()
       .visit()
       .provideLaunchRequestData(`/videos/${videoId}`)

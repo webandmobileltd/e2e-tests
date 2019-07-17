@@ -1,0 +1,35 @@
+export interface SubjectFixture {
+  name: string;
+}
+
+export const subjectFixtures: SubjectFixture[] = [
+  { name: 'Arabic' },
+  { name: 'Art' },
+  { name: 'Art History' },
+  { name: 'Biology' },
+  { name: 'Business and Economics' },
+  { name: 'Chemistry' },
+  { name: 'Computing' },
+  { name: 'Design and technology' },
+  { name: 'Early Childhood' },
+  { name: 'Food and Health' },
+  { name: 'French' },
+  { name: 'Geography' },
+  { name: 'German' },
+  { name: 'Government and Politics' },
+  { name: 'History' },
+  { name: 'Literature' },
+  { name: 'Mandarin' },
+  { name: 'Mathematics' },
+  { name: 'Performing Arts' },
+  { name: 'Philosophy and Religion' },
+  { name: 'Physics' },
+  { name: 'Psychology' },
+  { name: 'Reading and writing' },
+  { name: 'Science' },
+  { name: 'SEN' },
+  { name: 'Social and emotional aspects of learning' },
+  { name: 'Sociology' },
+  { name: 'Spanish' },
+  { name: 'Teacher Training' },
+];

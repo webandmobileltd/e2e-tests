@@ -59,8 +59,8 @@ export class LtiToolConsumerEmulatorPage {
   }
 
   public selectFirstVideoTile() {
-    this.withinIframe(By.dataQa('videoTile'), (videoTile: Cypress.Chainable) =>
-      videoTile.click(),
+    this.withinIframe(By.dataQa('videoTile'), (videoTiles: Cypress.Chainable) =>
+      videoTiles.first().click(),
     );
 
     return this;
