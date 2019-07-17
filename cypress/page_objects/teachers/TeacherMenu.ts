@@ -17,11 +17,7 @@ export class MenuPage {
   }
 
   public goToCollections() {
-    this.openAccountMenu();
-
-    cy.get("[data-qa='video-collection']:visible")
-      .should('be.visible')
-      .click();
+    cy.get("[data-qa='my-videos']").click();
 
     return new CollectionsPage();
   }
