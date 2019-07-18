@@ -2,10 +2,10 @@
 
 set -e
 
-cwd="$(cd "$(dirname $0)" && pwd)"
+cwd="$(cd "$(dirname "$0")" && pwd)"
 
-CYPRESS_BACKOFFICE_USERNAME="$(lpass show e2e-backoffice-testing --username)"
-CYPRESS_BACKOFFICE_PASSWORD="$(lpass show e2e-backoffice-testing --password)"
+CYPRESS_BACKOFFICE_USERNAME="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-username"]')"
+CYPRESS_BACKOFFICE_PASSWORD="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-password"]')"
 CYPRESS_FRONTEND_USERNAME="$(lpass show e2e-frontend-testing --username)"
 CYPRESS_FRONTEND_PASSWORD="$(lpass show e2e-frontend-testing --password)"
 CYPRESS_OPERATOR_USERNAME="$(lpass show operator-testing --username)"

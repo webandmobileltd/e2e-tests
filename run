@@ -23,25 +23,21 @@ case "$1-$2" in
   exit 1
 esac
 
-extract () {
-    echo "$1" | awk -F'=' "/^$2/ { print \$2 }"
-}
-
-: ${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}
-: ${CYPRESS_API_BASE_URL:="https://api.testing-boclips.com"}
-: ${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}
-: ${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}
-: ${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}
-: ${CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL:="https://ltiapps.net/test/tc.php"}
-: ${CYPRESS_LTI_LAUNCH_URL:="https://lti.testing-boclips.com/v1p1"}
-: ${CYPRESS_BACKOFFICE_USERNAME:="$(lpass show e2e-backoffice-testing --username)"}
-: ${CYPRESS_BACKOFFICE_PASSWORD:="$(lpass show e2e-backoffice-testing --password)"}
-: ${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}
-: ${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}
-: ${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}
-: ${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}
-: ${CYPRESS_LTI_CONSUMER_KEY:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_KEY)"}
-: ${CYPRESS_LTI_CONSUMER_SECRET:="$(extract "$(lpass show lti-testing-env --notes)" BOCLIPS_LTI_V1P1_CONSUMER_SECRET)"}
+: "${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}"
+: "${CYPRESS_API_BASE_URL:="https://api.testing-boclips.com"}"
+: "${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}"
+: "${CYPRESS_FRONTEND_BASE_URL:="https://publishers.testing-boclips.com"}"
+: "${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}"
+: "${CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL:="https://ltiapps.net/test/tc.php"}"
+: "${CYPRESS_LTI_LAUNCH_URL:="https://lti.testing-boclips.com/v1p1"}"
+: "${CYPRESS_BACKOFFICE_USERNAME:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-username"]')"}"
+: "${CYPRESS_BACKOFFICE_PASSWORD:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-password"]')"}"
+: "${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}"
+: "${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}"
+: "${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}"
+: "${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}"
+: "${CYPRESS_LTI_CONSUMER_KEY:="$(decoded-secret boclips.lti concourse-main | jq -r '.["consumer-key"]')"}"
+: "${CYPRESS_LTI_CONSUMER_SECRET:="$(decoded-secret boclips.lti concourse-main | jq -r '.["consumer-secret"]')"}"
 
 export CYPRESS_API_BASE_URL
 export CYPRESS_TOKEN_URL
