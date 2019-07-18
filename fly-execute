@@ -4,12 +4,12 @@ set -e
 
 cwd="$(cd "$(dirname "$0")" && pwd)"
 
-CYPRESS_BACKOFFICE_USERNAME="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-username"]')"
-CYPRESS_BACKOFFICE_PASSWORD="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-password"]')"
-CYPRESS_FRONTEND_USERNAME="$(decoded-secret boclips.e2e concourse-main | jq -r '.["frontend-username"]')"
-CYPRESS_FRONTEND_PASSWORD="$(decoded-secret boclips.e2e concourse-main | jq -r '.["frontend-password"]')"
-CYPRESS_OPERATOR_USERNAME="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-username"]')"
-CYPRESS_OPERATOR_PASSWORD="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-password"]')"
+CYPRESS_BACKOFFICE_USERNAME="$(get-k8s-concourse-secret boclips e2e backoffice-username)"
+CYPRESS_BACKOFFICE_PASSWORD="$(get-k8s-concourse-secret boclips e2e backoffice-password)"
+CYPRESS_FRONTEND_USERNAME="$(get-k8s-concourse-secret boclips e2e frontend-username)"
+CYPRESS_FRONTEND_PASSWORD="$(get-k8s-concourse-secret boclips e2e frontend-password)"
+CYPRESS_OPERATOR_USERNAME="$(get-k8s-concourse-secret boclips operator testing-username)"
+CYPRESS_OPERATOR_PASSWORD="$(get-k8s-concourse-secret boclips operator testing-password)"
 
 export CYPRESS_BACKOFFICE_USERNAME
 export CYPRESS_BACKOFFICE_PASSWORD

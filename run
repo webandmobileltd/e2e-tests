@@ -30,14 +30,14 @@ esac
 : "${CYPRESS_TEACHERS_BASE_URL:="https://teachers.testing-boclips.com"}"
 : "${CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL:="https://ltiapps.net/test/tc.php"}"
 : "${CYPRESS_LTI_LAUNCH_URL:="https://lti.testing-boclips.com/v1p1"}"
-: "${CYPRESS_BACKOFFICE_USERNAME:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-username"]')"}"
-: "${CYPRESS_BACKOFFICE_PASSWORD:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-password"]')"}"
-: "${CYPRESS_FRONTEND_USERNAME:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["frontend-username"]')"}"
-: "${CYPRESS_FRONTEND_PASSWORD:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["frontend-password"]')"}"
-: "${CYPRESS_OPERATOR_USERNAME:="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-username"]')"}"
-: "${CYPRESS_OPERATOR_PASSWORD:="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-password"]')"}"
-: "${CYPRESS_LTI_CONSUMER_KEY:="$(decoded-secret boclips.lti concourse-main | jq -r '.["consumer-key"]')"}"
-: "${CYPRESS_LTI_CONSUMER_SECRET:="$(decoded-secret boclips.lti concourse-main | jq -r '.["consumer-secret"]')"}"
+: "${CYPRESS_BACKOFFICE_USERNAME:="$(get-k8s-concourse-secret boclips e2e backoffice-username)"}"
+: "${CYPRESS_BACKOFFICE_PASSWORD:="$(get-k8s-concourse-secret boclips e2e backoffice-password)"}"
+: "${CYPRESS_FRONTEND_USERNAME:="$(get-k8s-concourse-secret boclips e2e frontend-username)"}"
+: "${CYPRESS_FRONTEND_PASSWORD:="$(get-k8s-concourse-secret boclips e2e frontend-password)"}"
+: "${CYPRESS_OPERATOR_USERNAME:="$(get-k8s-concourse-secret boclips operator testing-username)"}"
+: "${CYPRESS_OPERATOR_PASSWORD:="$(get-k8s-concourse-secret boclips operator testing-password)"}"
+: "${CYPRESS_LTI_CONSUMER_KEY:="$(get-k8s-concourse-secret boclips lti consumer-key)"}"
+: "${CYPRESS_LTI_CONSUMER_SECRET:="$(get-k8s-concourse-secret boclips lti consumer-secret)"}"
 
 export CYPRESS_API_BASE_URL
 export CYPRESS_TOKEN_URL
