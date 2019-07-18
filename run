@@ -34,8 +34,8 @@ esac
 : "${CYPRESS_BACKOFFICE_PASSWORD:="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-password"]')"}"
 : "${CYPRESS_FRONTEND_USERNAME:="$(lpass show e2e-frontend-testing --username)"}"
 : "${CYPRESS_FRONTEND_PASSWORD:="$(lpass show e2e-frontend-testing --password)"}"
-: "${CYPRESS_OPERATOR_USERNAME:="$(lpass show operator-testing --username)"}"
-: "${CYPRESS_OPERATOR_PASSWORD:="$(lpass show operator-testing --password)"}"
+: "${CYPRESS_OPERATOR_USERNAME:="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-username"]')"}"
+: "${CYPRESS_OPERATOR_PASSWORD:="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-password"]')"}"
 : "${CYPRESS_LTI_CONSUMER_KEY:="$(decoded-secret boclips.lti concourse-main | jq -r '.["consumer-key"]')"}"
 : "${CYPRESS_LTI_CONSUMER_SECRET:="$(decoded-secret boclips.lti concourse-main | jq -r '.["consumer-secret"]')"}"
 
