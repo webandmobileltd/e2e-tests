@@ -6,8 +6,8 @@ cwd="$(cd "$(dirname "$0")" && pwd)"
 
 CYPRESS_BACKOFFICE_USERNAME="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-username"]')"
 CYPRESS_BACKOFFICE_PASSWORD="$(decoded-secret boclips.e2e concourse-main | jq -r '.["backoffice-password"]')"
-CYPRESS_FRONTEND_USERNAME="$(lpass show e2e-frontend-testing --username)"
-CYPRESS_FRONTEND_PASSWORD="$(lpass show e2e-frontend-testing --password)"
+CYPRESS_FRONTEND_USERNAME="$(decoded-secret boclips.e2e concourse-main | jq -r '.["frontend-username"]')"
+CYPRESS_FRONTEND_PASSWORD="$(decoded-secret boclips.e2e concourse-main | jq -r '.["frontend-password"]')"
 CYPRESS_OPERATOR_USERNAME="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-username"]')"
 CYPRESS_OPERATOR_PASSWORD="$(decoded-secret boclips.operator concourse-main | jq -r '.["testing-password"]')"
 
