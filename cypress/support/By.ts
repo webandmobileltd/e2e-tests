@@ -6,14 +6,14 @@ export class By {
   public static dataState(dataState: string, dataQa?: string): string {
     return `[data-state="${dataState}"]${
       dataQa ? `[data-qa="${dataQa}"]` : ''
-    }`;
+      }`;
   }
 
   public static dataBoclipsPlayerInitialised(): string {
     return '[data-boclips-player-initialised=true]';
   }
 
-  public static boclipsPlayerErrorOverlay(): string {
-    return 'section.error';
+  public static boclipsPlayerPlayButton(): string {
+    return `${this.dataBoclipsPlayerInitialised()} button`;
   }
 }

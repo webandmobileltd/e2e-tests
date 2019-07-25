@@ -46,9 +46,9 @@ export class LtiToolConsumerEmulatorPage {
     );
 
     this.withinIframe(
-      By.boclipsPlayerErrorOverlay(),
+      By.boclipsPlayerPlayButton(),
       (errorOverlay: Cypress.Chainable) =>
-        errorOverlay.should('not.exist')
+        errorOverlay.should('be.visible')
     );
 
     return this;
