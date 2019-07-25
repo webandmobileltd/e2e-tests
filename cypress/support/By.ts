@@ -12,4 +12,8 @@ export class By {
   public static dataBoclipsPlayerInitialised(): string {
     return '[data-boclips-player-initialised=true]';
   }
+
+  public static boclipsPlayerErrorOverlay(): string {
+    return 'section.error';
+  }
 }
