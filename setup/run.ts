@@ -7,6 +7,7 @@ import {
 } from './fixture/videos';
 import { generateToken } from './generateToken';
 import { getSubjects, insertSubject } from './subjectApi';
+import {getTags, insertTag} from './tagApi';
 import { findVideos, insertVideo } from './videoApi';
 
 import {
@@ -23,6 +24,7 @@ import {
 } from './fixture/collections';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
+import { tagFixtures } from './fixture/tags';
 
 if (!TOKEN_URL || !OPERATOR_USERNAME || !OPERATOR_PASSWORD) {
   throw new Error('Environment variables not set properly.');
@@ -42,6 +44,10 @@ async function insertSubjects(token: string) {
   return Promise.all(
     subjectFixtures.map(subject => insertSubject(subject, token)),
   );
+}
+
+async function insertTags(token: string) {
+  return Promise.all(tagFixtures.map(tag => insertTag(tag, token)));
 }
 
 async function insertDisciplines(token: string) {
@@ -92,6 +98,13 @@ async function setUp() {
     await insertSubjects(token);
   } else {
     console.log('Subjects already exist, did not update subjects');
+  }
+
+  const tags = await getTags();
+  if (!tags) {
+    await insertTags(token);
+  } else {
+    console.log('Tags already exist, did not update tags');
   }
 
   const disciplines = await getDisciplines(token);

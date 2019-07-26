@@ -303,7 +303,16 @@ export class TeachersHomepage extends TeacherPage {
     return this;
   }
 
-  public rateVideo(rating: number) {
+  public assertPedagogicalTagOnFirstVideo(tag: string) {
+    cy.get(By.dataQa('video-card'))
+      .first()
+      .find(By.dataQa('best-for-tags'))
+      .find(By.dataQa('filter-tag'))
+      .should('have.contain.text', tag);
+    return this;
+  }
+
+  public rateAndTagVideo(rating: number, tag?: string) {
     cy.get(By.dataQa('rating-video-button'))
       .first()
       .click();
@@ -312,6 +321,10 @@ export class TeachersHomepage extends TeacherPage {
       .find('.ant-rate-star')
       .eq(rating - 1)
       .click();
+
+    if (tag) {
+      cy.get(By.dataState('Hook', 'tag-radio')).click();
+    }
 
     cy.get(By.dataQa('rate-button')).click();
     cy.get(By.dataQa('rate-video')).should('not.exist');
