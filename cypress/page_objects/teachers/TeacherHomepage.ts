@@ -273,24 +273,12 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public isOnPage(pageNumber: number) {
-    const activeElementInPagination =
-      "[data-qa='pagination'] .ant-pagination-item-active a";
-    cy.get(activeElementInPagination).then(elements => {
-      elements.each((idx, element: HTMLElement) => {
-        const textContent = element!.textContent;
-        expect(textContent).to.eq(pageNumber.toString());
-      });
-    });
+    cy.get("[data-qa='pagination'] .ant-pagination-item-active a").should("contain", pageNumber);
     return this;
   }
 
-  public goToNextPage() {
-    cy.get('.ant-pagination-next').click();
-    return this;
-  }
-
-  public goToPreviousPage() {
-    cy.get('.ant-pagination-prev').click();
+  public goToPage(pageNumber: number) {
+    cy.get(`[data-qa='pagination'] .ant-pagination-item-${pageNumber} a`).click();
     return this;
   }
 

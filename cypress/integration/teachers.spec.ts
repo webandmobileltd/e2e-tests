@@ -79,9 +79,9 @@ context('Teachers App', () => {
       .menu()
       .search(MINUTE_PHYSICS)
       .isOnPage(1)
-      .goToNextPage()
+      .goToPage(2)
       .isOnPage(2)
-      .goToPreviousPage()
+      .goToPage(1)
       .isOnPage(1)
 
       .log('testing subject filter')
