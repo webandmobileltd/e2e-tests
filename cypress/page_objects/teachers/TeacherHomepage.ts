@@ -315,7 +315,6 @@ export class TeachersHomepage extends TeacherPage {
     }
 
     cy.get(By.dataQa('rate-button')).click();
-    cy.get(By.dataQa('rate-video')).should('not.exist');
     return this;
   }
 
