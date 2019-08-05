@@ -94,14 +94,14 @@ context('Teachers App', () => {
       .log('testing duration filter')
       .applyDurationFilter(0, 240)
       .inspectResults(videos => {
-        expect(videos.length).to.be.eq(9, `There are nine videos showing`);
+        expect(videos.length).to.be.eq(8, `There are eight videos showing`);
       })
       .removeFilterTag('0m-4m')
 
       .log('testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
-        expect(videos.length).to.be.eq(4, `There are four videos showing`);
+        expect(videos.length).to.be.eq(3, `There are three videos showing`);
       })
       .removeFilterTag('3-11')
 
