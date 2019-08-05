@@ -208,6 +208,7 @@ export async function getParametrisedVideoFixtures(
       title: 'Robert Neuwirth: The hidden world of shadow cities',
       description:
         'Robert Neuwirth, author of "Shadow Cities," finds the worlds squatter sites -- where a billion people now make their homes -- to be thriving centers of ingenuity and innovation. He takes us on a tour.',
+      subjects: [convertSubjectNameToId('Biology')],
     }),
   ];
 
