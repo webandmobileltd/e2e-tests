@@ -124,12 +124,14 @@ async function setUp() {
 
   const contentPartners = await getContentPartners(token);
   if (!contentPartners) {
-    await insertContentPartners(token);
+    const addedContentPartners = await insertContentPartners(token);
+    console.log(`Inserted ${addedContentPartners.length} content partners`);
   } else {
     console.log('Content partners already exist, did not update');
   }
 
-  await insertVideos(token);
+  const videos = await insertVideos(token);
+  console.log(`Attempted to insert ${videos.length} videos`);
 
   const collections = await getCollections(token);
   if (!collections) {
