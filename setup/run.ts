@@ -83,7 +83,7 @@ async function insertLtiCollection(token: string) {
 
 async function insertContentPartners(token: string) {
   console.log('Inserting content partners...');
-  await Promise.all(
+  return Promise.all(
     contentPartnerFixtures.map(contentPartnerFixture => {
       insertContentPartner(
         {
