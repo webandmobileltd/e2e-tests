@@ -43,10 +43,14 @@ export async function getParametrisedVideoFixtures(
   const subjects = await getSubjects();
 
   function convertContentPartnerNameToId(contentPartnerName: string) {
+    if (contentPartners === undefined) {
+      throw new Error('There are no content partners');
+    }
+
     if (contentPartnerName === undefined) {
       throw new Error('Content partner name is undefined');
     }
-    console.log('cps: ', contentPartners);
+
     const matchingContentPartners = contentPartners.filter(
       contentPartner => contentPartner.name === contentPartnerName,
     );

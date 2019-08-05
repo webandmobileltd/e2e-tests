@@ -41,7 +41,7 @@ export async function insertContentPartner(
 
 export async function getContentPartners(
   token: string,
-): Promise<ContentPartner[]> {
+): Promise<ContentPartner[] | undefined> {
   const response = await fetch(`${API_URL}/v1/content-partners`, {
     method: 'GET',
     headers: {
@@ -50,5 +50,10 @@ export async function getContentPartners(
     },
   });
   const payload: HypermediaWrapper = await response.json();
-  return payload._embedded.contentPartners;
+
+  if (payload && payload._embedded && payload._embedded.contentPartners) {
+    return payload._embedded.contentPartners;
+  } else {
+    return undefined;
+  }
 }

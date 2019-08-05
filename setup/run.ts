@@ -13,7 +13,10 @@ import {
   insertCollection,
 } from './api/collectionApi';
 
-import { insertContentPartner } from './api/contentPartnerApi';
+import {
+  getContentPartners,
+  insertContentPartner,
+} from './api/contentPartnerApi';
 import {
   CollectionFixture,
   collectionFixtures,
@@ -119,12 +122,12 @@ async function setUp() {
     console.log('Disciplines already exist, did not update');
   }
 
-  // const contentPartners = await getContentPartners(token);
-  // if (!contentPartners) {
-  await insertContentPartners(token);
-  // } else {
-  //   console.log('Content partners already exist, did not update', contentPartners);
-  // }
+  const contentPartners = await getContentPartners(token);
+  if (!contentPartners) {
+    await insertContentPartners(token);
+  } else {
+    console.log('Content partners already exist, did not update');
+  }
 
   await insertVideos(token);
 
