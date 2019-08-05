@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
-import * as Constants from './Constants';
-import { Tag } from './fixture/tags';
-import { Link } from './hypermedia';
+import * as Constants from '../Constants';
+import { Tag } from '../fixture/tags';
+import { Link } from '../hypermedia';
 
 interface HypermediaWrapper {
   _embedded: Tags;

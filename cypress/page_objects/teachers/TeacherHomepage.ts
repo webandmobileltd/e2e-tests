@@ -273,12 +273,17 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public isOnPage(pageNumber: number) {
-    cy.get("[data-qa='pagination'] .ant-pagination-item-active a").should("contain", pageNumber);
+    cy.get("[data-qa='pagination'] .ant-pagination-item-active a").should(
+      'contain',
+      pageNumber,
+    );
     return this;
   }
 
   public goToPage(pageNumber: number) {
-    cy.get(`[data-qa='pagination'] .ant-pagination-item-${pageNumber} a`).click();
+    cy.get(
+      `[data-qa='pagination'] .ant-pagination-item-${pageNumber} a`,
+    ).click();
     return this;
   }
 

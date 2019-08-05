@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import * as Constants from './Constants';
-import { VideoFixture } from './fixture/videos';
+import * as Constants from '../Constants';
+import { VideoFixture } from '../fixture/videos';
 
 interface HypermediaWrapper {
   _embedded: Videos;

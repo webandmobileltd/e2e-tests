@@ -1,27 +1,25 @@
+import { getDisciplines, insertDiscipline } from './api/disciplineApi';
+import { getSubjects, insertSubject } from './api/subjectApi';
+import { getTags, insertTag } from './api/tagApi';
+import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
-import { getDisciplines, insertDiscipline } from './disciplineApi';
-import {
-  getInstructionalVideoFixtures,
-  newsVideoFixtures,
-  stockVideoFixtures,
-} from './fixture/videos';
+import { getParametrisedVideoFixtures } from './fixture/videos';
 import { generateToken } from './generateToken';
-import { getSubjects, insertSubject } from './subjectApi';
-import {getTags, insertTag} from './tagApi';
-import { findVideos, insertVideo } from './videoApi';
 
 import {
   addVideoToCollection,
   findOneCollectionId,
   getCollections,
   insertCollection,
-} from './collectionApi';
+} from './api/collectionApi';
 
+import { insertContentPartner } from './api/contentPartnerApi';
 import {
   CollectionFixture,
   collectionFixtures,
   ltiCollectionFixture,
 } from './fixture/collections';
+import { contentPartnerFixtures } from './fixture/contentPartners';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
@@ -31,10 +29,10 @@ if (!TOKEN_URL || !OPERATOR_USERNAME || !OPERATOR_PASSWORD) {
 }
 
 async function insertVideos(token: string) {
-  const videoPromises = await allVideos();
-
+  const allInterpolatedVideos = await getParametrisedVideoFixtures(token);
+  console.log('Inserting all videos...');
   return Promise.all(
-    videoPromises.map(async video => {
+    allInterpolatedVideos.map(async video => {
       await insertVideo(video, token);
     }),
   );
@@ -80,14 +78,21 @@ async function insertLtiCollection(token: string) {
   });
 }
 
-async function allVideos() {
-  const allInterpolatedVideos = await getInstructionalVideoFixtures();
-
-  return [
-    ...allInterpolatedVideos,
-    ...stockVideoFixtures,
-    ...newsVideoFixtures,
-  ];
+async function insertContentPartners(token: string) {
+  console.log('Inserting content partners...');
+  await Promise.all(
+    contentPartnerFixtures.map(contentPartnerFixture => {
+      insertContentPartner(
+        {
+          name: contentPartnerFixture.name,
+          distributionMethods: contentPartnerFixture.distributionMethods,
+          accreditedToYtChannelId:
+            contentPartnerFixture.accreditedToYtChannelId,
+        },
+        token,
+      );
+    }),
+  );
 }
 
 async function setUp() {
@@ -97,7 +102,7 @@ async function setUp() {
   if (!subjects) {
     await insertSubjects(token);
   } else {
-    console.log('Subjects already exist, did not update subjects');
+    console.log('Subjects already exist, did not update');
   }
 
   const tags = await getTags();
@@ -111,17 +116,23 @@ async function setUp() {
   if (!disciplines) {
     await insertDisciplines(token);
   } else {
-    console.log('Disciplines already exist, did not update disciplines');
+    console.log('Disciplines already exist, did not update');
   }
 
-  console.log('insert all videos');
+  // const contentPartners = await getContentPartners(token);
+  // if (!contentPartners) {
+  await insertContentPartners(token);
+  // } else {
+  //   console.log('Content partners already exist, did not update', contentPartners);
+  // }
+
   await insertVideos(token);
 
   const collections = await getCollections(token);
   if (!collections) {
     await insertCollections(token);
   } else {
-    console.log('Collections already exist, did not update collections');
+    console.log('Collections already exist, did not update');
   }
 }
 

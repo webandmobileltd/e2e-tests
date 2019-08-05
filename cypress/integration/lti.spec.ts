@@ -1,8 +1,8 @@
-import { findOneCollectionId } from '../../setup/collectionApi';
+import { findOneCollectionId } from '../../setup/api/collectionApi';
+import { findOneVideoId } from '../../setup/api/videoApi';
 import { ltiCollectionFixture } from '../../setup/fixture/collections';
-import { getInstructionalVideoFixtures } from '../../setup/fixture/videos';
+import { getParametrisedVideoFixtures } from '../../setup/fixture/videos';
 import { generateToken } from '../../setup/generateToken';
-import { findOneVideoId } from '../../setup/videoApi';
 
 import { LtiToolConsumerEmulatorPage } from '../page_objects/lti/LtiToolConsumerEmulatorPage';
 
@@ -15,7 +15,9 @@ beforeEach(() => {
   return generateToken()
     .then(async (freshToken: string) => {
       token = freshToken;
-      const allInstructionalVideos = await getInstructionalVideoFixtures();
+      const allInstructionalVideos = await getParametrisedVideoFixtures(
+        freshToken,
+      );
       return findOneVideoId(allInstructionalVideos[0].title, token);
     })
     .then((returnedVideoId: string) => {

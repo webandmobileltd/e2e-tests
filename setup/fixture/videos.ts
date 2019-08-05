@@ -1,7 +1,8 @@
-import { getSubjects } from '../subjectApi';
+import { getContentPartners } from '../api/contentPartnerApi';
+import { getSubjects } from '../api/subjectApi';
 
 export interface VideoFixture {
-  provider: string;
+  providerId: string;
   providerVideoId: string;
   title: string;
   description: string;
@@ -19,7 +20,7 @@ export interface VideoFixture {
 
 function video(params: Partial<VideoFixture>): VideoFixture {
   return {
-    provider: params.provider || 'Minute Physics',
+    providerId: params.providerId!!,
     providerVideoId: params.providerVideoId || 'ted-123',
     title: params.title || 'Richard St. John: 8 secrets of success',
     description: params.description || 'Video description',
@@ -35,10 +36,36 @@ function video(params: Partial<VideoFixture>): VideoFixture {
   };
 }
 
-export async function getInstructionalVideoFixtures(): Promise<VideoFixture[]> {
+export async function getParametrisedVideoFixtures(
+  token: string,
+): Promise<VideoFixture[]> {
+  const contentPartners = await getContentPartners(token);
   const subjects = await getSubjects();
 
-  function convertToId(subjectName: string) {
+  function convertContentPartnerNameToId(contentPartnerName: string) {
+    if (contentPartnerName === undefined) {
+      throw new Error('Content partner name is undefined');
+    }
+    console.log('cps: ', contentPartners);
+    const matchingContentPartners = contentPartners.filter(
+      contentPartner => contentPartner.name === contentPartnerName,
+    );
+
+    if (matchingContentPartners.length === 0) {
+      throw Error(
+        `Matched no content partners for ${contentPartnerName}, check fixtures.`,
+      );
+    }
+    if (matchingContentPartners.length > 1) {
+      throw Error(
+        `Matched more than one content partner for ${contentPartnerName}, check fixtures.`,
+      );
+    }
+
+    return matchingContentPartners[0].id;
+  }
+
+  function convertSubjectNameToId(subjectName: string) {
     if (subjects === undefined) {
       throw new Error('Subjects are undefined');
     }
@@ -55,139 +82,168 @@ export async function getInstructionalVideoFixtures(): Promise<VideoFixture[]> {
     return matchingSubjects[0].id;
   }
 
-  return [
+  const instructionalVideos = [
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-1',
       title: 'Richard St. John: 8 secrets of success',
       description:
         "Why do people succeed? Is it because they\\'re smart? Or are they just lucky? Neither. Analyst Richard St. John condenses years of interviews into an unmissable 3-minute slideshow on the real secrets of success.",
       playbackId: '9eb02357-ed43-49ab-84c7-a0fa5699d860',
-      subjects: [convertToId('Mathematics'), convertToId('Physics')],
+      subjects: [
+        convertSubjectNameToId('Mathematics'),
+        convertSubjectNameToId('Physics'),
+      ],
     }),
     video({
+      providerId: convertContentPartnerNameToId('Youtube CP'),
       providerVideoId: 's3Gl6T0CC2I',
       playbackProvider: 'YOUTUBE',
       title:
         'The Terrifying art of Free Solo Slacklining UNTETHERED - Full Documentary',
       description: 'This is now about dogs.',
       playbackId: 's3Gl6T0CC2I',
-      subjects: [convertToId('Biology'), convertToId('Physics')],
+      subjects: [
+        convertSubjectNameToId('Biology'),
+        convertSubjectNameToId('Physics'),
+      ],
       duration: 'PT1M30S',
       ageRangeMin: 4,
       ageRangeMax: 8,
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-2',
       title: 'Rives: If I controlled the Internet',
       description:
         "How many poets could cram eBay, Friendster and Monster.com into 3-minute poem worthy of a standing ovation? Enjoy Rives' unique talent.",
-      subjects: [convertToId('Biology'), convertToId('Physics')],
+      subjects: [
+        convertSubjectNameToId('Biology'),
+        convertSubjectNameToId('Physics'),
+      ],
       playbackId: 'b6d3a962-a013-4fff-9cc2-0ef7ee7a7afe',
       duration: 'PT1M30S',
       ageRangeMin: 10,
       ageRangeMax: 13,
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-3',
       title: 'Steven Johnson: How the "ghost map" helped end a killer disease',
       description:
         'Author Steven Johnson takes us on a 10-minute tour of The Ghost Map, his book about a cholera outbreak in 1854 London and the impact it had on science, cities and modern society.',
-      subjects: [convertToId('Biology'), convertToId('Physics')],
+      subjects: [
+        convertSubjectNameToId('Biology'),
+        convertSubjectNameToId('Physics'),
+      ],
       duration: 'PT5M30S',
       playbackId: 'b6d3a962-a013-4fff-9cc2-0ef7ee7a7afe',
       ageRangeMin: 4,
       ageRangeMax: 10,
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-4',
       title: 'Jeff Han: The radical promise of the multi-touch interface',
       description:
         'Jeff Han shows off a cheap, scalable multi-touch and pressure-sensitive computer screen interface that may spell the end of point-and-click.',
-      subjects: [convertToId('Mathematics'), convertToId('Physics')],
+      subjects: [
+        convertSubjectNameToId('Mathematics'),
+        convertSubjectNameToId('Physics'),
+      ],
       playbackId: 'b6d3a962-a013-4fff-9cc2-0ef7ee7a7afe',
       duration: 'PT1M30S',
       ageRangeMin: 4,
       ageRangeMax: 10,
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-5',
       title: 'Eva Vertes: Meet the future of cancer research',
       description:
         'Eva Vertes -- only 19 when she gave this talk -- discusses her journey toward studying medicine and her drive to understand the roots of cancer and Alzheimer’s.',
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-6',
       title: 'Mena Trott: Meet the founder of the blog revolution',
       description:
         "The founding mother of the blog revolution, Movable Type's Mena Trott, talks about the early days of blogging, when she realized that giving regular people the power to share our lives online is the key to building a friendlier, more connecminute-physics world.",
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-7',
       title: 'Michael Shermer: Why people believe weird things',
       description:
         'Why do people see the Virgin Mary on a cheese sandwich or hear demonic lyrics in "Stairway to Heaven"? Using video and music, skeptic Michael Shermer shows how we convince ourselves to believe -- and overlook the facts.',
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-8',
       title: 'Peter Gabriel: Fight injustice with raw video',
       description:
         'Musician and activist Peter Gabriel shares his very personal motivation for standing up for human rights with the watchdog group WITNESS -- and tells stories of citizen journalists in action.',
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-9',
       title: 'Seth Godin: How to get your ideas to spread',
       description:
         'In a world of too many options and too little time, our obvious choice is to just ignore the ordinary stuff. Marketing guru Seth Godin spells out why, when it comes to getting our attention, bad or bizarre ideas are more successful than boring ones.',
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-10',
       title: 'Vik Muniz: Art with wire, sugar, chocolate and string',
       description:
         'Vik Muniz makes art from pretty much anything, be it shredded paper, wire, clouds or diamonds. Here he describes the thinking behind his work and takes us on a tour of his incredible images.',
     }),
     video({
+      providerId: convertContentPartnerNameToId('Minute Physics'),
       providerVideoId: 'minute-physics-11',
       title: 'Robert Neuwirth: The hidden world of shadow cities',
       description:
         'Robert Neuwirth, author of "Shadow Cities," finds the worlds squatter sites -- where a billion people now make their homes -- to be thriving centers of ingenuity and innovation. He takes us on a tour.',
     }),
   ];
+
+  const newsVideos = [
+    video({
+      providerId: convertContentPartnerNameToId('Reuters'),
+      providerVideoId: 'reuters-13',
+      title: 'Gdansk Mayor Stabbed at a charity event',
+      description: 'Terrible news from Poland',
+      releasedOn: '2018-12-03T00:00:00',
+      videoType: 'NEWS',
+    }),
+    video({
+      providerId: convertContentPartnerNameToId('Reuters'),
+      providerVideoId: 'reuters-14',
+      title: "'Richard St. John: 8 secrets of success' goes viral on boclips",
+      description:
+        'Incredible news as the greatest video has exploded on the internet',
+      releasedOn: '2018-12-04T00:00:00',
+      videoType: 'NEWS',
+    }),
+    video({
+      providerId: convertContentPartnerNameToId('Reuters'),
+      providerVideoId: 'reuters-15',
+      title: 'Breaking news',
+      description: 'Latest piece of news about Richard',
+      releasedOn: '2018-12-05T00:00:00',
+      videoType: 'NEWS',
+    }),
+  ];
+
+  const stockVideos = [
+    video({
+      providerId: convertContentPartnerNameToId('Getty'),
+      providerVideoId: 'getty-12',
+      videoType: 'STOCK',
+      title: 'Celebrities on the red carpet',
+      description: 'Not valuable for education',
+    }),
+  ];
+
+  return [...instructionalVideos, ...newsVideos, ...stockVideos];
 }
-
-export const newsVideoFixtures: VideoFixture[] = [
-  video({
-    provider: 'Reuters',
-    providerVideoId: 'reuters-13',
-    title: 'Gdansk Mayor Stabbed at a charity event',
-    description: 'Terrible news from Poland',
-    releasedOn: '2018-12-03T00:00:00',
-    videoType: 'NEWS',
-  }),
-  video({
-    provider: 'Reuters',
-    providerVideoId: 'reuters-14',
-    title: "'Richard St. John: 8 secrets of success' goes viral on boclips",
-    description:
-      'Incredible news as the greatest video has exploded on the internet',
-    releasedOn: '2018-12-04T00:00:00',
-    videoType: 'NEWS',
-  }),
-  video({
-    provider: 'Reuters',
-    providerVideoId: 'reuters-15',
-    title: 'Breaking news',
-    description: 'Latest piece of news about Richard',
-    releasedOn: '2018-12-05T00:00:00',
-    videoType: 'NEWS',
-  }),
-];
-
-export const stockVideoFixtures: VideoFixture[] = [
-  video({
-    provider: 'Getty',
-    providerVideoId: 'getty-12',
-    videoType: 'STOCK',
-    title: 'Celebrities on the red carpet',
-    description: 'Not valuable for education',
-  }),
-];

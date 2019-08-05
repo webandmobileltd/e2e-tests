@@ -42,13 +42,12 @@ export class LtiToolConsumerEmulatorPage {
     this.withinIframe(
       By.dataBoclipsPlayerInitialised(),
       (initialisedPlayer: Cypress.Chainable) =>
-        initialisedPlayer.should('be.visible')
+        initialisedPlayer.should('be.visible'),
     );
 
     this.withinIframe(
       By.boclipsPlayerPlayButton(),
-      (errorOverlay: Cypress.Chainable) =>
-        errorOverlay.should('be.visible')
+      (errorOverlay: Cypress.Chainable) => errorOverlay.should('be.visible'),
     );
 
     return this;

@@ -6,7 +6,7 @@ export class By {
   public static dataState(dataState: string, dataQa?: string): string {
     return `[data-state="${dataState}"]${
       dataQa ? `[data-qa="${dataQa}"]` : ''
-      }`;
+    }`;
   }
 
   public static dataBoclipsPlayerInitialised(): string {

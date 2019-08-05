@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import { API_URL } from './Constants';
-import { CollectionFixture } from './fixture/collections';
+import { API_URL } from '../Constants';
+import { CollectionFixture } from '../fixture/collections';
 
 interface HypermediaWrapper {
   _embedded: Collections;

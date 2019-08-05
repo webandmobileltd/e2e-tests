@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
-import { API_URL } from './Constants';
-import { DisciplineFixture } from './fixture/disciplines';
-import { Link } from './hypermedia';
+import { API_URL } from '../Constants';
+import { DisciplineFixture } from '../fixture/disciplines';
+import { Link } from '../hypermedia';
 import { getSubjectByName } from './subjectApi';
 
 interface HypermediaWrapper {
