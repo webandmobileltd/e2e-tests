@@ -156,7 +156,7 @@ context('Teachers App', () => {
       .setVisibility(true)
       .setSubject(SUBJECT)
       .setName(newCollectionTitle)
-      .itHasCorrectVisiblity(true)
+      .itHasCorrectVisibility(true)
       .itHasName(newCollectionTitle)
 
       .log('verifying and managing videos')

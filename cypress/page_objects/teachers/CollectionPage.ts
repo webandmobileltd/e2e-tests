@@ -54,7 +54,7 @@ export class CollectionPage extends TeacherPage {
     return this;
   }
 
-  public itHasCorrectVisiblity(isPublic: boolean): CollectionPage {
+  public itHasCorrectVisibility(isPublic: boolean): CollectionPage {
     cy.get(By.dataQa('collection-visibility'))
       .get(By.dataState(isPublic + ''))
       .should('exist');
