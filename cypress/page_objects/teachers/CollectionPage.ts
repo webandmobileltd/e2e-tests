@@ -62,12 +62,12 @@ export class CollectionPage extends TeacherPage {
   }
 
   public itHasName(name: string): CollectionPage {
-    cy.get(By.dataQa('collection-name')).should('contain', name);
+    cy.get(By.dataQa('collection-title')).should('contain', name);
     return this;
   }
 
   public checkA11yOnCollectionPage(threshold: number) {
-    cy.get(By.dataQa('collection-name'));
+    cy.get(By.dataQa('collection-title'));
     cy.checkA11y(threshold);
     return this;
   }
