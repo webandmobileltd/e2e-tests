@@ -27,7 +27,12 @@ context('Teachers App', () => {
 
       .log('logging in')
       .visit()
-      .logIn(username, password);
+      .logIn(username, password)
+
+      .log('activating account')
+      .activateAccount()
+      .accountActivated()
+    ;
   });
 
   beforeEach(preserveLoginCookiesBetweenTests);

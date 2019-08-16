@@ -53,18 +53,10 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public createAccount(username: string, password: string) {
-    cy.get(By.dataQa('first-name')).type('Firstname');
-    cy.get(By.dataQa('last-name')).type('Lastname');
-    this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
-    cy.get('footer').click();
-
-    this.clickDropDownOption(By.dataQa('ageRange'), '3-5');
-    cy.get('footer').click();
 
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);
     cy.get(By.dataQa('password-confirm')).type(password);
-    cy.get(By.dataQa('privacy-policy')).click();
 
     cy.server();
     cy.route('POST', '**/users').as('createUser');
@@ -76,8 +68,26 @@ export class TeachersHomepage extends TeacherPage {
     return this;
   }
 
+  public activateAccount() {
+    cy.get(By.dataQa('first-name')).type('Firstname');
+    cy.get(By.dataQa('last-name')).type('Lastname');
+    this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
+    cy.get('footer').click();
+    this.clickDropDownOption(By.dataQa('ageRange'), '3-5');
+    cy.get('footer').click();
+    cy.get(By.dataQa('privacy-policy')).click();
+
+    cy.get(By.dataQa('onboard-button')).click();
+    return this;
+  }
+
   public accountCreated() {
     cy.get(By.dataQa('create-account-page')).should('be.visible');
+    return this;
+  }
+
+  public accountActivated() {
+    cy.get('.home-page').should('be.visible');
     return this;
   }
 
