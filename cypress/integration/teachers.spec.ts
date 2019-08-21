@@ -9,7 +9,7 @@ context('Teachers App', () => {
   const homepage = new TeachersHomepage();
 
   const username = `${uuid()}@boclips.com`;
-  const password = uuid();
+  const password = `${uuid()}Aa1$`;
 
   const MINUTE_PHYSICS = 'Minute Physics';
   const SUBJECT = 'Biology';
