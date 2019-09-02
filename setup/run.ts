@@ -141,7 +141,12 @@ async function setUp() {
   }
 }
 
-setUp().then(() => {
-  console.log('Setup finished');
-  process.exit();
-});
+setUp()
+  .then(() => {
+    console.log('Setup finished');
+    process.exit();
+  })
+  .catch(e => {
+    console.log(`Setup failed, ${e}`);
+    process.exit(1);
+  });
