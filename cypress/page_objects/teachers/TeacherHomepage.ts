@@ -53,7 +53,6 @@ export class TeachersHomepage extends TeacherPage {
   }
 
   public createAccount(username: string, password: string) {
-
     cy.get(By.dataQa('email')).type(username);
     cy.get(By.dataQa('password')).type(password);
 

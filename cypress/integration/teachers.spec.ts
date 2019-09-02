@@ -31,8 +31,7 @@ context('Teachers App', () => {
 
       .log('activating account')
       .activateAccount()
-      .accountActivated()
-    ;
+      .accountActivated();
   });
 
   beforeEach(preserveLoginCookiesBetweenTests);
