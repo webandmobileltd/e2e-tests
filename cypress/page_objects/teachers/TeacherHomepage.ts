@@ -69,10 +69,16 @@ export class TeachersHomepage extends TeacherPage {
   public activateAccount() {
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
+
+    cy.get(By.dataQa('onboard-next-button')).click();
+
     this.clickDropDownOption(By.dataQa('subjects'), 'Biology');
     cy.get('footer').click();
     this.clickDropDownOption(By.dataQa('ageRange'), '3-5');
     cy.get('footer').click();
+
+    cy.get(By.dataQa('onboard-next-button')).click();
+
     cy.get(By.dataQa('privacy-policy')).click();
 
     cy.get(By.dataQa('onboard-button')).click();
