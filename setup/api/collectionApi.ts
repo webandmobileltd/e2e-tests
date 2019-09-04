@@ -60,7 +60,7 @@ export async function addVideoToCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    console.log(`Collection creation status: ${response.status}`);
+    console.log(`Adding video to collection status: ${response.status}`);
   });
 }
 
