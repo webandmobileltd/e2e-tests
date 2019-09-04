@@ -78,14 +78,15 @@ export class TeachersHomepage extends TeacherPage {
     cy.get('footer').click();
 
     cy.get(By.dataQa('onboard-next-button')).click();
-    this.clickDropDownOption(By.dataQa('countries-filter-select'), 'Albania');
 
+    this.clickDropDownOption(By.dataQa('countries-filter-select'), 'Albania');
+    cy.get('footer').click();
 
     cy.get(By.dataQa('onboard-next-button')).click();
 
     cy.get(By.dataQa('privacy-policy')).click();
 
-    cy.get(By.dataQa('onboard-button')).click();
+    cy.get(By.dataQa('onboard-next-button')).click();
     return this;
   }
 
