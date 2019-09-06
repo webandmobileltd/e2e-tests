@@ -86,7 +86,7 @@ export class TeachersHomepage extends TeacherPage {
 
     cy.get(By.dataQa('privacy-policy')).click();
 
-    cy.get(By.dataQa('onboard-next-button')).click();
+    cy.get(By.dataQa('onboard-submit-button')).click();
     return this;
   }
 
