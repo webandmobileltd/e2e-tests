@@ -81,6 +81,7 @@ export class TeachersHomepage extends TeacherPage {
 
     this.clickDropDownOption(By.dataQa('countries-filter-select'), 'Albania');
     cy.get('footer').click();
+    cy.get(By.dataQa('school')).get('input').type('School');
 
     cy.get(By.dataQa('onboard-next-button')).click();
 
