@@ -24,10 +24,10 @@ beforeEach(() => {
       videoId = returnedVideoId;
     })
     .then(async () => {
-      collectionId = await findOneCollectionId(
+      collectionId = (await findOneCollectionId(
         ltiCollectionFixture.title,
         token,
-      );
+      )) as string;
     });
 });
 

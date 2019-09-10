@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
 import { CollectionFixture } from '../fixture/collections';
+import { assertCreateSucceeded, extractIdFromLocation } from './utilities';
 
 interface HypermediaWrapper {
   _embedded: Collections;
@@ -14,11 +15,29 @@ export interface Collection {
   id: string;
 }
 
+export async function ensureCollectionAndReturnId(
+  collection: CollectionFixture,
+  token: string,
+): Promise<string> {
+  let collectionId = await findOneCollectionId(collection.title, token);
+
+  if (!collectionId) {
+    console.log(
+      `Collection '${collection.title}' does not exist yet, creating`,
+    );
+    collectionId = await insertCollection(collection, token);
+  } else {
+    console.log(`Collection '${collection.title}' exists`);
+  }
+
+  return collectionId;
+}
+
 export async function insertCollection(
   collection: CollectionFixture,
   token: string,
-) {
-  await fetch(`${API_URL}/v1/collections`, {
+): Promise<string> {
+  return await fetch(`${API_URL}/v1/collections`, {
     method: 'POST',
     body: JSON.stringify(collection),
     headers: {
@@ -26,7 +45,8 @@ export async function insertCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    console.log(`Collection creation status: ${response.status}`);
+    assertCreateSucceeded('Collection', response);
+    return extractIdFromLocation(response);
   });
 }
 
@@ -67,7 +87,7 @@ export async function addVideoToCollection(
 export async function findOneCollectionId(
   query: string,
   token: string,
-): Promise<string> {
+): Promise<string | undefined> {
   const response = await fetch(
     `${API_URL}/v1/collections?query=${query}&page=0&size=1`,
     {
@@ -80,6 +100,11 @@ export async function findOneCollectionId(
   );
 
   const payload: HypermediaWrapper = await response.json();
+  const collections = payload._embedded.collections;
 
-  return payload._embedded.collections[0].id;
+  if (collections && collections[0]) {
+    return collections[0].id;
+  }
+
+  return undefined;
 }

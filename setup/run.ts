@@ -1,14 +1,6 @@
-import { getDisciplines, insertDiscipline } from './api/disciplineApi';
-import { getSubjects, insertSubject } from './api/subjectApi';
-import { getTags, insertTag } from './api/tagApi';
-import { findVideos, insertVideo } from './api/videoApi';
-import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
-import { getParametrisedVideoFixtures } from './fixture/videos';
-import { generateToken } from './generateToken';
-
 import {
   addVideoToCollection,
-  findOneCollectionId,
+  ensureCollectionAndReturnId,
   getCollections,
   insertCollection,
 } from './api/collectionApi';
@@ -17,15 +9,24 @@ import {
   getContentPartners,
   insertContentPartner,
 } from './api/contentPartnerApi';
+import { ensureContractAndReturnId } from './api/contractApi';
+import { getDisciplines, insertDiscipline } from './api/disciplineApi';
+import { getSubjects, insertSubject } from './api/subjectApi';
+import { getTags, insertTag } from './api/tagApi';
+import { findVideos, insertVideo } from './api/videoApi';
+import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
 import {
   CollectionFixture,
   collectionFixtures,
   ltiCollectionFixture,
 } from './fixture/collections';
 import { contentPartnerFixtures } from './fixture/contentPartners';
+import { ltiSelectedContentContractFixture } from './fixture/contract';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
+import { getParametrisedVideoFixtures } from './fixture/videos';
+import { generateToken } from './generateToken';
 
 if (!TOKEN_URL || !OPERATOR_USERNAME || !OPERATOR_PASSWORD) {
   throw new Error('Environment variables not set properly.');
@@ -63,22 +64,24 @@ async function insertCollections(token: string) {
       insertCollection(collection, token),
     ),
   );
-  await insertLtiCollection(token);
 }
 
-async function insertLtiCollection(token: string) {
-  await insertCollection(ltiCollectionFixture, token);
-  const ltiCollectionId = await findOneCollectionId(
-    ltiCollectionFixture.title,
+async function setupLtiFixtures(token: string) {
+  const collectionId = await ensureCollectionAndReturnId(
+    ltiCollectionFixture,
     token,
   );
-  return findVideos('Minute Physics', token).then(videos => {
+
+  await findVideos('Minute Physics', token).then(videos => {
     return Promise.all(
-      videos.map(video =>
-        addVideoToCollection(ltiCollectionId, video.id, token),
-      ),
+      videos.map(video => addVideoToCollection(collectionId, video.id, token)),
     );
   });
+
+  await ensureContractAndReturnId(
+    ltiSelectedContentContractFixture([collectionId]),
+    token,
+  );
 }
 
 async function insertContentPartners(token: string) {
@@ -139,6 +142,8 @@ async function setUp() {
   } else {
     console.log('Collections already exist, did not update');
   }
+
+  await setupLtiFixtures(token);
 }
 
 setUp()
