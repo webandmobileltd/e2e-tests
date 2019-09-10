@@ -24,15 +24,15 @@ beforeEach(() => {
       videoId = returnedVideoId;
     })
     .then(async () => {
-      collectionId = await findOneCollectionId(
+      collectionId = (await findOneCollectionId(
         ltiCollectionFixture.title,
         token,
-      );
+      )) as string;
     });
 });
 
 context('LTI', () => {
-  it('Launching a single videos', () => {
+  it('Launching a single video', () => {
     new LtiToolConsumerEmulatorPage()
       .visit()
       .provideLaunchRequestData(`/videos/${videoId}`)
@@ -47,6 +47,19 @@ context('LTI', () => {
       .provideLaunchRequestData(`/collections/${collectionId}`)
       .saveData()
       .launchToolProvider()
+      .hasLoadedCollectionsPage()
+      .selectFirstVideoTile()
+      .hasLoadedBoclipsPlayer();
+  });
+
+  it('Launching a collections landing page', () => {
+    new LtiToolConsumerEmulatorPage()
+      .visit()
+      .provideLaunchRequestData('/collections')
+      .saveData()
+      .launchToolProvider()
+      .hasLoadedCollectionsLandingPage()
+      .selectFirstCollectionTile()
       .hasLoadedCollectionsPage()
       .selectFirstVideoTile()
       .hasLoadedBoclipsPlayer();
