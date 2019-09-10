@@ -5,6 +5,7 @@ import {
   insertCollection,
 } from './api/collectionApi';
 
+import { ensureApiIntegrationAndReturnId } from './api/apiIntegrationApi';
 import {
   getContentPartners,
   insertContentPartner,
@@ -15,6 +16,7 @@ import { getSubjects, insertSubject } from './api/subjectApi';
 import { getTags, insertTag } from './api/tagApi';
 import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
+import { ltiApiIntegrationFixture } from './fixture/apiIntegration';
 import {
   CollectionFixture,
   collectionFixtures,
@@ -78,8 +80,13 @@ async function setupLtiFixtures(token: string) {
     );
   });
 
-  await ensureContractAndReturnId(
+  const contractId = await ensureContractAndReturnId(
     ltiSelectedContentContractFixture([collectionId]),
+    token,
+  );
+
+  await ensureApiIntegrationAndReturnId(
+    ltiApiIntegrationFixture([contractId]),
     token,
   );
 }
