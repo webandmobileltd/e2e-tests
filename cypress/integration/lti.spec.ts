@@ -52,7 +52,7 @@ context('LTI', () => {
       .hasLoadedBoclipsPlayer();
   });
 
-  xit('Launching a collections landing page', () => {
+  it('Launching a collections landing page', () => {
     new LtiToolConsumerEmulatorPage()
       .visit()
       .provideLaunchRequestData('/collections')
