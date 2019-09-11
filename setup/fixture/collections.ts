@@ -10,5 +10,5 @@ export const collectionFixtures: CollectionFixture[] = [
 
 export const ltiCollectionFixture: CollectionFixture = {
   title: 'LTI Collection',
-  public: true,
+  public: false,
 };
