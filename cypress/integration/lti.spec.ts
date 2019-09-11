@@ -48,6 +48,7 @@ context('LTI', () => {
       .saveData()
       .launchToolProvider()
       .hasLoadedCollectionsPage()
+      .withCollectionTitle(ltiCollectionFixture.title)
       .selectFirstVideoTile()
       .hasLoadedBoclipsPlayer();
   });
@@ -59,8 +60,10 @@ context('LTI', () => {
       .saveData()
       .launchToolProvider()
       .hasLoadedCollectionsLandingPage()
+      .withNumberOfCollections(1)
       .selectFirstCollectionTile()
       .hasLoadedCollectionsPage()
+      .withCollectionTitle(ltiCollectionFixture.title)
       .selectFirstVideoTile()
       .hasLoadedBoclipsPlayer();
   });

@@ -63,11 +63,31 @@ export class LtiToolConsumerEmulatorPage {
     return this;
   }
 
+  public withCollectionTitle(title: string) {
+    this.withinIframe(
+      By.dataQa('collectionTitle'),
+      (collectionTitle: Cypress.Chainable) =>
+        collectionTitle.should('contain', title),
+    );
+
+    return this;
+  }
+
   public hasLoadedCollectionsLandingPage() {
     this.withinIframe(
       By.dataQa('collectionTile'),
       (collectionTitle: Cypress.Chainable) =>
         collectionTitle.should('be.visible'),
+    );
+
+    return this;
+  }
+
+  public withNumberOfCollections(count: number) {
+    this.withinIframe(
+      By.dataQa('collectionTile'),
+      (videoTiles: Cypress.Chainable) =>
+        videoTiles.should('have.length', count),
     );
 
     return this;
