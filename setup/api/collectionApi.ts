@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
 import { CollectionFixture } from '../fixture/collections';
+import { LinksHolder } from './hateoas';
 import { assertCreateSucceeded, extractIdFromLocation } from './utilities';
 
 interface HypermediaWrapper {
@@ -13,6 +14,7 @@ interface Collections {
 
 export interface Collection {
   id: string;
+  title: string;
 }
 
 export async function ensureCollectionAndReturnId(
@@ -85,26 +87,49 @@ export async function addVideoToCollection(
 }
 
 export async function findOneCollectionId(
-  query: string,
+  name: string,
   token: string,
 ): Promise<string | undefined> {
-  const response = await fetch(
-    `${API_URL}/v1/collections?query=${query}&page=0&size=1`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+  const myCollectionsUri = await getMyCollectionsLink(token);
+
+  const response = await fetch(myCollectionsUri, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-  );
+  });
+
+  if (response.status !== 200) {
+    throw new Error(`Collection lookup failed with status ${response.status}`);
+  }
 
   const payload: HypermediaWrapper = await response.json();
   const collections = payload._embedded.collections;
 
-  if (collections && collections[0]) {
-    return collections[0].id;
+  const collection = collections.find((it: Collection) => it.title === name);
+
+  if (collection) {
+    return collection.id;
+  } else {
+    return undefined;
+  }
+}
+
+async function getMyCollectionsLink(token: string): Promise<string> {
+  const response = await fetch(`${API_URL}/v1`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error(`Links lookup failed with status ${response.status}`);
   }
 
-  return undefined;
+  const payload: LinksHolder = await response.json();
+
+  return payload._links.myCollections.href;
 }

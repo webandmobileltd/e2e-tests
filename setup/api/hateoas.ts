@@ -4,6 +4,7 @@ export interface Link {
 
 export interface Links {
   self: Link;
+  myCollections: Link;
 }
 
 export interface LinksHolder {
