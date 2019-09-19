@@ -112,6 +112,7 @@ async function setUp() {
 
   const subjects = await getSubjects();
   if (!subjects) {
+    inserting('subjects');
     await insertSubjects(token);
   }
 

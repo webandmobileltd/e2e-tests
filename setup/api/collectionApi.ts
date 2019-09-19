@@ -24,12 +24,7 @@ export async function ensureCollectionAndReturnId(
   let collectionId = await findOneCollectionId(collection.title, token);
 
   if (!collectionId) {
-    console.log(
-      `Collection '${collection.title}' does not exist yet, creating`,
-    );
     collectionId = await insertCollection(collection, token);
-  } else {
-    console.log(`Collection '${collection.title}' exists`);
   }
 
   return collectionId;
@@ -100,9 +95,7 @@ export async function findOneCollectionId(
     },
   });
 
-  if (response.status !== 200) {
-    throw new Error(`Collection lookup failed with status ${response.status}`);
-  }
+  assertApiCall(response, 'Collection lookup');
 
   const payload: HypermediaWrapper = await response.json();
   const collections = payload._embedded.collections;

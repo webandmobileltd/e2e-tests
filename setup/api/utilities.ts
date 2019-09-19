@@ -26,6 +26,5 @@ export function assertApiCall(response: Response, message: string = 'API call') 
 
 export function inserting(item: string) {
   console.log('');
-  console.log('');
   console.log(`⬇⬇⬇   Inserting all ${item}...   ⬇⬇⬇   `);
 }

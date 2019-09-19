@@ -77,7 +77,7 @@ export async function findVideos(
 
   const payload = await response.json();
 
-  console.log('Videos query result:', payload);
+  assertApiCall(response, 'Videos lookup');
 
   if (payload._embedded.videos.length === 0) {
     await sleepForMillis(1000);
