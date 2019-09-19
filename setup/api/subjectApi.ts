@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { SubjectFixture } from '../fixture/subjects';
 import { Link } from '../hypermedia';
+import {assertApiCall} from "./utilities";
 
 interface HypermediaWrapper {
   _embedded: Subjects;
@@ -30,9 +31,7 @@ export async function insertSubject(subject: SubjectFixture, token: string) {
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    console.log(
-      `Subject creation status:, ${response.statusText} ${response.status}`,
-    );
+    assertApiCall(response, 'Subject creation');
   });
 }
 

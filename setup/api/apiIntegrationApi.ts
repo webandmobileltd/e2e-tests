@@ -3,7 +3,7 @@ import { API_URL } from '../Constants';
 import { ApiIntegrationFixture } from '../fixture/apiIntegration';
 import { LinksHolder } from './hateoas';
 import {
-  assertCreateSucceeded,
+  assertApiCall,
   extractIdFromLocation,
   extractIdFromSelfUri,
 } from './utilities';
@@ -78,7 +78,7 @@ export async function createApiIntegration(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
-    assertCreateSucceeded('API Integration', response);
+    assertApiCall(response, 'API Integration creation');
     return extractIdFromLocation(response);
   });
 }

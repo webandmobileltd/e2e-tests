@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
 import { CollectionFixture } from '../fixture/collections';
 import { LinksHolder } from './hateoas';
-import { assertCreateSucceeded, extractIdFromLocation } from './utilities';
+import { assertApiCall, extractIdFromLocation } from './utilities';
 
 interface HypermediaWrapper {
   _embedded: Collections;
@@ -47,7 +47,7 @@ export async function insertCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    assertCreateSucceeded('Collection', response);
+    assertApiCall(response, 'Collection creation');
     return extractIdFromLocation(response);
   });
 }
@@ -82,7 +82,7 @@ export async function addVideoToCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    console.log(`Adding video to collection status: ${response.status}`);
+    assertApiCall(response, 'Video/Collection association');
   });
 }
 
@@ -125,9 +125,7 @@ async function getMyCollectionsLink(token: string): Promise<string> {
     },
   });
 
-  if (response.status !== 200) {
-    throw new Error(`Links lookup failed with status ${response.status}`);
-  }
+  assertApiCall(response, 'Links lookup');
 
   const payload: LinksHolder = await response.json();
 

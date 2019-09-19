@@ -1,4 +1,4 @@
-import { Response } from 'node-fetch';
+import {Response} from 'node-fetch';
 
 export function extractIdFromSelfUri(uriString: string): string {
   return uriString.substring(uriString.lastIndexOf('/') + 1);
@@ -13,10 +13,19 @@ export function extractIdFromLocation(response: Response): string {
   return extractIdFromSelfUri(locationHeaderValue);
 }
 
-export function assertCreateSucceeded(item: string, response: Response) {
-  if (response.status === 201) {
-    console.log(`${item} created successfully`);
+export function assertApiCall(response: Response, message: string = 'API call') {
+  if (response.status < 400) {
+    console.log(`😎 ${message} successful: ${response.status}`);
+  } else if (response.status == 409) {
+    console.log(`😍 ${message} ignored because it already exists: ${response.status}`);
   } else {
-    throw new Error(`${item} creation failed with status ${response.status}`);
+    response.json().then(console.error);
+    throw new Error(`💩 ${message} failed with status ${response.status}`);
   }
+}
+
+export function inserting(item: string) {
+  console.log('');
+  console.log('');
+  console.log(`⬇⬇⬇   Inserting all ${item}...   ⬇⬇⬇   `);
 }

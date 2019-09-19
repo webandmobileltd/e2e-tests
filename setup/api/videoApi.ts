@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { VideoFixture } from '../fixture/videos';
+import {assertApiCall} from "./utilities";
 
 interface HypermediaWrapper {
   _embedded: Videos;
@@ -24,7 +25,7 @@ export async function insertVideo(video: VideoFixture, token: string) {
     },
   });
 
-  console.log(`Video creation status: ${response.status}`);
+  assertApiCall(response, 'Video creation');
 }
 
 export async function findOneVideoId(

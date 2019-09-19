@@ -3,7 +3,7 @@ import { API_URL } from '../Constants';
 import { SelectedContentContract } from '../fixture/contract';
 import { LinksHolder } from './hateoas';
 import {
-  assertCreateSucceeded,
+  assertApiCall,
   extractIdFromLocation,
   extractIdFromSelfUri,
 } from './utilities';
@@ -65,7 +65,7 @@ export async function createContract(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
-    assertCreateSucceeded('Contract', response);
+    assertApiCall(response, 'Contract creation');
     return extractIdFromLocation(response);
   });
 }

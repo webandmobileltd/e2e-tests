@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { Tag } from '../fixture/tags';
 import { Link } from '../hypermedia';
+import {assertApiCall} from "./utilities";
 
 interface HypermediaWrapper {
   _embedded: Tags;
@@ -30,9 +31,7 @@ export async function insertTag(tag: Tag, token: string) {
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    console.log(
-      `Tag creation status:, ${response.statusText} ${response.status}`,
-    );
+    assertApiCall(response, 'Tag creation');
   });
 }
 

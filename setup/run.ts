@@ -29,6 +29,7 @@ import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
 import { getParametrisedVideoFixtures } from './fixture/videos';
 import { generateToken } from './generateToken';
+import {inserting} from "./api/utilities";
 
 if (!TOKEN_URL || !OPERATOR_USERNAME || !OPERATOR_PASSWORD) {
   throw new Error('Environment variables not set properly.');
@@ -36,7 +37,6 @@ if (!TOKEN_URL || !OPERATOR_USERNAME || !OPERATOR_PASSWORD) {
 
 async function insertVideos(token: string) {
   const allInterpolatedVideos = await getParametrisedVideoFixtures(token);
-  console.log('Inserting all videos...');
   return Promise.all(
     allInterpolatedVideos.map(async video => {
       await insertVideo(video, token);
@@ -92,7 +92,6 @@ async function setupLtiFixtures(token: string) {
 }
 
 async function insertContentPartners(token: string) {
-  console.log('Inserting content partners...');
   return Promise.all(
     contentPartnerFixtures.map(async contentPartnerFixture => {
       return insertContentPartner(
@@ -114,40 +113,33 @@ async function setUp() {
   const subjects = await getSubjects();
   if (!subjects) {
     await insertSubjects(token);
-  } else {
-    console.log('Subjects already exist, did not update');
   }
 
   const tags = await getTags();
   if (!tags) {
+    inserting('tags');
     await insertTags(token);
-  } else {
-    console.log('Tags already exist, did not update tags');
   }
 
   const disciplines = await getDisciplines(token);
   if (!disciplines) {
+    inserting('disciplines');
     await insertDisciplines(token);
-  } else {
-    console.log('Disciplines already exist, did not update');
   }
 
   const contentPartners = await getContentPartners(token);
   if (!contentPartners) {
-    const addedContentPartners = await insertContentPartners(token);
-    console.log(`Inserted ${addedContentPartners.length} content partners`);
-  } else {
-    console.log('Content partners already exist, did not update');
+    inserting('content partners');
+    await insertContentPartners(token);
   }
 
-  const videos = await insertVideos(token);
-  console.log(`Attempted to insert ${videos.length} videos`);
+  inserting('videos');
+  await insertVideos(token);
 
   const collections = await getCollections(token);
   if (!collections) {
+    inserting('collections');
     await insertCollections(token);
-  } else {
-    console.log('Collections already exist, did not update');
   }
 
   await setupLtiFixtures(token);
