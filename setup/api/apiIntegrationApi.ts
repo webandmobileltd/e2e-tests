@@ -3,7 +3,8 @@ import { API_URL } from '../Constants';
 import { ApiIntegrationFixture } from '../fixture/apiIntegration';
 import { LinksHolder } from './hateoas';
 import {
-  assertApiCall,
+  assertApiResourceCreation,
+  assertApiResourceLookup,
   extractIdFromLocation,
   extractIdFromSelfUri,
 } from './utilities';
@@ -22,12 +23,7 @@ export async function ensureApiIntegrationAndReturnId(
   );
 
   if (!apiIntegrationId) {
-    console.log(
-      `API Integration '${apiIntegration.name}' does not exist yet, creating`,
-    );
     apiIntegrationId = await createApiIntegration(apiIntegration, token);
-  } else {
-    console.log(`API Integration '${apiIntegration.name}' exists`);
   }
 
   return apiIntegrationId;
@@ -44,25 +40,16 @@ export async function findApiIntegrationIdByName(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
+    assertApiResourceLookup(response, `API integration [name=${name}]`);
     if (response.status === 404) {
-      console.log(`API Integration not found for name '${name}'`);
       return undefined;
-    } else if (response.status !== 200) {
-      throw new Error(
-        `API Integration lookup failed with status ${response.status}`,
-      );
     }
 
     const apiIntegration: ApiIntegrationResource = await response.json();
 
-    const apiIntegrationId = extractIdFromSelfUri(
+    return extractIdFromSelfUri(
       apiIntegration._links.self.href,
     );
-    console.log(
-      `Found API Integration for name '${name}' with id ${apiIntegrationId}`,
-    );
-
-    return apiIntegrationId;
   });
 }
 
@@ -78,7 +65,7 @@ export async function createApiIntegration(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
-    assertApiCall(response, 'API Integration creation');
+    assertApiResourceCreation(response, 'API Integration creation');
     return extractIdFromLocation(response);
   });
 }

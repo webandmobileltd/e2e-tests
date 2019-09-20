@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME } from './Constants';
 
 import * as Constants from './Constants';
-import {assertApiCall} from "./api/utilities";
+import {assertApiResourceCreation} from "./api/utilities";
 
 interface AccessTokenResponse {
   access_token: string;
@@ -16,7 +16,7 @@ export async function generateToken(): Promise<string> {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-  assertApiCall(response, `Token generation for user ${Constants.OPERATOR_USERNAME}`);
+  assertApiResourceCreation(response, `Token generation for user ${Constants.OPERATOR_USERNAME}`);
   const body: AccessTokenResponse = await response.json();
 
   return body.access_token;

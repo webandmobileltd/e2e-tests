@@ -13,7 +13,7 @@ export function extractIdFromLocation(response: Response): string {
   return extractIdFromSelfUri(locationHeaderValue);
 }
 
-export function assertApiCall(response: Response, message: string = 'API call') {
+export function assertApiResourceCreation(response: Response, message: string = 'API call') {
   if (response.status < 400) {
     console.log(`😎 ${message} successful: ${response.status}`);
   } else if (response.status == 409) {
@@ -21,6 +21,17 @@ export function assertApiCall(response: Response, message: string = 'API call') 
   } else {
     response.json().then(console.error);
     throw new Error(`💩 ${message} failed with status ${response.status}`);
+  }
+}
+
+export function assertApiResourceLookup(response: Response, message: string = 'API call') {
+  if (response.status < 400) {
+    console.log(`😎 ${message} lookup successful: ${response.status}`);
+  } else if (response.status == 404) {
+    console.log(`🙆 ${message} cannot be found: ${response.status}`);
+  } else {
+    response.json().then(console.error);
+    throw new Error(`💩 ${message} lookup failed with status ${response.status}`);
   }
 }
 

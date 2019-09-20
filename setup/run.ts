@@ -143,6 +143,7 @@ async function setUp() {
     await insertCollections(token);
   }
 
+  inserting('LTI fixtures');
   await setupLtiFixtures(token);
 }
 

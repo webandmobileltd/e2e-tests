@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
 import { CollectionFixture } from '../fixture/collections';
 import { LinksHolder } from './hateoas';
-import { assertApiCall, extractIdFromLocation } from './utilities';
+import { assertApiResourceCreation, extractIdFromLocation } from './utilities';
 
 interface HypermediaWrapper {
   _embedded: Collections;
@@ -42,7 +42,7 @@ export async function insertCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    assertApiCall(response, 'Collection creation');
+    assertApiResourceCreation(response, 'Collection creation');
     return extractIdFromLocation(response);
   });
 }
@@ -77,7 +77,7 @@ export async function addVideoToCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    assertApiCall(response, 'Video/Collection association');
+    assertApiResourceCreation(response, `Video/Collection association [${collectionId}/${videoId}]`);
   });
 }
 
@@ -95,7 +95,7 @@ export async function findOneCollectionId(
     },
   });
 
-  assertApiCall(response, 'Collection lookup');
+  assertApiResourceCreation(response, `Collection lookup [name=${name}`);
 
   const payload: HypermediaWrapper = await response.json();
   const collections = payload._embedded.collections;
@@ -118,7 +118,7 @@ async function getMyCollectionsLink(token: string): Promise<string> {
     },
   });
 
-  assertApiCall(response, 'Links lookup');
+  assertApiResourceCreation(response, 'Links lookup');
 
   const payload: LinksHolder = await response.json();
 

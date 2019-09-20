@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { API_URL } from '../Constants';
-import {assertApiCall} from "./utilities";
+import {assertApiResourceCreation} from "./utilities";
 
 interface HypermediaWrapper {
   _links: any;
@@ -32,7 +32,7 @@ export async function insertContentPartner(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    assertApiCall(response, 'Content partner creation');
+    assertApiResourceCreation(response, 'Content partner creation');
   });
 }
 

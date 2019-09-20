@@ -3,7 +3,7 @@ import { API_URL } from '../Constants';
 import { SelectedContentContract } from '../fixture/contract';
 import { LinksHolder } from './hateoas';
 import {
-  assertApiCall,
+  assertApiResourceCreation, assertApiResourceLookup,
   extractIdFromLocation,
   extractIdFromSelfUri,
 } from './utilities';
@@ -17,10 +17,7 @@ export async function ensureContractAndReturnId(
   let contractId = await findContractIdByName(contract.name, token);
 
   if (!contractId) {
-    console.log(`Contract '${contract.name}' does not exist yet, creating`);
     contractId = await createContract(contract, token);
-  } else {
-    console.log(`Contract '${contract.name}' exists`);
   }
 
   return contractId;
@@ -37,17 +34,14 @@ export async function findContractIdByName(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
+    assertApiResourceLookup(response, `Contract [name=${name}]`);
     if (response.status === 404) {
-      console.log(`Contract not found for name '${name}'`);
       return undefined;
-    } else if (response.status !== 200) {
-      throw new Error(`Contract lookup failed with status ${response.status}`);
     }
 
     const contract: SelectedContentContractResource = await response.json();
 
     const contractId = extractIdFromSelfUri(contract._links.self.href);
-    console.log(`Found contract for name '${name}' with id ${contractId}`);
 
     return contractId;
   });
@@ -65,7 +59,7 @@ export async function createContract(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
-    assertApiCall(response, 'Contract creation');
+    assertApiResourceCreation(response, 'Contract creation');
     return extractIdFromLocation(response);
   });
 }

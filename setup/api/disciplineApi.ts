@@ -3,7 +3,7 @@ import { API_URL } from '../Constants';
 import { DisciplineFixture } from '../fixture/disciplines';
 import { Link } from '../hypermedia';
 import { getSubjectByName } from './subjectApi';
-import {assertApiCall} from "./utilities";
+import {assertApiResourceCreation} from "./utilities";
 
 interface HypermediaWrapper {
   _links: DisciplineLinks;
@@ -37,7 +37,7 @@ export async function insertDiscipline(
     },
   })
     .then(response => {
-      assertApiCall(response, 'Discipline creation');
+      assertApiResourceCreation(response, 'Discipline creation');
       return response.json();
     })
     .then((resource: HypermediaWrapper) => {
@@ -49,7 +49,7 @@ export async function insertDiscipline(
           'Content-Type': 'text/uri-list',
         },
       }).then(response => {
-        assertApiCall(response, 'Subject/discipline assotiation');
+        assertApiResourceCreation(response, 'Subject/discipline assotiation');
       });
     });
 }
