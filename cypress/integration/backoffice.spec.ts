@@ -14,7 +14,7 @@ context('Backoffice', () => {
       .contentPartnerTableHasData();
   });
 
-  it('Import an order CSV', () => {
+  xit('Import an order CSV', () => {
     backoffice
       .visit()
       .logIn()
