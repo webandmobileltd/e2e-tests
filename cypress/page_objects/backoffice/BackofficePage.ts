@@ -2,6 +2,7 @@ import { findOneVideoId } from '../../../setup/api/videoApi';
 import { getParametrisedVideoFixtures } from '../../../setup/fixture/videos';
 import { generateToken } from '../../../setup/generateToken';
 import { By } from '../../support/By';
+import { findOneValidVideoId } from '../../support/cypressBoclipsApiWrappers/findOneValidVideoId';
 
 export class BackofficePage {
   private readonly url: string;
@@ -47,37 +48,25 @@ export class BackofficePage {
 
   public importOrderCSV() {
     cy.get(By.dataQa('import-order-button')).click();
-    cy.then(() => {
-      return generateToken();
-    })
-      .then((token: string) => {
-        return cy
-          .then(() => {
-            return getParametrisedVideoFixtures(token);
-          })
-          .then(allInstructionalVideos => {
-            return findOneVideoId(allInstructionalVideos[0].title, token);
-          });
-      })
-      .then(id => {
-        console.log(id);
-        cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
-          const content = `Order No,Month Date ,Order request Date,Order Fulfillment Date,Quarter,Member (request),Member (authorise) ID,Clip ID,Title,Source,Source Code,License Duration,Territory,Type,Price,Publisher,ISBN / PRODUCT DESCRIP,Language,Captioning,Trim,Notes,Remittance Notes
+    findOneValidVideoId().then(id => {
+      console.log(id);
+      cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
+        const content = `Order No,Month Date ,Order request Date,Order Fulfillment Date,Quarter,Member (request),Member (authorise) ID,Clip ID,Title,Source,Source Code,License Duration,Territory,Type,Price,Publisher,ISBN / PRODUCT DESCRIP,Language,Captioning,Trim,Notes,Remittance Notes
 129,Nov-15,05/11/15,,2015 Q4,Susan Andrews,871,${id},Learning from proximity to power,XKA Digital,,5,Europe,Instructional Clips,£200 ,ICS,,,,,Complete,`;
-          const blob = new Blob([content]);
-          const orderFile = new File([blob], 'orders.csv', {
-            type: 'text/csv',
-          });
+        const blob = new Blob([content]);
+        const orderFile = new File([blob], 'orders.csv', {
+          type: 'text/csv',
+        });
 
-          const dataTransfer = new DataTransfer();
-          dataTransfer.items.add(orderFile);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(orderFile);
 
-          cy.wrap(dropzone, { log: false }).trigger('drop', {
-            force: true,
-            dataTransfer,
-          });
+        cy.wrap(dropzone, { log: false }).trigger('drop', {
+          force: true,
+          dataTransfer,
         });
       });
+    });
 
     return this;
   }
