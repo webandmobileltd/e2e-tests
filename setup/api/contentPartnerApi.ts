@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { API_URL } from '../Constants';
-import {assertApiResourceCreation} from "./utilities";
+import { assertApiResourceCreation } from './utilities';
 
 interface HypermediaWrapper {
   _links: any;

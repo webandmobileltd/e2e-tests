@@ -14,6 +14,7 @@ import { ensureContractAndReturnId } from './api/contractApi';
 import { getDisciplines, insertDiscipline } from './api/disciplineApi';
 import { getSubjects, insertSubject } from './api/subjectApi';
 import { getTags, insertTag } from './api/tagApi';
+import { inserting } from './api/utilities';
 import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
 import { ltiApiIntegrationFixture } from './fixture/apiIntegration';
@@ -29,7 +30,6 @@ import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
 import { getParametrisedVideoFixtures } from './fixture/videos';
 import { generateToken } from './generateToken';
-import {inserting} from "./api/utilities";
 
 if (!TOKEN_URL || !OPERATOR_USERNAME || !OPERATOR_PASSWORD) {
   throw new Error('Environment variables not set properly.');

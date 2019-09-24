@@ -3,7 +3,7 @@ import { API_URL } from '../Constants';
 import { DisciplineFixture } from '../fixture/disciplines';
 import { Link } from '../hypermedia';
 import { getSubjectByName } from './subjectApi';
-import {assertApiResourceCreation} from "./utilities";
+import { assertApiResourceCreation } from './utilities';
 
 interface HypermediaWrapper {
   _links: DisciplineLinks;

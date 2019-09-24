@@ -47,9 +47,7 @@ export async function findApiIntegrationIdByName(
 
     const apiIntegration: ApiIntegrationResource = await response.json();
 
-    return extractIdFromSelfUri(
-      apiIntegration._links.self.href,
-    );
+    return extractIdFromSelfUri(apiIntegration._links.self.href);
   });
 }
 

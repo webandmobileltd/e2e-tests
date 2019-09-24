@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { SubjectFixture } from '../fixture/subjects';
 import { Link } from '../hypermedia';
-import {assertApiResourceCreation} from "./utilities";
+import { assertApiResourceCreation } from './utilities';
 
 interface HypermediaWrapper {
   _embedded: Subjects;

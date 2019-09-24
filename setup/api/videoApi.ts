@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { VideoFixture } from '../fixture/videos';
-import {assertApiResourceCreation} from "./utilities";
+import { assertApiResourceCreation } from './utilities';
 
 interface HypermediaWrapper {
   _embedded: Videos;

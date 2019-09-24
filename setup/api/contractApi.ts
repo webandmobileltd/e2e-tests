@@ -3,7 +3,8 @@ import { API_URL } from '../Constants';
 import { SelectedContentContract } from '../fixture/contract';
 import { LinksHolder } from './hateoas';
 import {
-  assertApiResourceCreation, assertApiResourceLookup,
+  assertApiResourceCreation,
+  assertApiResourceLookup,
   extractIdFromLocation,
   extractIdFromSelfUri,
 } from './utilities';

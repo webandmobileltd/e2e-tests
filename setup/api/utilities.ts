@@ -1,4 +1,4 @@
-import {Response} from 'node-fetch';
+import { Response } from 'node-fetch';
 
 export function extractIdFromSelfUri(uriString: string): string {
   return uriString.substring(uriString.lastIndexOf('/') + 1);
@@ -13,25 +13,35 @@ export function extractIdFromLocation(response: Response): string {
   return extractIdFromSelfUri(locationHeaderValue);
 }
 
-export function assertApiResourceCreation(response: Response, message: string = 'API call') {
+export function assertApiResourceCreation(
+  response: Response,
+  message: string = 'API call',
+) {
   if (response.status < 400) {
     console.log(`😎 ${message} successful: ${response.status}`);
-  } else if (response.status == 409) {
-    console.log(`😍 ${message} ignored because it already exists: ${response.status}`);
+  } else if (response.status === 409) {
+    console.log(
+      `😍 ${message} ignored because it already exists: ${response.status}`,
+    );
   } else {
     response.json().then(console.error);
     throw new Error(`💩 ${message} failed with status ${response.status}`);
   }
 }
 
-export function assertApiResourceLookup(response: Response, message: string = 'API call') {
+export function assertApiResourceLookup(
+  response: Response,
+  message: string = 'API call',
+) {
   if (response.status < 400) {
     console.log(`😎 ${message} lookup successful: ${response.status}`);
-  } else if (response.status == 404) {
+  } else if (response.status === 404) {
     console.log(`🙆 ${message} cannot be found: ${response.status}`);
   } else {
     response.json().then(console.error);
-    throw new Error(`💩 ${message} lookup failed with status ${response.status}`);
+    throw new Error(
+      `💩 ${message} lookup failed with status ${response.status}`,
+    );
   }
 }
 

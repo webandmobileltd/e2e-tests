@@ -77,7 +77,10 @@ export async function addVideoToCollection(
       'Content-Type': 'application/json',
     },
   }).then(response => {
-    assertApiResourceCreation(response, `Video/Collection association [${collectionId}/${videoId}]`);
+    assertApiResourceCreation(
+      response,
+      `Video/Collection association [${collectionId}/${videoId}]`,
+    );
   });
 }
 
