@@ -10,6 +10,7 @@ export const contentPartnerFixtures: any[] = [
   {
     name: 'Minute Physics',
     distributionMethods: ['DOWNLOAD', 'STREAM'],
+    currency: 'GBP',
   },
   {
     name: 'Youtube CP',
