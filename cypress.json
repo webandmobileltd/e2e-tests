@@ -3,5 +3,6 @@
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1280,
+  "modifyObstructiveCode": false,
   "numTestsKeptInMemory": 0
 }
