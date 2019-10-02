@@ -6,10 +6,20 @@ import {
   assertApiResourceCreation,
   assertApiResourceLookup,
   extractIdFromLocation,
-  extractIdFromSelfUri,
 } from './utilities';
 
-type SelectedContentContractResource = SelectedContentContract & LinksHolder;
+type SelectedContentContractResource = SelectedContentContract &
+  LinksHolder & {
+    id: string;
+  };
+
+interface HypermediaWrapper {
+  _embedded: Contracts;
+}
+
+interface Contracts {
+  contracts: SelectedContentContractResource[];
+}
 
 export async function ensureContractAndReturnId(
   contract: SelectedContentContract,
@@ -36,15 +46,19 @@ export async function findContractIdByName(
     },
   }).then(async response => {
     assertApiResourceLookup(response, `Contract [name=${name}]`);
-    if (response.status === 404) {
+
+    const payload: HypermediaWrapper = await response.json();
+    const contracts = payload._embedded.contracts;
+
+    const contract = contracts.find(
+      (it: SelectedContentContractResource) => it.name === name,
+    );
+
+    if (contract) {
+      return contract.id;
+    } else {
       return undefined;
     }
-
-    const contract: SelectedContentContractResource = await response.json();
-
-    const contractId = extractIdFromSelfUri(contract._links.self.href);
-
-    return contractId;
   });
 }
 
