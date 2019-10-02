@@ -14,7 +14,7 @@ context('Backoffice', () => {
       .contentPartnerTableHasData();
   });
 
-  xit('Import an order CSV', () => {
+  it('Import an order CSV and set its currency', () => {
     backoffice
       .visit()
       .logIn()
