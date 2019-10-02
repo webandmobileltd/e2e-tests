@@ -100,6 +100,7 @@ async function insertContentPartners(token: string) {
           distributionMethods: contentPartnerFixture.distributionMethods,
           accreditedToYtChannelId:
             contentPartnerFixture.accreditedToYtChannelId,
+          currency: contentPartnerFixture.currency,
         },
         token,
       );

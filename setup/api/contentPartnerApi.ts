@@ -18,6 +18,7 @@ export interface ContentPartner {
   accreditedToYtChannelId?: string;
   ageRange?: any;
   distributionMethods?: string[];
+  currency?: string;
 }
 
 export async function insertContentPartner(
