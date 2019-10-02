@@ -55,8 +55,10 @@ export async function findContractIdByName(
     );
 
     if (contract) {
+      console.log(`😎 Contract found for name ${name}`);
       return contract.id;
     } else {
+      console.log(`🙆 Contract not found for name ${name}`);
       return undefined;
     }
   });
