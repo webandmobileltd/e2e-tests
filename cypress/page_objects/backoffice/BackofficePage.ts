@@ -76,8 +76,6 @@ export class BackofficePage {
     cy.get(By.dataQa('aud-fx-rate-input')).type('4.5');
     cy.get(By.dataQa('submit-fx-rates')).click();
 
-    cy.get('.notification').should('not.exist');
-
     return this;
   }
 
