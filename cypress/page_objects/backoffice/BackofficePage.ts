@@ -81,12 +81,6 @@ export class BackofficePage {
 
   public updateOrderCurrency() {
     cy.get(By.dataQa('edit-currency')).click();
-    cy.get(By.dataQa('currency-select')).click();
-    cy.get(`.ant-select-dropdown-menu-item`)
-      .contains('USD')
-      .scrollIntoView()
-      .click();
-    cy.get(By.dataQa('inline-save')).click();
     return this;
   }
 
