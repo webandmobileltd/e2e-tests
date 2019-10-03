@@ -1,6 +1,4 @@
-import { findOneVideoId } from '../../../setup/api/videoApi';
 import { getParametrisedVideoFixtures } from '../../../setup/fixture/videos';
-import { generateToken } from '../../../setup/generateToken';
 import { By } from '../../support/By';
 import { findOneValidVideoId } from '../../support/cypressBoclipsApiWrappers/findOneValidVideoId';
 
@@ -70,10 +68,24 @@ export class BackofficePage {
     return this;
   }
 
-  public nthOrderHasID(orderId: string) {
-    cy.get(By.dataQa('order'))
-      .get(By.dataQa('order-id'))
-      .contains(orderId);
+  public exportOrderCSV() {
+    cy.get(By.dataQa('export-orders-csv')).click();
+    cy.get(By.dataQa('usd-fx-rate-input')).type('1.5');
+    cy.get(By.dataQa('eur-fx-rate-input')).type('2.5');
+    cy.get(By.dataQa('sgd-fx-rate-input')).type('3.5');
+    cy.get(By.dataQa('aud-fx-rate-input')).type('4.5');
+    cy.get(By.dataQa('submit-fx-rates')).click();
+
+    return this;
+  }
+
+  public updateOrderCurrency() {
+    cy.get(By.dataQa('edit-currency')).click();
+    return this;
+  }
+
+  public loadOrderById(orderId: string) {
+    cy.get(By.dataState(orderId)).click();
 
     return this;
   }
