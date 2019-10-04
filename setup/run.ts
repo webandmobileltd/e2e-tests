@@ -1,6 +1,7 @@
 import {
   addVideoToCollection,
   ensureCollectionAndReturnId,
+  findOneCollectionId,
   getCollections,
   insertCollection,
 } from './api/collectionApi';
@@ -63,7 +64,11 @@ async function insertDisciplines(token: string) {
 async function insertCollections(token: string) {
   await Promise.all(
     collectionFixtures.map((collection: CollectionFixture) =>
-      insertCollection(collection, token),
+      findOneCollectionId(collection.title, token).then(id => {
+        if (!id) {
+          insertCollection(collection, token);
+        }
+      }),
     ),
   );
 }
@@ -138,11 +143,8 @@ async function setUp() {
   inserting('videos');
   await insertVideos(token);
 
-  const collections = await getCollections(token);
-  if (!collections) {
-    inserting('collections');
-    await insertCollections(token);
-  }
+  inserting('collections');
+  await insertCollections(token);
 
   inserting('LTI fixtures');
   await setupLtiFixtures(token);

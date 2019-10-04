@@ -98,7 +98,7 @@ export async function findOneCollectionId(
     },
   });
 
-  assertApiResourceCreation(response, `Collection lookup [name=${name}`);
+  assertApiResourceCreation(response, `Collection lookup [name=${name}]`);
 
   const payload: HypermediaWrapper = await response.json();
   const collections = payload._embedded.collections;
