@@ -56,7 +56,8 @@ export async function findContractIdByName(
 
     if (contract) {
       console.log(`😎 Contract found for name ${name}`);
-      return contract.id;
+      const self = contract._links.self.href;
+      return self.substring(self.lastIndexOf("/"));
     } else {
       console.log(`🙆 Contract not found for name ${name}`);
       return undefined;
