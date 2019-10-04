@@ -47,8 +47,8 @@ export class TeachersHomepage extends TeacherPage {
     return this;
   }
 
-  public goToRegistrationPage() {
-    cy.get(By.dataQa('create-account')).click();
+  public visitRegistrationPage() {
+    cy.visit(this.url + '/create-account');
     return this;
   }
 

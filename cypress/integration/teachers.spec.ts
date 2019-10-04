@@ -21,7 +21,7 @@ context('Teachers App', () => {
     homepage
       .log('creating an account')
       .visit()
-      .goToRegistrationPage()
+      .visitRegistrationPage()
       .createAccount(username, password)
       .accountCreated()
 
