@@ -56,7 +56,7 @@ export async function findContractIdByName(
 
     if (contract) {
       const self = contract._links.self.href;
-      return self.substring(self.lastIndexOf("/"));
+      return self.substring(self.lastIndexOf('/'));
     } else {
       return undefined;
     }
