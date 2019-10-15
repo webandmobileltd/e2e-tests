@@ -10,6 +10,8 @@ CYPRESS_FRONTEND_USERNAME="$(get-k8s-concourse-secret boclips e2e frontend-usern
 CYPRESS_FRONTEND_PASSWORD="$(get-k8s-concourse-secret boclips e2e frontend-password)"
 CYPRESS_OPERATOR_USERNAME="$(get-k8s-concourse-secret boclips operator testing-username)"
 CYPRESS_OPERATOR_PASSWORD="$(get-k8s-concourse-secret boclips operator testing-password)"
+CYPRESS_LTI_CONSUMER_KEY="$(get-k8s-concourse-secret boclips testing-lti consumer-key)"
+CYPRESS_LTI_CONSUMER_SECRET="$(get-k8s-concourse-secret boclips testing-lti consumer-secret)"
 
 export CYPRESS_BACKOFFICE_USERNAME
 export CYPRESS_BACKOFFICE_PASSWORD
@@ -17,6 +19,8 @@ export CYPRESS_FRONTEND_USERNAME
 export CYPRESS_FRONTEND_PASSWORD
 export CYPRESS_OPERATOR_USERNAME
 export CYPRESS_OPERATOR_PASSWORD
+export CYPRESS_LTI_CONSUMER_KEY
+export CYPRESS_LTI_CONSUMER_SECRET
 
 fly --target ci \
     execute \
