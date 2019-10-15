@@ -10,9 +10,6 @@ image_resource:
 inputs:
 - name: source
 
-outputs:
-- name: test-results
-
 params:
   CYPRESS_TOKEN_URL: https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token
   CYPRESS_API_BASE_URL: https://api.testing-boclips.com
@@ -29,11 +26,16 @@ params:
   CYPRESS_OPERATOR_PASSWORD:
   CYPRESS_LTI_CONSUMER_KEY:
   CYPRESS_LTI_CONSUMER_SECRET:
-  SPEC:
 
 run:
-  path: source/pipelines/scripts/run
+  dir: source
+  path: sh
+  args:
+  - -ec
+  - |-
+    npm ci
+    npm run cypress:setup
 
 caches:
-- path: ../../../root/.cache
-- path: ../../../root/.npm
+- path: ../../../../root/.cache
+- path: ../../../../root/.npm

@@ -56,5 +56,5 @@ cd source || exit 1
 
 npm ci || exit 1
 
-./run ci "$SPEC"
+npm run cypress:run -- --spec="$SPEC"
 )
