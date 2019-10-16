@@ -2,27 +2,6 @@
 
 set -e
 
-case "$1-$2" in
-"ci-frontend")
-  cypress="npm run cypress:run -- --spec=cypress/integration/frontend.spec.ts"
-  ;;
-"ci-marketing")
-  cypress="npm run cypress:run -- --spec=cypress/integration/marketing_collections.spec.ts"
-  ;;
-"ci-teachers")
-  cypress="npm run cypress:run -- --spec=cypress/integration/teachers.spec.ts"
-  ;;
-"ci-")
-  cypress="npm run cypress:run"
-  ;;
-"-")
-  cypress="npm run cypress:open"
-  ;;
-"ci-"*)
-  echo "Usage: run [ci] [SPEC]"
-  exit 1
-esac
-
 : "${CYPRESS_TOKEN_URL:="https://login.testing-boclips.com/auth/realms/boclips/protocol/openid-connect/token"}"
 : "${CYPRESS_API_BASE_URL:="https://api.testing-boclips.com"}"
 : "${CYPRESS_BACKOFFICE_BASE_URL:="https://backoffice.testing-boclips.com"}"
@@ -56,5 +35,4 @@ export CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL
 export CYPRESS_LTI_LAUNCH_URL
 
 npm run cypress:setup
-
-${cypress}
+npm run cypress:open
