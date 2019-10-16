@@ -5,7 +5,7 @@ import {
   preserveLoginCookiesBetweenTests,
 } from '../page_objects/teachers/CookiesUtils';
 
-context('Teachers App', () => {
+context('Teachers App Videos Journey', () => {
   const homepage = new TeachersHomepage();
 
   const username = `${uuid()}@boclips.com`;
@@ -13,8 +13,6 @@ context('Teachers App', () => {
 
   const MINUTE_PHYSICS = 'Minute Physics';
   const SUBJECT = 'Biology';
-
-  const existingPublicCollectionTitle = MINUTE_PHYSICS;
 
   before(() => {
     clearLoginCookies();
@@ -36,7 +34,7 @@ context('Teachers App', () => {
 
   beforeEach(preserveLoginCookiesBetweenTests);
 
-  specify('Videos Journey: Search, Filtering, Browsing & Rating', () => {
+  specify('Search, Filtering, Browsing & Rating', () => {
     const nonEducationalSearchQuery = 'Celebrities on the red carpet';
     const queryWithNewsAndNonNews = 'richard';
 
@@ -123,65 +121,4 @@ context('Teachers App', () => {
       });
   });
 
-  specify('Collections Journey: Management, Discover & Bookmarking', () => {
-    const collectionTitle = uuid();
-    const newCollectionTitle = uuid();
-
-    homepage
-      .log('bookmarking collection')
-      .visit()
-      .bookmarkCollection(existingPublicCollectionTitle)
-      .unbookmarkCollection(existingPublicCollectionTitle)
-      .bookmarkCollection(existingPublicCollectionTitle)
-
-      .log('checking bookmarks')
-      .menu()
-      .goToBookmarkedCollections()
-      .goToHomepage()
-      .reload()
-      .checkCollectionBookmarkStatus(existingPublicCollectionTitle, true)
-
-      .log('creating a collection')
-      .menu()
-      .search(MINUTE_PHYSICS)
-      .createCollectionFromVideo(0, collectionTitle)
-
-      .log('managing collection videos')
-      .addVideoToCollection(1, collectionTitle)
-      .isVideoInCollection(1, collectionTitle)
-      .reload()
-      .removeVideoFromCollection(1, collectionTitle)
-
-      .log('editing a collection')
-      .menu()
-      .goToCollections()
-      .inspectCollections(collections => expect(collections).to.have.length(1))
-      .goToCollectionDetails(collectionTitle)
-      .setVisibility(true)
-      .setSubject(SUBJECT)
-      .setName(newCollectionTitle)
-      .itHasCorrectVisibility(true)
-      .itHasName(newCollectionTitle)
-
-      .log('verifying and managing videos')
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .reload()
-      .itHasName(newCollectionTitle)
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .removeVideo(0)
-      .isEmpty()
-      .reload()
-      .isEmpty()
-
-      .log('verifying collection in discipline subject page')
-      .menu()
-      .goToHomepage()
-      .goToDiscoverBySubject(SUBJECT)
-      .hasCollectionTitle(newCollectionTitle)
-
-      .log('deleting a collection')
-      .menu()
-      .goToCollections()
-      .deleteCollection(newCollectionTitle);
-  });
 });
