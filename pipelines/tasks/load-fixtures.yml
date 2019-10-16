@@ -8,8 +8,6 @@ image_resource:
     tag: "10"
 
 inputs:
-- name: npm-cache
-  optional: true
 - name: source
 
 params:
@@ -35,7 +33,6 @@ run:
   args:
   - -ec
   - |-
-    npm config set cache ~/npm-cache
     npm ci
     npm run cypress:setup
 
