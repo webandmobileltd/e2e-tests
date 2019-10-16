@@ -8,6 +8,8 @@ image_resource:
     tag: "10"
 
 inputs:
+- name: npm-cache
+  optional: true
 - name: source
 
 outputs:
