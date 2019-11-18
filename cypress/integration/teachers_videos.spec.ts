@@ -39,43 +39,10 @@ context('Teachers App Videos Journey', () => {
     const queryWithNewsAndNonNews = 'richard';
 
     homepage
-      .log('searching collections')
-      .menu()
-      .search(MINUTE_PHYSICS)
-      .inspectCollections(collections => {
-        expect(collections.length).to.be.greaterThan(
-          0,
-          `There are no collections showing`,
-        );
-        expect(collections[0].title).to.equal(MINUTE_PHYSICS);
-      })
-
       .log('searching non educational videos')
       .menu()
       .search(nonEducationalSearchQuery)
       .noVideosShown()
-
-      .log('searching news and non news')
-      .menu()
-      .search(queryWithNewsAndNonNews)
-      .inspectResults(videos => {
-        expect(videos.length).to.be.greaterThan(
-          0,
-          `There are no videos showing`,
-        );
-      })
-      .goToNewsPage(false)
-      .inspectResults(videos => {
-        expect(videos.length).to.be.greaterThan(
-          0,
-          `There are no videos showing`,
-        );
-        expect(videos[0].title).to.equal('Breaking news');
-        expect(videos[1].title).to.equal(
-          "'Richard St. John: 8 secrets of success' goes viral on boclips",
-        );
-      })
-      .goBackToMainSearchPage(false)
 
       .log('testing paging')
       .menu()
@@ -120,5 +87,4 @@ context('Teachers App Videos Journey', () => {
           .assertRating(2);
       });
   });
-
 });
