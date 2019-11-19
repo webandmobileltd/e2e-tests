@@ -91,50 +91,9 @@ export class BackofficePage {
     return this;
   }
 
-  public updateOrderItemDuration(duration: string, index: number = 0) {
-    this.startOrderRowEdit(index);
-
-    cy.get(By.dataQa('duration-edit'))
-      .find('input')
-      .clear()
-      .type(duration);
-
-    this.saveOrderRowEdit();
-
-    cy.get(By.dataQa('license-duration')).contains(duration);
-
-    return this;
-  }
-  public updateOrderItemTerritory(territory: string, index: number = 0) {
-    this.startOrderRowEdit(index);
-
-    cy.get(By.dataQa('territory-edit'))
-      .find('input')
-      .clear()
-      .type(territory);
-
-    this.saveOrderRowEdit();
-
-    cy.get(By.dataQa('license-territory')).contains(territory);
-
-    return this;
-  }
-
   public loadOrderById(orderId: string) {
     cy.get(By.dataState(orderId)).click();
 
     return this;
-  }
-
-  private startOrderRowEdit(index: number = 0) {
-    cy.get(By.dataQa('edit-row-button'))
-      .eq(index)
-      .click({ force: true });
-  }
-
-  private saveOrderRowEdit() {
-    cy.get(By.dataQa('inline-save'))
-      .first()
-      .click({ force: true });
   }
 }
