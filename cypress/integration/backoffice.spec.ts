@@ -18,7 +18,9 @@ context('Backoffice', () => {
       .goToOrdersPage()
       .importOrderCSV()
       .loadOrderById('129')
-      .updateOrderCurrency();
+      .updateOrderCurrency()
+      .updateOrderItemDuration('17 Years')
+      .updateOrderItemTerritory('World Wide');
   });
 
   it('export a manifest', () => {
