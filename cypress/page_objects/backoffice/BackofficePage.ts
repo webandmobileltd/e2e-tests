@@ -75,7 +75,12 @@ export class BackofficePage {
     cy.get(By.dataQa('sgd-fx-rate-input')).type('3.5');
     cy.get(By.dataQa('aud-fx-rate-input')).type('4.5');
     cy.get(By.dataQa('cad-fx-rate-input')).type('1.11');
-    cy.get(By.dataQa('submit-fx-rates')).click();
+
+    /*
+     * Electron doesn't play nicely with downloaded files in ci. It prompts the user with a selector that needs native events to interact with
+     * https://github.com/cypress-io/cypress/issues/433
+     */
+    // cy.get(By.dataQa('submit-fx-rates')).click();
 
     return this;
   }
