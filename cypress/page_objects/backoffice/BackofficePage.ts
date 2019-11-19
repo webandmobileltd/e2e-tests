@@ -74,7 +74,6 @@ export class BackofficePage {
     cy.get(By.dataQa('eur-fx-rate-input')).type('2.5');
     cy.get(By.dataQa('sgd-fx-rate-input')).type('3.5');
     cy.get(By.dataQa('aud-fx-rate-input')).type('4.5');
-    cy.get(By.dataQa('cad-fx-rate-input')).type('1.11');
     cy.get(By.dataQa('submit-fx-rates')).click();
 
     return this;
