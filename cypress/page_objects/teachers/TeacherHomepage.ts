@@ -10,11 +10,11 @@ export class TeachersHomepage extends TeacherPage {
   constructor() {
     super();
     this.url = Cypress.env('TEACHERS_BASE_URL');
+    cy.setCookie('__hs_opt_out', 'yes');
   }
 
   public visit() {
     cy.visit(this.url);
-    cy.setCookie('__hs_opt_out', 'yes');
     return this;
   }
 

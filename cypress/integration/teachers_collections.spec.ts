@@ -20,7 +20,6 @@ context('Teachers App Collections Journey', () => {
     clearLoginCookies();
     homepage
       .log('creating an account')
-      .visit()
       .visitRegistrationPage()
       .createAccount(username, password)
       .accountCreated()
