@@ -19,6 +19,7 @@ context('Teachers App Collections Journey', () => {
   before(() => {
     clearLoginCookies();
     homepage
+      .configureHubspotCookie()
       .log('creating an account')
       .visitRegistrationPage()
       .createAccount(username, password)

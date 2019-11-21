@@ -17,6 +17,7 @@ context('Teachers App Videos Journey', () => {
   before(() => {
     clearLoginCookies();
     homepage
+      .configureHubspotCookie()
       .log('creating an account')
       .visitRegistrationPage()
       .createAccount(username, password)
