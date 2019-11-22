@@ -13,7 +13,7 @@ export function extractIdFromLocation(response: Response): string {
   return extractIdFromSelfUri(locationHeaderValue);
 }
 
-export function assertApiResourceCreation(
+export async function assertApiResourceCreation(
   response: Response,
   message: string = 'API call',
 ) {
@@ -24,7 +24,11 @@ export function assertApiResourceCreation(
       `😍 ${message} ignored because it already exists: ${response.status}`,
     );
   } else {
-    response.json().then(console.error);
+    const body = await response.text();
+    console.error(
+      `The request to ${response.url} failed with status ${response.status}. See body below.`,
+    );
+    console.error(body);
     throw new Error(`💩 ${message} failed with status ${response.status}`);
   }
 }

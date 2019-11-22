@@ -34,17 +34,17 @@ export async function insertCollection(
   collection: CollectionFixture,
   token: string,
 ): Promise<string> {
-  return await fetch(`${API_URL}/v1/collections`, {
+  const response = await fetch(`${API_URL}/v1/collections`, {
     method: 'POST',
     body: JSON.stringify(collection),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).then(response => {
-    assertApiResourceCreation(response, 'Collection creation');
-    return extractIdFromLocation(response);
   });
+
+  await assertApiResourceCreation(response, 'Collection creation');
+  return extractIdFromLocation(response);
 }
 
 export async function getCollections(
@@ -70,18 +70,20 @@ export async function addVideoToCollection(
   videoId: string,
   token: string,
 ) {
-  return fetch(`${API_URL}/v1/collections/${collectionId}/videos/${videoId}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    `${API_URL}/v1/collections/${collectionId}/videos/${videoId}`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     },
-  }).then(response => {
-    assertApiResourceCreation(
-      response,
-      `Video/Collection association [${collectionId}/${videoId}]`,
-    );
-  });
+  );
+  await assertApiResourceCreation(
+    response,
+    `Video/Collection association [${collectionId}/${videoId}]`,
+  );
 }
 
 export async function findOneCollectionId(
@@ -98,7 +100,7 @@ export async function findOneCollectionId(
     },
   });
 
-  assertApiResourceCreation(response, `Collection lookup [name=${name}]`);
+  await assertApiResourceCreation(response, `Collection lookup [name=${name}]`);
 
   const payload: HypermediaWrapper = await response.json();
   const collections = payload._embedded.collections;
@@ -121,7 +123,7 @@ async function getMyCollectionsLink(token: string): Promise<string> {
     },
   });
 
-  assertApiResourceCreation(response, 'Links lookup');
+  await assertApiResourceCreation(response, 'Links lookup');
 
   const payload: LinksHolder = await response.json();
 

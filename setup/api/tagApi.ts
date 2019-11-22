@@ -23,16 +23,15 @@ export interface TagLinks {
 }
 
 export async function insertTag(tag: Tag, token: string) {
-  return fetch(Constants.API_URL + '/v1/tags', {
+  const response = await fetch(Constants.API_URL + '/v1/tags', {
     method: 'POST',
     body: JSON.stringify(tag),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).then(response => {
-    assertApiResourceCreation(response, 'Tag creation');
   });
+  await assertApiResourceCreation(response, 'Tag creation');
 }
 
 export async function getTags(): Promise<Tag[] | undefined> {

@@ -28,30 +28,32 @@ export async function insertDiscipline(
 
   delete discipline.associatedSubject;
 
-  return fetch(`${API_URL}/v1/disciplines`, {
+  const disciplineResponse = await fetch(`${API_URL}/v1/disciplines`, {
     method: 'POST',
     body: JSON.stringify(discipline),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  })
-    .then(response => {
-      assertApiResourceCreation(response, 'Discipline creation');
-      return response.json();
-    })
-    .then((resource: HypermediaWrapper) => {
-      return fetch(resource._links.subjects.href, {
-        method: 'PUT',
-        body: subject._links.self.href,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'text/uri-list',
-        },
-      }).then(response => {
-        assertApiResourceCreation(response, 'Subject/discipline assotiation');
-      });
-    });
+  });
+
+  await assertApiResourceCreation(disciplineResponse, 'Discipline creation');
+  const disciplineResource: HypermediaWrapper = await disciplineResponse.json();
+  const disciplineSubjectMappingResponse = await fetch(
+    disciplineResource._links.subjects.href,
+    {
+      method: 'PUT',
+      body: subject._links.self.href,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'text/uri-list',
+      },
+    },
+  );
+  await assertApiResourceCreation(
+    disciplineSubjectMappingResponse,
+    'Subject/discipline assotiation',
+  );
 }
 
 export async function getDisciplines(

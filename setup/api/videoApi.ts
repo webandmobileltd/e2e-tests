@@ -25,7 +25,7 @@ export async function insertVideo(video: VideoFixture, token: string) {
     },
   });
 
-  assertApiResourceCreation(response, 'Video creation');
+  await assertApiResourceCreation(response, 'Video creation');
 }
 
 export async function findOneVideoId(
@@ -77,7 +77,7 @@ export async function findVideos(
 
   const payload = await response.json();
 
-  assertApiResourceCreation(response, 'Videos lookup');
+  await assertApiResourceCreation(response, 'Videos lookup');
 
   if (payload._embedded.videos.length === 0) {
     await sleepForMillis(1000);

@@ -25,16 +25,15 @@ export async function insertContentPartner(
   contentPartner: ContentPartner,
   token: string,
 ) {
-  return fetch(Constants.API_URL + '/v1/content-partners', {
+  const response = await fetch(Constants.API_URL + '/v1/content-partners', {
     method: 'POST',
     body: JSON.stringify(contentPartner),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).then(response => {
-    assertApiResourceCreation(response, 'Content partner creation');
   });
+  await assertApiResourceCreation(response, 'Content partner creation');
 }
 
 export async function getContentPartners(

@@ -67,15 +67,14 @@ export async function createContract(
   contract: SelectedContentContract,
   token: string,
 ): Promise<string> {
-  return fetch(`${API_URL}/v1/contracts`, {
+  const response = await fetch(`${API_URL}/v1/contracts`, {
     method: 'POST',
     body: JSON.stringify(contract),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).then(async response => {
-    assertApiResourceCreation(response, 'Contract creation');
-    return extractIdFromLocation(response);
   });
+  await assertApiResourceCreation(response, 'Contract creation');
+  return extractIdFromLocation(response);
 }

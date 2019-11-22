@@ -23,16 +23,16 @@ export interface SubjectLinks {
 }
 
 export async function insertSubject(subject: SubjectFixture, token: string) {
-  return fetch(Constants.API_URL + '/v1/subjects', {
+  const response = await fetch(Constants.API_URL + '/v1/subjects', {
     method: 'POST',
     body: JSON.stringify(subject),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).then(response => {
-    assertApiResourceCreation(response, 'Subject creation');
   });
+
+  await assertApiResourceCreation(response, 'Subject creation');
 }
 
 export async function getSubjects(): Promise<Subject[] | undefined> {

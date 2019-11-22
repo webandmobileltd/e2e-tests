@@ -16,7 +16,7 @@ export async function generateToken(): Promise<string> {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-  assertApiResourceCreation(
+  await assertApiResourceCreation(
     response,
     `Token generation for user ${Constants.OPERATOR_USERNAME}`,
   );

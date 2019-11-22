@@ -55,15 +55,15 @@ export async function createApiIntegration(
   apiIntegration: ApiIntegrationFixture,
   token: string,
 ): Promise<string> {
-  return fetch(`${API_URL}/v1/api-integrations`, {
+  const response = await fetch(`${API_URL}/v1/api-integrations`, {
     method: 'POST',
     body: JSON.stringify(apiIntegration),
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).then(async response => {
-    assertApiResourceCreation(response, 'API Integration creation');
-    return extractIdFromLocation(response);
   });
+
+  await assertApiResourceCreation(response, 'API Integration creation');
+  return extractIdFromLocation(response);
 }
