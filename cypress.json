@@ -4,5 +4,8 @@
   "requestTimeout": 15000,
   "viewportWidth": 1280,
   "modifyObstructiveCode": false,
-  "numTestsKeptInMemory": 0
+  "numTestsKeptInMemory": 0,
+  "env": {
+    "RETRIES": 2
+  }
 }

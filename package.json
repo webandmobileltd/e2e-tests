@@ -33,6 +33,7 @@
     "audit-ci": "^2.2.0",
     "axe-core": "^3.2.2",
     "cypress-axe": "^0.4.1",
+    "cypress-plugin-retries": "^1.4.0",
     "prettier": "^1.16.4",
     "query-string": "^6.8.1",
     "raw-loader": "^2.0.0",
