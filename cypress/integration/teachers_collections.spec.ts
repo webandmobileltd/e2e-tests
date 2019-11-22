@@ -146,7 +146,7 @@ context('Teachers App Collections Journey', () => {
           collections.filter(
             collection => collection.title === collectionTitle,
           ),
-        ).lengthOf(1),
+        ).lengthOf(0),
       );
   });
 });
