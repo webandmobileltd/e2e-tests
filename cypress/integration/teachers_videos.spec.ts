@@ -34,46 +34,65 @@ context('Teachers App Videos Journey', () => {
 
   beforeEach(preserveLoginCookiesBetweenTests);
 
-  specify('Search, Filtering, Browsing & Rating', () => {
-    const nonEducationalSearchQuery = 'Celebrities on the red carpet';
-    const queryWithNewsAndNonNews = 'richard';
+  beforeEach(() => {
+    homepage.reload();
+  });
 
+  specify('Searching non educational videos', () => {
+    const nonEducationalSearchQuery = 'Celebrities on the red carpet';
     homepage
       .log('searching non educational videos')
       .menu()
       .search(nonEducationalSearchQuery)
-      .noVideosShown()
+      .noVideosShown();
+  });
 
-      .log('testing paging')
+  specify('Search result pagination check', () => {
+    homepage
       .menu()
       .search(MINUTE_PHYSICS)
       .isOnPage(1)
       .goToPage(2)
       .isOnPage(2)
       .goToPage(1)
-      .isOnPage(1)
+      .isOnPage(1);
+  });
 
-      .log('testing subject filter')
+  specify('Subject filter in search', () => {
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
       .applySubjectFilter(SUBJECT)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are three videos showing`);
-      })
-      .removeFilterTag(SUBJECT)
+      });
+  });
 
-      .log('testing duration filter')
+  specify('Duration filter in search', () => {
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
       .applyDurationFilter(0, 240)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(8, `There are eight videos showing`);
-      })
-      .removeFilterTag('0m-4m')
+      });
+  });
 
+  specify('Age range filter in search', () => {
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
       .log('testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are three videos showing`);
-      })
-      .removeFilterTag('3-11')
+      });
+  });
 
+  specify('Video Rating', () => {
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
       .log('testing video rating')
       .rateAndTagVideo(2, 'Hook')
       .assertRatingOnFirstVideo(2)

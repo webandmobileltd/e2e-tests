@@ -256,7 +256,11 @@ export class TeachersHomepage extends TeacherPage {
     return this;
   }
 
-  public isVideoInCollection(index: number, collectionTitle: string) {
+  public isVideoInCollection(
+    index: number,
+    collectionTitle: string,
+    expectation: boolean = true,
+  ) {
     this.searchResultsHtmlElements()
       .eq(index)
       .within(() => {
@@ -265,7 +269,7 @@ export class TeachersHomepage extends TeacherPage {
       .get(
         `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
       )
-      .should('be.visible');
+      .should(expectation ? 'be.visible' : 'not.exist');
 
     return this;
   }

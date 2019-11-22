@@ -1,7 +1,7 @@
 import { Homepage } from '../page_objects/frontend/Homepage';
 
 context('Frontend', () => {
-  it('teachers journey', () => {
+  it('Publishers Functionality', () => {
     const homepage = new Homepage();
     const validSearchQuery =
       'Robert Neuwirth: The hidden world of shadow cities';

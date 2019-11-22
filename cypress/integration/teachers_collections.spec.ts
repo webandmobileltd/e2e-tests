@@ -36,65 +36,117 @@ context('Teachers App Collections Journey', () => {
 
   beforeEach(preserveLoginCookiesBetweenTests);
 
-  specify('Management, Discover & Bookmarking', () => {
-    const collectionTitle = uuid();
-    const newCollectionTitle = uuid();
-
+  specify('Bookmarking', () => {
     homepage
-      .log('bookmarking collection')
       .visit()
       .bookmarkCollection(existingPublicCollectionTitle)
       .unbookmarkCollection(existingPublicCollectionTitle)
       .bookmarkCollection(existingPublicCollectionTitle)
 
-      .log('checking bookmarks')
       .menu()
       .goToBookmarkedCollections()
       .goToHomepage()
       .reload()
-      .checkCollectionBookmarkStatus(existingPublicCollectionTitle, true)
+      .checkCollectionBookmarkStatus(existingPublicCollectionTitle, true);
+  });
 
-      .log('creating a collection')
+  specify('Create a collection with a video', () => {
+    const collectionTitle = uuid();
+
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
+      .createCollectionFromVideo(0, collectionTitle)
+      .isVideoInCollection(0, collectionTitle);
+  });
+
+  specify('Remove a video on search page', () => {
+    const collectionTitle = uuid();
+
+    homepage
       .menu()
       .search(MINUTE_PHYSICS)
       .createCollectionFromVideo(0, collectionTitle)
 
-      .log('managing collection videos')
-      .addVideoToCollection(1, collectionTitle)
-      .isVideoInCollection(1, collectionTitle)
+      .isVideoInCollection(0, collectionTitle)
       .reload()
-      .removeVideoFromCollection(1, collectionTitle)
+      .removeVideoFromCollection(0, collectionTitle)
+      .isVideoInCollection(0, collectionTitle, false);
+  });
 
-      .log('editing a collection')
+  specify('Remove a video on collection page', () => {
+    const collectionTitle = uuid();
+
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
+      .createCollectionFromVideo(0, collectionTitle)
+
       .menu()
       .goToCollections()
-      .inspectCollections(collections => expect(collections).to.have.length(1))
+      .goToCollectionDetails(collectionTitle)
+      .inspectItems(videos => expect(videos).to.have.length(1))
+      .removeVideo(0)
+      .isEmpty();
+  });
+
+  specify('Editing a collection', () => {
+    const collectionTitle = uuid();
+    const newCollectionTitle = uuid();
+
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
+      .createCollectionFromVideo(0, collectionTitle)
+
+      .menu()
+      .goToCollections()
       .goToCollectionDetails(collectionTitle)
       .setVisibility(true)
       .setSubject(SUBJECT)
       .setName(newCollectionTitle)
       .itHasCorrectVisibility(true)
-      .itHasName(newCollectionTitle)
+      .itHasName(newCollectionTitle);
+  });
 
-      .log('verifying and managing videos')
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .reload()
-      .itHasName(newCollectionTitle)
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .removeVideo(0)
-      .isEmpty()
-      .reload()
-      .isEmpty()
+  specify('Making a collection public and be discoverable by subject', () => {
+    const collectionTitle = uuid();
 
-      .log('verifying collection in discipline subject page')
+    homepage
       .menu()
-      .goToHomepage()
-      .goToDiscoverBySubject(SUBJECT)
-      .hasCollectionTitle(newCollectionTitle)
+      .search(MINUTE_PHYSICS)
+      .createCollectionFromVideo(0, collectionTitle)
 
-      .log('deleting a collection')
       .menu()
       .goToCollections()
-      .deleteCollection(newCollectionTitle);
+      .goToCollectionDetails(collectionTitle)
+      .setVisibility(true)
+      .setSubject(SUBJECT)
+      .menu()
+      .goToHomepage()
+      .reload()
+      .goToDiscoverBySubject(SUBJECT)
+      .hasCollectionTitle(collectionTitle);
+  });
+
+  specify('Can delete a collection', () => {
+    const collectionTitle = uuid();
+    let collectionCount: number;
+    homepage
+      .menu()
+      .search(MINUTE_PHYSICS)
+      .createCollectionFromVideo(0, collectionTitle)
+
+      .menu()
+      .goToCollections()
+      .inspectCollections(collections => (collectionCount = collections.length))
+      .deleteCollection(collectionTitle)
+      .inspectCollections(collections =>
+        expect(
+          collections.filter(
+            collection => collection.title === collectionTitle,
+          ),
+        ).lengthOf(1),
+      );
   });
 });
