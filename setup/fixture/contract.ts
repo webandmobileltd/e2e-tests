@@ -1,15 +1,15 @@
-export interface SelectedContentContract {
-  type: 'SelectedContent';
+export interface SelectedCollectionsContract {
+  type: 'SelectedCollections';
   name: string;
   collectionIds: string[];
 }
 
-export function ltiSelectedContentContractFixture(
+export function ltiSelectedCollectionsContractFixture(
   collectionIds: string[],
-): SelectedContentContract {
+): SelectedCollectionsContract {
   return {
-    type: 'SelectedContent',
-    name: 'LTI Selected Content',
+    type: 'SelectedCollections',
+    name: 'LTI Selected Collections',
     collectionIds,
   };
 }

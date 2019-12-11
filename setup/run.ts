@@ -25,7 +25,7 @@ import {
   ltiCollectionFixture,
 } from './fixture/collections';
 import { contentPartnerFixtures } from './fixture/contentPartners';
-import { ltiSelectedContentContractFixture } from './fixture/contract';
+import { ltiSelectedCollectionsContractFixture } from './fixture/contract';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
@@ -86,7 +86,7 @@ async function setupLtiFixtures(token: string) {
   });
 
   const contractId = await ensureContractAndReturnId(
-    ltiSelectedContentContractFixture([collectionId]),
+    ltiSelectedCollectionsContractFixture([collectionId]),
     token,
   );
 
