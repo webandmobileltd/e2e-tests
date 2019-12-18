@@ -5,7 +5,7 @@
   "main": "test.js",
   "scripts": {
     "test": "test",
-    "cypress:setup": "ts-node setup/run.ts",
+    "setup": "ts-node setup/run.ts",
     "cypress:open": "./node_modules/.bin/cypress open",
     "cypress:run": "./node_modules/.bin/cypress run",
     "lint": "tslint -c tslint.json -p .",
