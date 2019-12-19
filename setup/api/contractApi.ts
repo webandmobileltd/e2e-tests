@@ -1,28 +1,37 @@
 import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
-import { Contract } from '../fixture/contract';
-import { LinksHolder } from './hateoas';
+import { ContractFixture, ContractType } from '../fixture/contract';
+import { Link } from './hateoas';
 import {
   assertApiResourceCreation,
   assertApiResourceLookup,
   extractIdFromLocation,
 } from './utilities';
 
-type ContractResource = Contract &
-  LinksHolder & {
-    id: string;
-  };
-
-interface HypermediaWrapper {
-  _embedded: Contracts;
+export interface Contract {
+  type: ContractType;
+  name: string;
+  _links: ContractLinks;
 }
 
-interface Contracts {
-  contracts: ContractResource[];
+export interface ContractLinks {
+  self: Link;
+}
+
+export interface SelectedVideosContract extends Contract {
+  videoIds: string[];
+}
+
+interface HypermediaWrapper {
+  _embedded: ContractsResource;
+}
+
+interface ContractsResource {
+  contracts: Contract[];
 }
 
 export async function ensureContractAndReturnId(
-  contract: Contract,
+  contract: ContractFixture,
   token: string,
 ): Promise<string> {
   let contractId = await findContractIdByName(contract.name, token);
@@ -34,10 +43,10 @@ export async function ensureContractAndReturnId(
   return contractId;
 }
 
-export async function findContractIdByName(
+export async function findContractByName(
   name: string,
   token: string,
-): Promise<string | undefined> {
+): Promise<Contract | undefined> {
   return fetch(`${API_URL}/v1/contracts?name=${name}`, {
     method: 'GET',
     headers: {
@@ -50,19 +59,28 @@ export async function findContractIdByName(
     const payload: HypermediaWrapper = await response.json();
     const contracts = payload._embedded.contracts;
 
-    const contract = contracts.find((it: ContractResource) => it.name === name);
+    const contract = contracts.find((it: Contract) => it.name === name);
 
-    if (contract) {
-      const self = contract._links.self.href;
-      return self.substring(self.lastIndexOf('/'));
-    } else {
-      return undefined;
-    }
+    return contract ? contract : undefined;
   });
 }
 
+export async function findContractIdByName(
+  name: string,
+  token: string,
+): Promise<string | undefined> {
+  const contract = await findContractByName(name, token);
+
+  if (contract) {
+    const self = contract._links.self.href;
+    return self.substring(self.lastIndexOf('/'));
+  } else {
+    return undefined;
+  }
+}
+
 export async function createContract(
-  contract: Contract,
+  contract: ContractFixture,
   token: string,
 ): Promise<string> {
   const response = await fetch(`${API_URL}/v1/contracts`, {
@@ -73,6 +91,6 @@ export async function createContract(
       'Content-Type': 'application/json',
     },
   });
-  await assertApiResourceCreation(response, 'Contract creation');
+  await assertApiResourceCreation(response, 'ContractFixture creation');
   return extractIdFromLocation(response);
 }

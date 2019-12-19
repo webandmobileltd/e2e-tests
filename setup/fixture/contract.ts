@@ -1,17 +1,21 @@
 export type ContractType = 'SelectedCollections' | 'SelectedVideos';
 
-export interface Contract {
+export interface ContractFixture {
   type: ContractType;
   name: string;
 }
 
-export interface SelectedCollectionsContract extends Contract {
+export interface SelectedCollectionsContractFixture extends ContractFixture {
   collectionIds: string[];
+}
+
+export interface SelectedVideosContractFixture extends ContractFixture {
+  videoIds: string[];
 }
 
 export function ltiSelectedCollectionsContractFixture(
   collectionIds: string[],
-): SelectedCollectionsContract {
+): SelectedCollectionsContractFixture {
   return {
     type: 'SelectedCollections',
     name: 'LTI Selected Collections',
@@ -19,15 +23,13 @@ export function ltiSelectedCollectionsContractFixture(
   };
 }
 
-export interface SelectedVideosContract extends Contract {
-  videoIds: string[];
-}
+export const SELECTED_VIDEOS_CONTRACT_NAME = 'Selected Videos ContractFixture';
 
 export function selectedVideosContractFixture(
   videoIds: string[],
-): SelectedVideosContract {
+): SelectedVideosContractFixture {
   return {
-    name: 'Selected Videos Contract',
+    name: SELECTED_VIDEOS_CONTRACT_NAME,
     type: 'SelectedVideos',
     videoIds,
   };

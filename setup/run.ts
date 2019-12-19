@@ -171,7 +171,7 @@ async function setUp() {
   inserting('LTI fixtures');
   await setupLtiFixtures(token);
 
-  inserting('Selected Videos Contract fixtures');
+  inserting('Selected Videos ContractFixture fixtures');
   await setupSelectedVideosE2ETest(token);
 }
 

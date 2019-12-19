@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
 import { DisciplineFixture } from '../fixture/disciplines';
-import { Link } from '../hypermedia';
+import { Link } from './hateoas';
 import { getSubjectByName } from './subjectApi';
 import { assertApiResourceCreation } from './utilities';
 

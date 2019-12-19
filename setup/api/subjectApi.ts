@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { SubjectFixture } from '../fixture/subjects';
-import { Link } from '../hypermedia';
+import { Link } from './hateoas';
 import { assertApiResourceCreation } from './utilities';
 
 interface HypermediaWrapper {
