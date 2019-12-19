@@ -8,10 +8,13 @@ interface AccessTokenResponse {
   access_token: string;
 }
 
-export async function generateToken(): Promise<string> {
+export async function generateToken(
+  username: string = OPERATOR_USERNAME,
+  password: string = OPERATOR_PASSWORD,
+): Promise<string> {
   const response = await fetch(Constants.TOKEN_URL, {
     method: 'POST',
-    body: `grant_type=password&client_id=boclips-admin&username=${OPERATOR_USERNAME}&password=${OPERATOR_PASSWORD}`,
+    body: `grant_type=password&client_id=boclips-admin&username=${username}&password=${password}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

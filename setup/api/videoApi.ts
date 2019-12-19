@@ -13,6 +13,7 @@ interface Videos {
 
 export interface Video {
   id: string;
+  title: string;
 }
 
 export async function insertVideo(video: VideoFixture, token: string) {
@@ -65,7 +66,7 @@ export async function findVideos(
   }
 
   const response = await fetch(
-    Constants.API_URL + `/v1/videos?query=${query}&page=0&size=1`,
+    Constants.API_URL + `/v1/videos?query=${query}&page=0&size=20`,
     {
       method: 'GET',
       headers: {

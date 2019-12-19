@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import { API_URL } from '../Constants';
-import { SelectedCollectionsContract } from '../fixture/contract';
+import { Contract } from '../fixture/contract';
 import { LinksHolder } from './hateoas';
 import {
   assertApiResourceCreation,
@@ -8,7 +8,7 @@ import {
   extractIdFromLocation,
 } from './utilities';
 
-type SelectedCollectionsContractResource = SelectedCollectionsContract &
+type ContractResource = Contract &
   LinksHolder & {
     id: string;
   };
@@ -18,11 +18,11 @@ interface HypermediaWrapper {
 }
 
 interface Contracts {
-  contracts: SelectedCollectionsContractResource[];
+  contracts: ContractResource[];
 }
 
 export async function ensureContractAndReturnId(
-  contract: SelectedCollectionsContract,
+  contract: Contract,
   token: string,
 ): Promise<string> {
   let contractId = await findContractIdByName(contract.name, token);
@@ -50,9 +50,7 @@ export async function findContractIdByName(
     const payload: HypermediaWrapper = await response.json();
     const contracts = payload._embedded.contracts;
 
-    const contract = contracts.find(
-      (it: SelectedCollectionsContractResource) => it.name === name,
-    );
+    const contract = contracts.find((it: ContractResource) => it.name === name);
 
     if (contract) {
       const self = contract._links.self.href;
@@ -64,7 +62,7 @@ export async function findContractIdByName(
 }
 
 export async function createContract(
-  contract: SelectedCollectionsContract,
+  contract: Contract,
   token: string,
 ): Promise<string> {
   const response = await fetch(`${API_URL}/v1/contracts`, {

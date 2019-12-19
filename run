@@ -15,6 +15,8 @@ set -e
 : "${CYPRESS_FRONTEND_PASSWORD:="$(bo show credential concourse-main boclips.e2e frontend-password)"}"
 : "${CYPRESS_OPERATOR_USERNAME:="$(bo show credential concourse-main boclips.operator testing-username)"}"
 : "${CYPRESS_OPERATOR_PASSWORD:="$(bo show credential concourse-main boclips.operator testing-password)"}"
+: "${CYPRESS_SELECTED_VIDEOS_TEST_USERNAME:="$(bo show credential concourse-main boclips.e2e selected-videos-test-username)"}"
+: "${CYPRESS_SELECTED_VIDEOS_TEST_PASSWORD:="$(bo show credential concourse-main boclips.e2e selected-videos-test-password)"}"
 : "${CYPRESS_LTI_CONSUMER_KEY:="$(bo show credential concourse-main boclips.lti consumer-key)"}"
 : "${CYPRESS_LTI_CONSUMER_SECRET:="$(bo show credential concourse-main boclips.lti consumer-secret)"}"
 
@@ -29,6 +31,8 @@ export CYPRESS_FRONTEND_USERNAME
 export CYPRESS_FRONTEND_PASSWORD
 export CYPRESS_OPERATOR_USERNAME
 export CYPRESS_OPERATOR_PASSWORD
+export CYPRESS_SELECTED_VIDEOS_TEST_USERNAME
+export CYPRESS_SELECTED_VIDEOS_TEST_PASSWORD
 export CYPRESS_LTI_CONSUMER_KEY
 export CYPRESS_LTI_CONSUMER_SECRET
 export CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL

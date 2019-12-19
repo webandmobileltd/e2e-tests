@@ -2,7 +2,6 @@ import {
   addVideoToCollection,
   ensureCollectionAndReturnId,
   findOneCollectionId,
-  getCollections,
   insertCollection,
 } from './api/collectionApi';
 
@@ -18,14 +17,20 @@ import { getTags, insertTag } from './api/tagApi';
 import { inserting } from './api/utilities';
 import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
-import { ltiApiIntegrationFixture } from './fixture/apiIntegration';
+import {
+  ltiApiIntegrationFixture,
+  selectedVideosApiIntegrationFixture,
+} from './fixture/apiIntegration';
 import {
   CollectionFixture,
   collectionFixtures,
   ltiCollectionFixture,
 } from './fixture/collections';
 import { contentPartnerFixtures } from './fixture/contentPartners';
-import { ltiSelectedCollectionsContractFixture } from './fixture/contract';
+import {
+  ltiSelectedCollectionsContractFixture,
+  selectedVideosContractFixture,
+} from './fixture/contract';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
@@ -96,6 +101,23 @@ async function setupLtiFixtures(token: string) {
   );
 }
 
+async function setupSelectedVideosE2ETest(token: string) {
+  return findVideos('Minute Physics', token)
+    .then(videos => [videos[0]])
+    .then(selectedVideos =>
+      ensureContractAndReturnId(
+        selectedVideosContractFixture(selectedVideos.map(video => video.id)),
+        token,
+      ),
+    )
+    .then(contractId =>
+      ensureApiIntegrationAndReturnId(
+        selectedVideosApiIntegrationFixture([contractId]),
+        token,
+      ),
+    );
+}
+
 async function insertContentPartners(token: string) {
   return Promise.all(
     contentPartnerFixtures.map(async contentPartnerFixture => {
@@ -148,6 +170,9 @@ async function setUp() {
 
   inserting('LTI fixtures');
   await setupLtiFixtures(token);
+
+  inserting('Selected Videos Contract fixtures');
+  await setupSelectedVideosE2ETest(token);
 }
 
 setUp()

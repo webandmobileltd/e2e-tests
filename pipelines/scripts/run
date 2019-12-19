@@ -16,6 +16,8 @@ if  [[ -z $CYPRESS_BACKOFFICE_USERNAME \
     || -z $CYPRESS_FRONTEND_PASSWORD \
     || -z $CYPRESS_OPERATOR_USERNAME \
     || -z $CYPRESS_OPERATOR_PASSWORD \
+    || -z $CYPRESS_SELECTED_VIDEOS_TEST_USERNAME \
+    || -z $CYPRESS_SELECTED_VIDEOS_TEST_PASSWORD \
     ]]
 then
     if  [[ -z $CYPRESS_BACKOFFICE_USERNAME ]]
@@ -46,6 +48,16 @@ then
     if  [[ -z $CYPRESS_OPERATOR_PASSWORD ]]
     then
         echo "Missing CYPRESS_OPERATOR_PASSWORD"
+    fi
+
+    if  [[ -z $CYPRESS_SELECTED_VIDEOS_TEST_USERNAME ]]
+    then
+        echo "Missing CYPRESS_SELECTED_VIDEOS_TEST_USERNAME"
+    fi
+
+    if  [[ -z $CYPRESS_SELECTED_VIDEOS_TEST_PASSWORD ]]
+    then
+        echo "Missing CYPRESS_SELECTED_VIDEOS_TEST_PASSWORD"
     fi
 
     exit 1
