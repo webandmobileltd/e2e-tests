@@ -139,7 +139,7 @@ async function setUp() {
   const token = await generateToken();
 
   const subjects = await getSubjects();
-  if (!subjects) {
+  if (!subjects || subjects.length === 0) {
     inserting('subjects');
     await insertSubjects(token);
   }
