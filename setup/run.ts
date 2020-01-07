@@ -157,7 +157,7 @@ async function setUp() {
   }
 
   const contentPartners = await getContentPartners(token);
-  if (!contentPartners) {
+  if (!contentPartners || contentPartners.length === 0) {
     inserting('content partners');
     await insertContentPartners(token);
   }
