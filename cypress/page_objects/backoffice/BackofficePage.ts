@@ -45,7 +45,6 @@ export class BackofficePage {
   }
 
   public importOrderCSV() {
-    cy.get(By.dataQa('import-order-button')).click();
     findOneValidVideoId().then(videoId => {
       cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
         const content = `Order No,Order Through Platform,Month Date ,Order request Date,Order Fulfillment Date,Quarter,Member (request),Member (authorise) ID,Clip ID,Title,Source,Source Code,License Duration,Territory,Type,Price,Publisher,ISBN / PRODUCT DESCRIP,Language,Captioning,Trim,Notes,Remittance Notes,
