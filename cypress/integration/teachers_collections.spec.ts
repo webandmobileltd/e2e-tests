@@ -105,7 +105,6 @@ context('Teachers App Collections Journey', () => {
       .setVisibility(true)
       .setSubject(SUBJECT)
       .setName(newCollectionTitle)
-      .itHasCorrectVisibility(true)
       .itHasName(newCollectionTitle);
   });
 
