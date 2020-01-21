@@ -44,23 +44,64 @@ export class BackofficePage {
     return this;
   }
 
+  public goToIngestsPage() {
+    cy.get(By.dataQa('ingests-menu')).click();
+
+    return this;
+  }
+
+
+  public jobsTableHasData() {
+    cy.wait(2000).reload().get(By.dataQa('job'))
+      .its('length')
+      .should('be.gte', 1);
+
+    return this;
+  }
+
+  public goToFirstJobDetails() {
+    cy.get(By.dataQa('job')).click();
+    return this;
+  }
+
+  public videosTableHasVideo() {
+    cy.get(By.dataQa('video-id')).its('text').should('be', 'CCAI_01_CLEAN_What-Is-AI');
+    return this;
+  }
+
   public importOrderCSV() {
     findOneValidVideoId().then(videoId => {
       cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
         const content = `Order No,Order Through Platform,Month Date ,Order request Date,Order Fulfillment Date,Quarter,Member (request),Member (authorise) ID,Clip ID,Title,Source,Source Code,License Duration,Territory,Type,Price,Publisher,ISBN / PRODUCT DESCRIP,Language,Captioning,Trim,Notes,Remittance Notes,
 129,yes,Nov-15,05/11/15,,2015 Q4,Susan Andrews,871,${videoId},Learning from proximity to power,XKA Digital,123,5,Europe,Instructional Clips,£200 ,ICS,,,,,Complete,`;
-        const blob = new Blob([content]);
-        const orderFile = new File([blob], 'orders.csv', {
-          type: 'text/csv',
-        });
+        this.uploadCSV(content, dropzone);
+      });
+    });
 
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(orderFile);
+    return this;
+  }
 
-        cy.wrap(dropzone, { log: false }).trigger('drop', {
-          force: true,
-          dataTransfer,
-        });
+  private uploadCSV(content: string, dropzone: JQuery<HTMLElement>) {
+    const blob = new Blob([content]);
+    const orderFile = new File([blob], 'orders.csv', {
+      type: 'text/csv',
+    });
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(orderFile);
+
+    cy.wrap(dropzone, {log: false}).trigger('drop', {
+      force: true,
+      dataTransfer,
+    });
+  }
+
+  public importJobCSV() {
+    findOneValidVideoId().then(() => {
+      cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
+        const content = `Provider,Unique ID,Title,Description,Creation Date,Keywords,Subject,Type ID,Legal Restrictions,URL
+Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial Intelligence? #1,"Artificial intelligence is everywhere",09/08/2019,"Crash course|Artificial intelligence",Computer Science,3,,https://kmvideowatchfolder.s3-eu-west-1.amazonaws.com/Crash_Course/CCAI_01_CLEAN_What-Is-AI.mp4`;
+        this.uploadCSV(content, dropzone);
       });
     });
 

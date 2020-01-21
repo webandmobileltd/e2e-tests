@@ -23,6 +23,17 @@ context('Backoffice', () => {
       .updateOrderItemTerritory('World Wide');
   });
 
+  it('Import job CSV and make sure the video ingestor picks it up', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .goToIngestsPage()
+      .importJobCSV()
+      .jobsTableHasData()
+      .goToFirstJobDetails()
+      .videosTableHasVideo();
+  });
+
   it('export a manifest', () => {
     backoffice
       .visit()
