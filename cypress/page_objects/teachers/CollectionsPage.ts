@@ -23,8 +23,9 @@ export class CollectionsPage extends TeacherPage {
 
   public deleteCollection(collectionTitle: string) {
     cy.get(`[data-state='${collectionTitle}'][data-qa='collection-card']`)
-      .find(By.dataQa('delete-collection'))
+      .find(By.dataQa('collection-edit-button'))
       .click();
+    cy.get('[data-qa="delete-collection"]').click();
     acceptDialog();
     return this;
   }
