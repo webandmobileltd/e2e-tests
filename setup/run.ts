@@ -151,7 +151,7 @@ async function setUp() {
   }
 
   const disciplines = await getDisciplines(token);
-  if (!disciplines) {
+  if (!disciplines || disciplines.length === 0) {
     inserting('disciplines');
     await insertDisciplines(token);
   }
