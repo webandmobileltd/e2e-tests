@@ -85,7 +85,7 @@ context('Teachers App Videos Journey', () => {
       .log('testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
-        expect(videos.length).to.be.eq(3, `There are three videos showing`);
+        expect(videos.length).to.be.eq(2, `There are three videos showing`);
       });
   });
 
