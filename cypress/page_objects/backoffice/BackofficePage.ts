@@ -45,14 +45,18 @@ export class BackofficePage {
   }
 
   public goToIngestsPage() {
-    cy.get(By.dataQa('ingests-menu')).click();
+    cy.get(By.dataQa('ingest-sub-menu'))
+      .trigger('mouseover')
+      .get(By.dataQa('video-ingests-menu'))
+      .click();
 
     return this;
   }
 
-
   public jobsTableHasData() {
-    cy.wait(2000).reload().get(By.dataQa('job'))
+    cy.wait(2000)
+      .reload()
+      .get(By.dataQa('job'))
       .its('length')
       .should('be.gte', 1);
 
@@ -65,7 +69,9 @@ export class BackofficePage {
   }
 
   public videosTableHasVideo() {
-    cy.get(By.dataQa('video-id')).its('text').should('be', 'CCAI_01_CLEAN_What-Is-AI');
+    cy.get(By.dataQa('video-id'))
+      .its('text')
+      .should('be', 'CCAI_01_CLEAN_What-Is-AI');
     return this;
   }
 
@@ -90,7 +96,7 @@ export class BackofficePage {
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(orderFile);
 
-    cy.wrap(dropzone, {log: false}).trigger('drop', {
+    cy.wrap(dropzone, { log: false }).trigger('drop', {
       force: true,
       dataTransfer,
     });
