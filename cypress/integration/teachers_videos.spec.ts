@@ -65,36 +65,35 @@ context('Teachers App Videos Journey', () => {
       .applySubjectFilter(SUBJECT)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are three videos showing`);
-      })
-      .removeFilterTag('Subject');
+      });
   });
 
   specify('Duration filter in search', () => {
     homepage
+      .visit()
       .menu()
       .search(MINUTE_PHYSICS)
       .applyDurationFilter(0, 240)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(8, `There are eight videos showing`);
-      })
-      .removeFilterTag('Duration');
+      });
   });
 
   specify('Age range filter in search', () => {
     homepage
+      .visit()
       .menu()
       .search(MINUTE_PHYSICS)
-      .removeFilterTag('Duration')
       .log('testing age range filter')
       .applyAgeRangeFilter(3, 11)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(2, `There are three videos showing`);
-      })
-      .removeFilterTag('Age');
+      });
   });
 
   specify('Video Rating', () => {
     homepage
+      .visit()
       .menu()
       .search(MINUTE_PHYSICS)
       .log('testing video rating')
