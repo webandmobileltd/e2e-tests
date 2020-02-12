@@ -20,7 +20,7 @@ export class TeachersVideoDetailsPage extends TeacherPage {
   }
 
   public hasContentPartnerName() {
-    cy.get(By.dataQa('video-content-partner')).should('not.be.empty');
+    cy.get(By.dataQa('video-created-by')).should('not.be.empty');
     return this;
   }
 
@@ -30,7 +30,7 @@ export class TeachersVideoDetailsPage extends TeacherPage {
   }
 
   public showsContentPartnerName(contentPartnerName: string) {
-    cy.get(By.dataQa('video-content-partner')).should(
+    cy.get(By.dataQa('video-created-by')).should(
       'have.text',
       contentPartnerName,
     );

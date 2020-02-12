@@ -48,6 +48,20 @@ export class TeacherPage {
       });
   }
 
+  public logOut() {
+    cy.get(By.dataQa('account-menu-open'))
+      .first()
+      .click();
+    cy.get(By.dataQa('logout-button'))
+      .first()
+      .click();
+    cy.get('[role=dialog]')
+      .find('button')
+      .last()
+      .click();
+    return this;
+  }
+
   protected getCollectionCardsFromHtmlElements(from = cy.get('body')) {
     return from.get(By.dataQa('collection-card'));
   }

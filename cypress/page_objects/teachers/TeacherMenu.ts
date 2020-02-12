@@ -31,6 +31,15 @@ export class MenuPage {
     return this;
   }
 
+  public navbarNotShown() {
+    cy.get(By.dataQa('search-input')).should('not.exist');
+    cy.get(By.dataQa('account-menu-open')).should('not.exist');
+    cy.get(By.dataQa('subjects-menu-open')).should('not.exist');
+    cy.get(By.dataQa('tutorials-page-icon')).should('not.exist');
+
+    return this;
+  }
+
   private openAccountMenu() {
     cy.get(By.dataQa('account-menu-open') + `:visible`)
       .should('be.visible')
