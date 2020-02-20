@@ -10,7 +10,7 @@ import {
   getContentPartners,
   insertContentPartner,
 } from './api/contentPartnerApi';
-import { ensureContractAndReturnId } from './api/contractApi';
+import { ensureAccessRuleAndReturnId } from './api/accessRuleApi';
 import { getDisciplines, insertDiscipline } from './api/disciplineApi';
 import { getSubjects, insertSubject } from './api/subjectApi';
 import { getTags, insertTag } from './api/tagApi';
@@ -28,9 +28,9 @@ import {
 } from './fixture/collections';
 import { contentPartnerFixtures } from './fixture/contentPartners';
 import {
-  ltiSelectedCollectionsContractFixture,
-  selectedVideosContractFixture,
-} from './fixture/contract';
+  ltiSelectedCollectionsAccessRuleFixture,
+  selectedVideosAccessRuleFixture,
+} from './fixture/accessRule';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
@@ -90,13 +90,13 @@ async function setupLtiFixtures(token: string) {
     );
   });
 
-  const contractId = await ensureContractAndReturnId(
-    ltiSelectedCollectionsContractFixture([collectionId]),
+  const accessRuleId = await ensureAccessRuleAndReturnId(
+    ltiSelectedCollectionsAccessRuleFixture([collectionId]),
     token,
   );
 
   await ensureApiIntegrationAndReturnId(
-    ltiApiIntegrationFixture([contractId]),
+    ltiApiIntegrationFixture([accessRuleId]),
     token,
   );
 }
@@ -105,14 +105,14 @@ async function setupSelectedVideosE2ETest(token: string) {
   return findVideos('Minute Physics', token)
     .then(videos => [videos[0]])
     .then(selectedVideos =>
-      ensureContractAndReturnId(
-        selectedVideosContractFixture(selectedVideos.map(video => video.id)),
+      ensureAccessRuleAndReturnId(
+        selectedVideosAccessRuleFixture(selectedVideos.map(video => video.id)),
         token,
       ),
     )
-    .then(contractId =>
+    .then(accessRuleId =>
       ensureApiIntegrationAndReturnId(
-        selectedVideosApiIntegrationFixture([contractId]),
+        selectedVideosApiIntegrationFixture([accessRuleId]),
         token,
       ),
     );
@@ -171,7 +171,7 @@ async function setUp() {
   inserting('LTI fixtures');
   await setupLtiFixtures(token);
 
-  inserting('Selected Videos ContractFixture fixtures');
+  inserting('Selected Videos AccessRuleFixture fixtures');
   await setupSelectedVideosE2ETest(token);
 }
 

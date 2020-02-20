@@ -1,25 +1,25 @@
 export interface ApiIntegrationFixture {
   name: string;
   role: string;
-  contractIds: string[];
+  accessRuleIds: string[];
 }
 
 export function ltiApiIntegrationFixture(
-  contractIds: string[],
+  accessRuleIds: string[],
 ): ApiIntegrationFixture {
   return {
     name: 'E2E Tests LTI Api Integration',
     role: 'ROLE_PEARSON_MYREALIZE',
-    contractIds,
+    accessRuleIds: accessRuleIds,
   };
 }
 
 export function selectedVideosApiIntegrationFixture(
-  contractIds: string[],
+  accessRuleIds: string[],
 ): ApiIntegrationFixture {
   return {
     name: 'E2E Tests Selected Videos API Integration',
     role: 'ROLE_SELECTED_VIDEOS_API_INTEGRATION',
-    contractIds,
+    accessRuleIds: accessRuleIds,
   };
 }
