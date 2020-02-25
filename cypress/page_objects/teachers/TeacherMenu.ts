@@ -26,7 +26,7 @@ export class MenuPage {
   public goToBookmarkedCollections() {
     this.openAccountMenu();
 
-    cy.get("[data-qa='bookmarked-collections']:visible").click();
+    cy.get("[data-qa='user-videos']:visible").click();
 
     return this;
   }

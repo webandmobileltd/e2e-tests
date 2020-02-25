@@ -1,8 +1,8 @@
 import * as queryString from 'query-string';
-import { By } from '../../support/By';
+import {By} from '../../support/By';
 import Video from '../domain/Video';
 import VideoCollection from '../domain/VideoCollection';
-import { DiscoverPage, TeacherPage } from './index';
+import {DiscoverPage, TeacherPage} from './index';
 
 export class TeachersHomepage extends TeacherPage {
   private readonly url: string;
@@ -66,7 +66,7 @@ export class TeachersHomepage extends TeacherPage {
     cy.get(By.dataQa('register-button')).click();
 
     cy.wait('@createUser');
-    cy.server({ enable: false });
+    cy.server({enable: false});
     return this;
   }
 
@@ -410,44 +410,38 @@ export class TeachersHomepage extends TeacherPage {
     expectedState: boolean,
   ) {
     cy.get(By.dataState(collectionName, 'collection-card'))
-      .find(
+      .get(By.dataQa('open-button-menu')).click()
+      .get(
         By.dataQa(
           `${expectedState ? 'unbookmark-collection' : 'bookmark-collection'}`,
         ),
       )
-      .should('be.visible');
+      .should('be.visible')
+      .get('body').click();
 
     return this;
   }
 
   public bookmarkCollection(title: string) {
     this.getFirstCollectionCardBy(title)
-      .find(By.dataQa('bookmark-collection'))
-      .click();
-
-    this.getFirstCollectionCardBy(title)
-      .find(By.dataQa('unbookmark-collection'))
-      .should('be.visible');
-
-    this.getFirstCollectionCardBy(title)
-      .find(By.dataQa('bookmark-collection'))
-      .should('not.be.visible');
+      .get(By.dataQa('open-button-menu')).click()
+      .get(By.dataQa('bookmark-collection')).should('be.visible').click()
+      .get(By.dataQa('open-button-menu')).click()
+      .get(By.dataQa('unbookmark-collection')).should('be.visible')
+      .get(By.dataQa('bookmark-collection')).should('not.be.visible')
+      .get('body').click();
 
     return this;
   }
 
   public unbookmarkCollection(title: string) {
     this.getFirstCollectionCardBy(title)
-      .find(By.dataQa('unbookmark-collection'))
-      .click();
-
-    this.getFirstCollectionCardBy(title)
-      .find(By.dataQa('bookmark-collection'))
-      .should('be.visible');
-
-    this.getFirstCollectionCardBy(title)
-      .find(By.dataQa('unbookmark-collection'))
-      .should('not.be.visible');
+      .get(By.dataQa('open-button-menu')).click()
+      .get(By.dataQa('unbookmark-collection')).should('be.visible').click()
+      .get(By.dataQa('open-button-menu')).click()
+      .get(By.dataQa('bookmark-collection')).should('be.visible')
+      .get(By.dataQa('unbookmark-collection')).should('not.be.visible')
+      .get('body').click();
 
     return this;
   }
