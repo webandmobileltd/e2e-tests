@@ -1,6 +1,6 @@
-import { By } from '../../support/By';
+import {By} from '../../support/By';
 import Video from '../domain/Video';
-import { TeacherPage } from './index';
+import {TeacherPage} from './index';
 
 export class CollectionPage extends TeacherPage {
   public reload() {
@@ -104,6 +104,11 @@ export class CollectionPage extends TeacherPage {
     );
   }
 
+  public showsSharingModal() {
+    cy.get('.share-code-dialog').should('be.visible');
+    return this;
+  }
+
   private interactWithItem(index: number, callback: () => void) {
     this.itemsHtmlElements()
       .eq(index)
@@ -111,4 +116,5 @@ export class CollectionPage extends TeacherPage {
       .within(callback);
     return this;
   }
+
 }

@@ -1,9 +1,6 @@
-import { v4 as uuid } from 'uuid';
-import { TeachersHomepage } from '../../page_objects/teachers';
-import {
-  clearLoginCookies,
-  preserveLoginCookiesBetweenTests,
-} from '../../page_objects/teachers/CookiesUtils';
+import {v4 as uuid} from 'uuid';
+import {TeachersHomepage} from '../../page_objects/teachers';
+import {clearLoginCookies, preserveLoginCookiesBetweenTests,} from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App Collections Journey', () => {
   const homepage = new TeachersHomepage();
@@ -85,9 +82,12 @@ context('Teachers App Collections Journey', () => {
       .menu()
       .goToCollections()
       .goToCollectionDetails(collectionTitle)
-      .inspectItems(videos => expect(videos).to.have.length(1))
-      .removeVideo(0)
-      .isEmpty();
+      .then(page => {
+        page
+          .inspectItems(videos => expect(videos).to.have.length(1))
+          .removeVideo(0)
+          .isEmpty();
+      });
   });
 
   specify('Editing a collection', () => {
@@ -102,10 +102,13 @@ context('Teachers App Collections Journey', () => {
       .menu()
       .goToCollections()
       .goToCollectionDetails(collectionTitle)
-      .setVisibility(true)
-      .setSubject(SUBJECT)
-      .setName(newCollectionTitle)
-      .itHasName(newCollectionTitle);
+      .then(page => {
+        page
+          .setVisibility(true)
+          .setSubject(SUBJECT)
+          .setName(newCollectionTitle)
+          .itHasName(newCollectionTitle);
+      });
   });
 
   specify('Making a collection public and be discoverable by subject', () => {
@@ -119,13 +122,16 @@ context('Teachers App Collections Journey', () => {
       .menu()
       .goToCollections()
       .goToCollectionDetails(collectionTitle)
-      .setVisibility(true)
-      .setSubject(SUBJECT)
-      .menu()
-      .goToHomepage()
-      .reload()
-      .goToDiscoverBySubject(SUBJECT)
-      .hasCollectionTitle(collectionTitle);
+      .then(page => {
+        page
+          .setVisibility(true)
+          .setSubject(SUBJECT)
+          .menu()
+          .goToHomepage()
+          .reload()
+          .goToDiscoverBySubject(SUBJECT)
+          .hasCollectionTitle(collectionTitle);
+      })
   });
 
   specify('Can delete a collection', () => {
