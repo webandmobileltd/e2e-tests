@@ -148,7 +148,7 @@ export class TeachersHomepage extends TeacherPage {
     cy.get('.ant-modal-title').click();
 
     cy.contains('OK').click();
-    cy.get(By.dataQa('open-filter-modal')).should('not.be.visible');
+    cy.get('.ant-modal-title').should('not.be.visible');
     return this;
   }
 
