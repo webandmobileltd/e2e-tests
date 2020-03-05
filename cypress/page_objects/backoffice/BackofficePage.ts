@@ -1,4 +1,3 @@
-import { getParametrisedVideoFixtures } from '../../../setup/fixture/videos';
 import { By } from '../../support/By';
 import { findOneValidVideoId } from '../../support/cypressBoclipsApiWrappers/findOneValidVideoId';
 
@@ -64,7 +63,9 @@ export class BackofficePage {
   }
 
   public goToFirstJobDetails() {
-    cy.get(By.dataQa('job')).click();
+    cy.get(By.dataQa('job'))
+      .first()
+      .click();
     return this;
   }
 
@@ -85,21 +86,6 @@ export class BackofficePage {
     });
 
     return this;
-  }
-
-  private uploadCSV(content: string, dropzone: JQuery<HTMLElement>) {
-    const blob = new Blob([content]);
-    const orderFile = new File([blob], 'orders.csv', {
-      type: 'text/csv',
-    });
-
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(orderFile);
-
-    cy.wrap(dropzone, { log: false }).trigger('drop', {
-      force: true,
-      dataTransfer,
-    });
   }
 
   public importJobCSV() {
@@ -156,6 +142,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
 
     return this;
   }
+
   public updateOrderItemTerritory(territory: string, index: number = 0) {
     this.startOrderRowEdit(index);
 
@@ -175,6 +162,21 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     cy.get(By.dataState(orderId)).click();
 
     return this;
+  }
+
+  private uploadCSV(content: string, dropzone: JQuery<HTMLElement>) {
+    const blob = new Blob([content]);
+    const orderFile = new File([blob], 'orders.csv', {
+      type: 'text/csv',
+    });
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(orderFile);
+
+    cy.wrap(dropzone, { log: false }).trigger('drop', {
+      force: true,
+      dataTransfer,
+    });
   }
 
   private startOrderRowEdit(index: number = 0) {

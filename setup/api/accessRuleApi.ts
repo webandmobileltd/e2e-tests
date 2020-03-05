@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
-import {API_URL} from '../Constants';
-import {AccessRuleFixture, AccessRuleType} from '../fixture/accessRule';
-import {Link} from './hateoas';
+import { API_URL } from '../Constants';
+import { AccessRuleFixture, AccessRuleType } from '../fixture/accessRule';
+import { Link } from './hateoas';
 import {
   assertApiResourceCreation,
   assertApiResourceLookup,
@@ -54,7 +54,6 @@ export async function findAccessRuleByName(
       'Content-Type': 'application/json',
     },
   }).then(async response => {
-
     assertApiResourceLookup(response, `Access Rule [name=${name}]`);
 
     const payload: HypermediaWrapper = await response.json();

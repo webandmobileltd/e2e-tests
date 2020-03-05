@@ -5,7 +5,8 @@ export interface AccessRuleFixture {
   name: string;
 }
 
-export interface SelectedCollectionsAccessRuleFixture extends AccessRuleFixture {
+export interface SelectedCollectionsAccessRuleFixture
+  extends AccessRuleFixture {
   collectionIds: string[];
 }
 
@@ -23,7 +24,8 @@ export function ltiSelectedCollectionsAccessRuleFixture(
   };
 }
 
-export const SELECTED_VIDEOS_ACCESS_RULE_NAME = 'Selected Videos AccessRuleFixture';
+export const SELECTED_VIDEOS_ACCESS_RULE_NAME =
+  'Selected Videos AccessRuleFixture';
 
 export function selectedVideosAccessRuleFixture(
   videoIds: string[],

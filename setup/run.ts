@@ -5,18 +5,22 @@ import {
   insertCollection,
 } from './api/collectionApi';
 
+import { ensureAccessRuleAndReturnId } from './api/accessRuleApi';
 import { ensureApiIntegrationAndReturnId } from './api/apiIntegrationApi';
 import {
   getContentPartners,
   insertContentPartner,
 } from './api/contentPartnerApi';
-import { ensureAccessRuleAndReturnId } from './api/accessRuleApi';
 import { getDisciplines, insertDiscipline } from './api/disciplineApi';
 import { getSubjects, insertSubject } from './api/subjectApi';
 import { getTags, insertTag } from './api/tagApi';
 import { inserting } from './api/utilities';
 import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
+import {
+  ltiSelectedCollectionsAccessRuleFixture,
+  selectedVideosAccessRuleFixture,
+} from './fixture/accessRule';
 import {
   ltiApiIntegrationFixture,
   selectedVideosApiIntegrationFixture,
@@ -27,10 +31,6 @@ import {
   ltiCollectionFixture,
 } from './fixture/collections';
 import { contentPartnerFixtures } from './fixture/contentPartners';
-import {
-  ltiSelectedCollectionsAccessRuleFixture,
-  selectedVideosAccessRuleFixture,
-} from './fixture/accessRule';
 import { disciplineFixtures } from './fixture/disciplines';
 import { subjectFixtures } from './fixture/subjects';
 import { tagFixtures } from './fixture/tags';
