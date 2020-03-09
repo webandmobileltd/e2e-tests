@@ -248,7 +248,6 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   public setMarketingFiles() {
     this.switchTabs('MARKETING');
 
-    cy.wait(200);
     cy.get('.ant-upload-drag-container:visible').then(it => {
       expect(it).to.have.length(3);
 
@@ -273,18 +272,6 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     });
 
     cy.wait(2000);
-
-    cy.get('.ant-upload-drag-container:visible').should('have.length', 2); // showreel shouldn't display once uploaded to
-
-    cy.get('.ant-upload-list-item').should('have.length', 4);
-
-    return this;
-  }
-
-  public checkMarketingFiles() {
-    cy.wait(10000);
-
-    this.switchTabs('MARKETING');
 
     cy.get('.ant-upload-drag-container:visible').should('have.length', 2); // showreel shouldn't display once uploaded to
 

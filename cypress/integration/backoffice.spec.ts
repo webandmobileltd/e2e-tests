@@ -55,7 +55,6 @@ context('Backoffice', () => {
       .setMarketingFiles()
       .submitContentPartner()
       .filterByContentPartner(contentPartnerName)
-      .editFirstAndOnlyContentPartner()
-      .checkMarketingFiles();
+      .editFirstAndOnlyContentPartner();
   });
 });
