@@ -7,6 +7,7 @@ import {
 
 import { ensureAccessRuleAndReturnId } from './api/accessRuleApi';
 import { ensureApiIntegrationAndReturnId } from './api/apiIntegrationApi';
+import { createContentPackage } from './api/contentPackageApi';
 import {
   getContentPartners,
   insertContentPartner,
@@ -95,27 +96,38 @@ async function setupLtiFixtures(token: string) {
     token,
   );
 
+  const contentPackageId = await createContentPackage(
+    {
+      name: 'LTI Content Package',
+      accessRuleIds: [accessRuleId],
+    },
+    token,
+  );
+
   await ensureApiIntegrationAndReturnId(
-    ltiApiIntegrationFixture([accessRuleId]),
+    ltiApiIntegrationFixture(contentPackageId),
     token,
   );
 }
 
 async function setupSelectedVideosE2ETest(token: string) {
-  return findVideos('Minute Physics', token)
-    .then(videos => [videos[0]])
-    .then(selectedVideos =>
-      ensureAccessRuleAndReturnId(
-        selectedVideosAccessRuleFixture(selectedVideos.map(video => video.id)),
-        token,
-      ),
-    )
-    .then(accessRuleId =>
-      ensureApiIntegrationAndReturnId(
-        selectedVideosApiIntegrationFixture([accessRuleId]),
-        token,
-      ),
-    );
+  const videos = await findVideos('Minute Physics', token);
+  const selectedVideos = [videos[0]];
+  const accessRuleId = await ensureAccessRuleAndReturnId(
+    selectedVideosAccessRuleFixture(selectedVideos.map(video => video.id)),
+    token,
+  );
+  const contentPackageId = await createContentPackage(
+    {
+      name: 'Selected Videos Content Package',
+      accessRuleIds: [accessRuleId],
+    },
+    token,
+  );
+  await ensureApiIntegrationAndReturnId(
+    selectedVideosApiIntegrationFixture(contentPackageId),
+    token,
+  );
 }
 
 async function insertContentPartners(token: string) {
