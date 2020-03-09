@@ -8,6 +8,52 @@ export class BackofficePage {
     this.url = Cypress.env('BACKOFFICE_BASE_URL');
   }
 
+  private static uploadCSV(content: string, dropzone: JQuery) {
+    const blob = new Blob([content]);
+    const orderFile = new File([blob], 'orders.csv', {
+      type: 'text/csv',
+    });
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(orderFile);
+
+    cy.wrap(dropzone, { log: false }).trigger('drop', {
+      force: true,
+      dataTransfer,
+    });
+  }
+
+  private static startOrderRowEdit(index: number = 0) {
+    cy.get(By.dataQa('edit-row-button'))
+      .eq(index)
+      .click({ force: true });
+  }
+
+  private static saveOrderRowEdit() {
+    cy.get(By.dataQa('inline-save'))
+      .first()
+      .click({ force: true });
+  }
+
+  private static uploadToDropzone(
+    element: HTMLElement,
+    filename: string,
+    filetype: string,
+  ) {
+    const blob = new Blob(['content']);
+    const logo = new File([blob], filename, {
+      type: filetype,
+    });
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(logo);
+
+    cy.wrap(element).trigger('drop', {
+      force: true,
+      dataTransfer,
+    });
+  }
+
   public visit() {
     cy.visit(this.url);
     return this;
@@ -81,7 +127,7 @@ export class BackofficePage {
       cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
         const content = `Order No,Order Through Platform,Month Date ,Order request Date,Order Fulfillment Date,Quarter,Member (request),Member (authorise) ID,Clip ID,Title,Source,Source Code,License Duration,Territory,Type,Price,Publisher,ISBN / PRODUCT DESCRIP,Language,Captioning,Trim,Notes,Remittance Notes,
 129,yes,Nov-15,05/11/15,,2015 Q4,Susan Andrews,871,${videoId},Learning from proximity to power,XKA Digital,123,5,Europe,Instructional Clips,£200 ,ICS,,,,,Complete,`;
-        this.uploadCSV(content, dropzone);
+        BackofficePage.uploadCSV(content, dropzone);
       });
     });
 
@@ -93,7 +139,7 @@ export class BackofficePage {
       cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
         const content = `Provider,Unique ID,Title,Description,Creation Date,Keywords,Subject,Type ID,Legal Restrictions,URL
 Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial Intelligence? #1,"Artificial intelligence is everywhere",09/08/2019,"Crash course|Artificial intelligence",Computer Science,3,,https://kmvideowatchfolder.s3-eu-west-1.amazonaws.com/Crash_Course/CCAI_01_CLEAN_What-Is-AI.mp4`;
-        this.uploadCSV(content, dropzone);
+        BackofficePage.uploadCSV(content, dropzone);
       });
     });
 
@@ -125,18 +171,19 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
       .scrollIntoView()
       .click();
     cy.get(By.dataQa('inline-save')).click();
+
     return this;
   }
 
   public updateOrderItemDuration(duration: string, index: number = 0) {
-    this.startOrderRowEdit(index);
+    BackofficePage.startOrderRowEdit(index);
 
     cy.get(By.dataQa('duration-edit'))
       .find('input')
       .clear()
       .type(duration);
 
-    this.saveOrderRowEdit();
+    BackofficePage.saveOrderRowEdit();
 
     cy.get(By.dataQa('license-duration')).contains(duration);
 
@@ -144,14 +191,14 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   }
 
   public updateOrderItemTerritory(territory: string, index: number = 0) {
-    this.startOrderRowEdit(index);
+    BackofficePage.startOrderRowEdit(index);
 
     cy.get(By.dataQa('territory-edit'))
       .find('input')
       .clear()
       .type(territory);
 
-    this.saveOrderRowEdit();
+    BackofficePage.saveOrderRowEdit();
 
     cy.get(By.dataQa('license-territory')).contains(territory);
 
@@ -164,30 +211,121 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     return this;
   }
 
-  private uploadCSV(content: string, dropzone: JQuery<HTMLElement>) {
-    const blob = new Blob([content]);
-    const orderFile = new File([blob], 'orders.csv', {
-      type: 'text/csv',
-    });
+  public createContentPartner() {
+    cy.get(By.dataQa('new-content-partner-button')).click();
 
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(orderFile);
-
-    cy.wrap(dropzone, { log: false }).trigger('drop', {
-      force: true,
-      dataTransfer,
-    });
+    return this;
   }
 
-  private startOrderRowEdit(index: number = 0) {
-    cy.get(By.dataQa('edit-row-button'))
-      .eq(index)
-      .click({ force: true });
+  public setContentPartnerName(name: string) {
+    this.switchTabs('DETAILS');
+
+    cy.get(By.dataQa('name-input')).type(name);
+
+    return this;
   }
 
-  private saveOrderRowEdit() {
-    cy.get(By.dataQa('inline-save'))
+  public setContentPartnerDistributionMethods(...names: DistributionMethod[]) {
+    this.switchTabs('INGEST');
+
+    cy.get('input[type="checkbox"]').then(checkboxes => {
+      if (names.find(it => it === 'STREAM')) {
+        checkboxes[0].click();
+      }
+      if (names.find(it => it === 'DOWNLOAD')) {
+        checkboxes[1].click();
+      }
+    });
+
+    cy.get('input[type="checkbox"]:checked').should(
+      'have.length',
+      names.length,
+    );
+
+    return this;
+  }
+
+  public setMarketingFiles() {
+    this.switchTabs('MARKETING');
+
+    cy.get('.ant-upload-drag-container:visible').then(it => {
+      expect(it).to.have.length(3);
+
+      const [logoUpload, showreelUpload, sampleVideosUpload] = it;
+
+      BackofficePage.uploadToDropzone(logoUpload, 'logo.png', 'image/png');
+      BackofficePage.uploadToDropzone(
+        showreelUpload,
+        'showreel.avi',
+        'video/avi',
+      );
+      BackofficePage.uploadToDropzone(
+        sampleVideosUpload,
+        'sample1.mp4',
+        'video/mp4',
+      );
+      BackofficePage.uploadToDropzone(
+        sampleVideosUpload,
+        'sample2.mp4',
+        'video/mp4',
+      );
+    });
+
+    cy.wait(2000);
+
+    cy.get('.ant-upload-drag-container:visible').should('have.length', 2); // showreel shouldn't display once uploaded to
+
+    cy.get('.ant-upload-list-item').should('have.length', 4);
+
+    return this;
+  }
+
+  public checkMarketingFiles() {
+    this.switchTabs('MARKETING');
+
+    cy.get('.ant-upload-drag-container:visible').should('have.length', 2); // showreel shouldn't display once uploaded to
+
+    cy.get('.ant-upload-list-item').should('have.length', 4);
+
+    return this;
+  }
+
+  public submitContentPartner() {
+    cy.get(By.dataQa('save-content-partner-button')).click();
+
+    return this;
+  }
+
+  public filterByContentPartner(name: string) {
+    cy.get('.content-partner-filter input')
+      .then(it => {
+        it.trigger('click');
+      })
+      .type(name);
+
+    cy.get('.ant-select-dropdown-menu-item').click();
+
+    return this;
+  }
+
+  public editFirstAndOnlyContentPartner() {
+    cy.get(By.dataQa('edit-content-partner'))
+      .should(it => expect(it).to.have.length(1))
+      .click();
+
+    return this;
+  }
+
+  private switchTabs(label: string) {
+    cy.get('.ant-tabs-tab')
+      .filter((_, it) => {
+        return it.innerText === label;
+      })
       .first()
-      .click({ force: true });
+      .click();
+
+    return this;
   }
 }
+
+type DistributionMethod = 'STREAM' | 'DOWNLOAD';

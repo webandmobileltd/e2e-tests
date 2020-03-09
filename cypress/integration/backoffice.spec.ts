@@ -1,9 +1,10 @@
+import uuid = require('uuid');
 import { BackofficePage } from '../page_objects/backoffice/BackofficePage';
 
 context('Backoffice', () => {
   const backoffice = new BackofficePage();
 
-  it('Log in and view content partner page', () => {
+  it('should log in and view content partner page', () => {
     backoffice
       .visit()
       .logIn()
@@ -11,7 +12,7 @@ context('Backoffice', () => {
       .contentPartnerTableHasData();
   });
 
-  it('Import an order CSV and set its currency', () => {
+  it('should import an order CSV and set its currency', () => {
     backoffice
       .visit()
       .logIn()
@@ -23,7 +24,7 @@ context('Backoffice', () => {
       .updateOrderItemTerritory('World Wide');
   });
 
-  it('Import job CSV and make sure the video ingestor picks it up', () => {
+  it('should import a job CSV and make sure the video ingestor picks it up', () => {
     backoffice
       .visit()
       .logIn()
@@ -34,11 +35,27 @@ context('Backoffice', () => {
       .videosTableHasVideo();
   });
 
-  it('export a manifest', () => {
+  it('should export a manifest', () => {
     backoffice
       .visit()
       .logIn()
       .goToOrdersPage()
       .exportOrderCSV();
+  });
+
+  it('should create a content partner', () => {
+    const contentPartnerName = uuid.v4();
+    backoffice
+      .visit()
+      .logIn()
+      .goToContentPartnerPage()
+      .createContentPartner()
+      .setContentPartnerName(contentPartnerName)
+      .setContentPartnerDistributionMethods('STREAM')
+      .setMarketingFiles()
+      .submitContentPartner()
+      .filterByContentPartner(contentPartnerName)
+      .editFirstAndOnlyContentPartner()
+      .checkMarketingFiles();
   });
 });
