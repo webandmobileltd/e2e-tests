@@ -271,7 +271,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
       );
     });
 
-    cy.wait(2000);
+    cy.wait(5000);
 
     cy.get('.ant-upload-drag-container:visible').should('have.length', 2); // showreel shouldn't display once uploaded to
 
