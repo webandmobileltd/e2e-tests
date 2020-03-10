@@ -1,9 +1,6 @@
-import { v4 as uuid } from 'uuid';
-import { TeachersHomepage } from '../../page_objects/teachers';
-import {
-  clearLoginCookies,
-  preserveLoginCookiesBetweenTests,
-} from '../../page_objects/teachers/CookiesUtils';
+import {v4 as uuid} from 'uuid';
+import {TeachersHomepage} from '../../page_objects/teachers';
+import {clearLoginCookies, preserveLoginCookiesBetweenTests,} from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App Videos Journey', () => {
   const homepage = new TeachersHomepage();
@@ -65,7 +62,8 @@ context('Teachers App Videos Journey', () => {
       .applySubjectFilter(SUBJECT)
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(3, `There are three videos showing`);
-      });
+      })
+      .removeFilterTag(SUBJECT);
   });
 
   specify('Duration filter in search', () => {
@@ -73,10 +71,11 @@ context('Teachers App Videos Journey', () => {
       .visit()
       .menu()
       .search(MINUTE_PHYSICS)
-      .applyDurationFilter(0, 240)
+      .applyDurationFilter('0m - 2m')
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(8, `There are eight videos showing`);
-      });
+      })
+      .removeFilterTag('0m - 2m')
   });
 
   specify('Age range filter in search', () => {
@@ -84,11 +83,11 @@ context('Teachers App Videos Journey', () => {
       .visit()
       .menu()
       .search(MINUTE_PHYSICS)
-      .log('testing age range filter')
-      .applyAgeRangeFilter(3, 11)
+      .applyAgeRangeFilter('3 - 5')
       .inspectResults(videos => {
-        expect(videos.length).to.be.eq(2, `There are three videos showing`);
-      });
+        expect(videos.length).to.be.eq(2, `There are two videos showing`);
+      })
+      .removeFilterTag('3 - 5');
   });
 
   specify('Video Rating', () => {
