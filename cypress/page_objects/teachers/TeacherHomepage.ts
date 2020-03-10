@@ -1,6 +1,6 @@
-import {By} from '../../support/By';
+import { By } from '../../support/By';
 import Video from '../domain/Video';
-import {TeacherPage} from './index';
+import { DiscoverPage, TeacherPage } from './index';
 
 export class TeachersHomepage extends TeacherPage {
   private readonly url: string;
@@ -40,7 +40,7 @@ export class TeachersHomepage extends TeacherPage {
     cy.get(By.dataQa('register-button')).click();
 
     cy.wait('@createUser');
-    cy.server({enable: false});
+    cy.server({ enable: false });
     return this;
   }
 
@@ -227,5 +227,127 @@ export class TeachersHomepage extends TeacherPage {
       });
     });
     return videos;
+  }
+
+  public bookmarkCollection(title: string) {
+    this.getFirstCollectionCardBy(title)
+      .get(By.dataQa('open-button-menu'))
+      .click()
+      .get(By.dataQa('bookmark-collection'))
+      .should('be.visible')
+      .click()
+      .get(By.dataQa('open-button-menu'))
+      .click()
+      .get(By.dataQa('unbookmark-collection'))
+      .should('be.visible')
+      .get(By.dataQa('bookmark-collection'))
+      .should('not.be.visible')
+      .get('body')
+      .click();
+
+    return this;
+  }
+
+  public unbookmarkCollection(title: string) {
+    this.getFirstCollectionCardBy(title)
+      .get(By.dataQa('open-button-menu'))
+      .click()
+      .get(By.dataQa('unbookmark-collection'))
+      .should('be.visible')
+      .click()
+      .get(By.dataQa('open-button-menu'))
+      .click()
+      .get(By.dataQa('bookmark-collection'))
+      .should('be.visible')
+      .get(By.dataQa('unbookmark-collection'))
+      .should('not.be.visible')
+      .get('body')
+      .click();
+
+    return this;
+  }
+
+  public checkCollectionBookmarkStatus(
+    collectionName: string,
+    expectedState: boolean,
+  ) {
+    cy.get(By.dataState(collectionName, 'collection-card'))
+      .get(By.dataQa('open-button-menu'))
+      .click()
+      .get(
+        By.dataQa(
+          `${expectedState ? 'unbookmark-collection' : 'bookmark-collection'}`,
+        ),
+      )
+      .should('be.visible')
+      .get('body')
+      .click();
+
+    return this;
+  }
+
+  public createCollectionFromVideo(index: number, collectionTitle: string) {
+    this.interactWithResult(index, () => {
+      cy.get("[data-qa='video-collection-menu']:visible")
+        .should('be.visible')
+        .click();
+    })
+      .get(By.dataQa('create-collection'))
+      .click()
+      .get(By.dataQa('new-collection-title'))
+      .type(collectionTitle)
+      .get(By.dataQa('create-collection-button'))
+      .click()
+      .wait(2000);
+
+    return this;
+  }
+
+  public isVideoInCollection(
+    index: number,
+    collectionTitle: string,
+    expectation: boolean = true,
+  ) {
+    this.searchResultsHtmlElements()
+      .eq(index)
+      .within(() => {
+        cy.get(`[data-qa='video-collection-menu']:visible`).click();
+      })
+      .get(
+        `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
+      )
+      .should(expectation ? 'be.visible' : 'not.exist');
+
+    return this;
+  }
+
+  public removeVideoFromCollection(index: number, collectionTitle: string) {
+    this.interactWithResult(index, () => {
+      cy.get("[data-qa='video-collection-menu']:visible").click();
+    })
+      .get(
+        `[data-state="${collectionTitle}"][data-qa="remove-from-collection"]`,
+      )
+      .should('be.visible')
+      .click();
+    return this;
+  }
+
+  public goToDiscoverBySubject(subject: string) {
+    cy.get(By.dataQa('discipline-subject'))
+      .contains(subject)
+      .click();
+    return new DiscoverPage();
+  }
+
+  private interactWithResult(index: number, callback: () => void) {
+    return this.searchResultsHtmlElements()
+      .eq(index)
+      .scrollIntoView()
+      .within(callback);
+  }
+
+  private getFirstCollectionCardBy(title: string): Cypress.Chainable {
+    return cy.get(By.dataState(title, 'collection-card')).first();
   }
 }
