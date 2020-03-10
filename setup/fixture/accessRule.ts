@@ -1,38 +1,38 @@
-export type AccessRuleType = 'SelectedCollections' | 'SelectedVideos';
+export type AccessRuleType = 'IncludedCollections' | 'IncludedVideos';
 
 export interface AccessRuleFixture {
   type: AccessRuleType;
   name: string;
 }
 
-export interface SelectedCollectionsAccessRuleFixture
+export interface IncludedCollectionsAccessRuleFixture
   extends AccessRuleFixture {
   collectionIds: string[];
 }
 
-export interface SelectedVideosAccessRuleFixture extends AccessRuleFixture {
+export interface IncludedVideosAccessRuleFixture extends AccessRuleFixture {
   videoIds: string[];
 }
 
-export function ltiSelectedCollectionsAccessRuleFixture(
+export function ltiIncludedCollectionsAccessRuleFixture(
   collectionIds: string[],
-): SelectedCollectionsAccessRuleFixture {
+): IncludedCollectionsAccessRuleFixture {
   return {
-    type: 'SelectedCollections',
+    type: 'IncludedCollections',
     name: 'LTI Selected Collections',
     collectionIds,
   };
 }
 
-export const SELECTED_VIDEOS_ACCESS_RULE_NAME =
+export const INCLUDED_VIDEOS_ACCESS_RULE_NAME =
   'Selected Videos AccessRuleFixture';
 
-export function selectedVideosAccessRuleFixture(
+export function includedVideosAccessRuleFixture(
   videoIds: string[],
-): SelectedVideosAccessRuleFixture {
+): IncludedVideosAccessRuleFixture {
   return {
-    name: SELECTED_VIDEOS_ACCESS_RULE_NAME,
-    type: 'SelectedVideos',
+    name: INCLUDED_VIDEOS_ACCESS_RULE_NAME,
+    type: 'IncludedVideos',
     videoIds,
   };
 }

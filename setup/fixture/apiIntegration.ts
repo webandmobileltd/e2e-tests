@@ -14,7 +14,7 @@ export function ltiApiIntegrationFixture(
   };
 }
 
-export function selectedVideosApiIntegrationFixture(
+export function includedVideosApiIntegrationFixture(
   contentPackageId: string,
 ): ApiIntegrationFixture {
   return {

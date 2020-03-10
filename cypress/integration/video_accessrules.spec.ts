@@ -7,7 +7,7 @@ import {
   SELECTED_VIDEOS_TEST_PASSWORD,
   SELECTED_VIDEOS_TEST_USERNAME,
 } from '../../setup/Constants';
-import { SELECTED_VIDEOS_ACCESS_RULE_NAME } from '../../setup/fixture/accessRule';
+import { INCLUDED_VIDEOS_ACCESS_RULE_NAME } from '../../setup/fixture/accessRule';
 import { generateToken } from '../../setup/generateToken';
 
 context('Video Access Rules', () => {
@@ -17,7 +17,7 @@ context('Video Access Rules', () => {
       SELECTED_VIDEOS_TEST_PASSWORD,
     );
     const accessRule = (await findAccessRuleByName(
-      SELECTED_VIDEOS_ACCESS_RULE_NAME,
+      INCLUDED_VIDEOS_ACCESS_RULE_NAME,
       token,
     )) as SelectedVideosAccessRule;
     const videos = await findVideos('Minute Physics', token);
