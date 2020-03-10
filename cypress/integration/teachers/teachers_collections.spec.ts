@@ -1,6 +1,9 @@
-import {v4 as uuid} from 'uuid';
-import {TeachersHomepage} from '../../page_objects/teachers';
-import {clearLoginCookies, preserveLoginCookiesBetweenTests,} from '../../page_objects/teachers/CookiesUtils';
+import { v4 as uuid } from 'uuid';
+import { TeachersHomepage } from '../../page_objects/teachers';
+import {
+  clearLoginCookies,
+  preserveLoginCookiesBetweenTests,
+} from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App Collections Journey', () => {
   const homepage = new TeachersHomepage();
@@ -131,7 +134,7 @@ context('Teachers App Collections Journey', () => {
           .reload()
           .goToDiscoverBySubject(SUBJECT)
           .hasCollectionTitle(collectionTitle);
-      })
+      });
   });
 
   specify('Can delete a collection', () => {

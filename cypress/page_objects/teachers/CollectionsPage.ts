@@ -1,7 +1,7 @@
-import {By} from '../../support/By';
+import { By } from '../../support/By';
 import VideoCollection from '../domain/VideoCollection';
-import {acceptDialog} from './AntUtils';
-import {CollectionPage, TeacherPage} from './index';
+import { acceptDialog } from './AntUtils';
+import { CollectionPage, TeacherPage } from './index';
 
 export class CollectionsPage extends TeacherPage {
   public reload() {
@@ -16,7 +16,9 @@ export class CollectionsPage extends TeacherPage {
 
   public goToCollectionDetails(collectionTitle: string) {
     return cy
-      .get(`[data-state='${collectionTitle}'][data-qa='collection-card']:visible`)
+      .get(
+        `[data-state='${collectionTitle}'][data-qa='collection-card']:visible`,
+      )
       .click()
       .then(() => {
         return new CollectionPage();

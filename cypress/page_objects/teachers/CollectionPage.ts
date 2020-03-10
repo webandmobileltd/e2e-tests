@@ -1,6 +1,6 @@
-import {By} from '../../support/By';
+import { By } from '../../support/By';
 import Video from '../domain/Video';
-import {TeacherPage} from './index';
+import { TeacherPage } from './index';
 
 export class CollectionPage extends TeacherPage {
   public reload() {
@@ -116,5 +116,4 @@ export class CollectionPage extends TeacherPage {
       .within(callback);
     return this;
   }
-
 }

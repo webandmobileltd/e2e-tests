@@ -1,6 +1,6 @@
-import {By} from '../../support/By';
+import { By } from '../../support/By';
 import VideoCollection from '../domain/VideoCollection';
-import {MenuPage, TeachersVideoDetailsPage} from './index';
+import { MenuPage, TeachersVideoDetailsPage } from './index';
 
 export class TeacherPage {
   public log(message: string) {
@@ -24,37 +24,38 @@ export class TeacherPage {
   }
 
   public goToFirstVideo() {
-    cy
-      .get(By.dataQa('video-card'))
+    cy.get(By.dataQa('video-card'))
       .first()
-      .find(By.dataQa('video-title')).click()
-      .get(By.dataQa('video-details-page')).should('exist');
+      .find(By.dataQa('video-title'))
+      .click()
+      .get(By.dataQa('video-details-page'))
+      .should('exist');
 
     return cy
-      .get(By.dataQa("share-button")).click()
-      .get(By.dataQa("copy-link"))
-      .then((button) => {
-        return button.attr("data-link")!!.toString();
+      .get(By.dataQa('share-button'))
+      .click()
+      .get(By.dataQa('copy-link'))
+      .then(button => {
+        return button.attr('data-link')!!.toString();
       })
       .then(copyLink => {
-        return cy.location()
-          .then(location => {
-            const pathname = location.pathname;
-            const parts = pathname.split('/');
-            const id = parts[parts.length - 1];
-            return {id: id, copyLink: copyLink};
-          })
+        return cy.location().then(location => {
+          const pathname = location.pathname;
+          const parts = pathname.split('/');
+          const id = parts[parts.length - 1];
+          return { id, copyLink };
+        });
       })
       .then(pageProperties => {
         return cy.get('.share-code__code').then(shareCode => {
-          return {...pageProperties, shareCode: shareCode.text()}
+          return { ...pageProperties, shareCode: shareCode.text() };
         });
       })
       .then(pageProperties => {
         return new TeachersVideoDetailsPage(
           pageProperties.id,
           pageProperties.copyLink,
-          pageProperties.shareCode
+          pageProperties.shareCode,
         );
       });
   }

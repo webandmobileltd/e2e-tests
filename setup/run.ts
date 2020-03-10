@@ -19,12 +19,12 @@ import { inserting } from './api/utilities';
 import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
 import {
-  ltiIncludedCollectionsAccessRuleFixture,
   includedVideosAccessRuleFixture,
+  ltiIncludedCollectionsAccessRuleFixture,
 } from './fixture/accessRule';
 import {
-  ltiApiIntegrationFixture,
   includedVideosApiIntegrationFixture,
+  ltiApiIntegrationFixture,
 } from './fixture/apiIntegration';
 import {
   CollectionFixture,

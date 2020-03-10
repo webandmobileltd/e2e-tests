@@ -1,6 +1,9 @@
-import {v4 as uuid} from 'uuid';
-import {TeachersHomepage} from '../../page_objects/teachers';
-import {clearLoginCookies, preserveLoginCookiesBetweenTests,} from '../../page_objects/teachers/CookiesUtils';
+import { v4 as uuid } from 'uuid';
+import { TeachersHomepage } from '../../page_objects/teachers';
+import {
+  clearLoginCookies,
+  preserveLoginCookiesBetweenTests,
+} from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App Videos Journey', () => {
   const homepage = new TeachersHomepage();
@@ -75,7 +78,7 @@ context('Teachers App Videos Journey', () => {
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(8, `There are eight videos showing`);
       })
-      .removeFilterTag('0m - 2m')
+      .removeFilterTag('0m - 2m');
   });
 
   specify('Age range filter in search', () => {

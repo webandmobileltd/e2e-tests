@@ -1,5 +1,5 @@
-import {By} from '../../support/By';
-import {TeacherPage} from './index';
+import { By } from '../../support/By';
+import { TeacherPage } from './index';
 
 export class TeachersVideoDetailsPage extends TeacherPage {
   private readonly url: string;
@@ -19,7 +19,9 @@ export class TeachersVideoDetailsPage extends TeacherPage {
   }
 
   public visitCopyLinkUrl() {
-    if (!this.copyLink) throw Error("Copy link not known, cannot visit it, sorry.");
+    if (!this.copyLink) {
+      throw Error('Copy link not known, cannot visit it, sorry.');
+    }
 
     cy.visit(this.copyLink);
     return this;
@@ -46,11 +48,15 @@ export class TeachersVideoDetailsPage extends TeacherPage {
   }
 
   public enterSharingCode() {
-    if (!this.shareCode) throw Error("Cannot enter sharing code, I don't have it, sorry.");
-    cy
-      .get('.share-code-dialog').should('be.visible')
-      .get(By.dataQa('share-code-input')).type(this.shareCode)
-      .get(By.dataQa('share-code-submit')).click();
+    if (!this.shareCode) {
+      throw Error("Cannot enter sharing code, I don't have it, sorry.");
+    }
+    cy.get('.share-code-dialog')
+      .should('be.visible')
+      .get(By.dataQa('share-code-input'))
+      .type(this.shareCode)
+      .get(By.dataQa('share-code-submit'))
+      .click();
     return this;
   }
 

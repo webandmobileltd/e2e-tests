@@ -1,6 +1,6 @@
-import {v4 as uuid} from 'uuid';
-import {TeachersHomepage} from '../../page_objects/teachers';
-import {clearLoginCookies} from '../../page_objects/teachers/CookiesUtils';
+import { v4 as uuid } from 'uuid';
+import { TeachersHomepage } from '../../page_objects/teachers';
+import { clearLoginCookies } from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App - Student Journey', () => {
   const homepage = new TeachersHomepage();
@@ -44,7 +44,7 @@ context('Teachers App - Student Journey', () => {
           .visitCopyLinkUrl()
           .showsSharingModal()
           .enterSharingCode()
-          .showsNoSharingModal()
+          .showsNoSharingModal();
       });
   });
 });
