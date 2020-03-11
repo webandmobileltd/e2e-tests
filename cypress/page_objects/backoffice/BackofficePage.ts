@@ -280,6 +280,26 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     return this;
   }
 
+  public setContentPartnerIngestType(type: 'MRSS', url: 'https://mrss.feed') {
+    this.switchTabs('INGEST');
+
+    cy.get(By.dataQa('ingest-type'))
+      .contains(type)
+      .click();
+
+    cy.get(By.dataQa('ingest-feed-url')).type(url);
+
+    return this;
+  }
+
+  public setContentPartnerDeliveryFrequency(itemText: 'Every 3 months') {
+    this.switchTabs('INGEST');
+
+    cy.get(By.dataQa('delivery-frequency')).select(itemText);
+
+    return this;
+  }
+
   public submitContentPartner() {
     cy.get(By.dataQa('save-content-partner-button')).click();
 

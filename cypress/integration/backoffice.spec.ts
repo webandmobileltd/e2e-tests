@@ -53,6 +53,8 @@ context('Backoffice', () => {
       .setContentPartnerName(contentPartnerName)
       .setContentPartnerDistributionMethods('STREAM')
       .setMarketingFiles()
+      .setContentPartnerIngestType('MRSS', 'https://mrss.feed')
+      .setContentPartnerDeliveryFrequency('Every 3 months')
       .submitContentPartner()
       .filterByContentPartner(contentPartnerName)
       .editFirstAndOnlyContentPartner();
