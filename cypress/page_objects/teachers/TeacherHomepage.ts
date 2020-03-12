@@ -182,7 +182,7 @@ export class TeachersHomepage extends TeacherPage {
   public assertPedagogicalTagOnFirstVideo(tag: string) {
     cy.get(By.dataQa('video-card'))
       .first()
-      .find(By.dataQa('best-for-tags'))
+      .find(By.dataQa('best-for-tag'))
       .find(By.dataQa('filter-tag'))
       .should('have.contain.text', tag);
     return this;
