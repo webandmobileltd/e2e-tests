@@ -110,6 +110,26 @@ async function setupLtiFixtures(token: string) {
   );
 }
 
+async function setupSelectedVideosE2ETest(token: string) {
+  const videos = await findVideos('Minute Physics', token);
+  const selectedVideos = [videos[0]];
+  const accessRuleId = await ensureAccessRuleAndReturnId(
+    includedVideosAccessRuleFixture(selectedVideos.map(video => video.id)),
+    token,
+  );
+  const contentPackageId = await createContentPackage(
+    {
+      name: 'Selected Videos Content Package',
+      accessRuleIds: [accessRuleId],
+    },
+    token,
+  );
+  await ensureApiIntegrationAndReturnId(
+    includedVideosApiIntegrationFixture(contentPackageId),
+    token,
+  );
+}
+
 async function insertContentPartners(token: string) {
   return Promise.all(
     contentPartnerFixtures.map(async contentPartnerFixture => {
@@ -162,6 +182,9 @@ async function setUp() {
 
   inserting('LTI fixtures');
   await setupLtiFixtures(token);
+
+  inserting('Selected Videos AccessRuleFixture fixtures');
+  await setupSelectedVideosE2ETest(token);
 }
 
 setUp()
