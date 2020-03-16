@@ -166,7 +166,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   public updateOrderCurrency() {
     cy.get(By.dataQa('edit-currency')).click();
     cy.get(By.dataQa('currency-select')).click();
-    cy.get(`.ant-select-dropdown-menu-item`)
+    cy.get(`.ant-select-item-option-content`)
       .contains('USD')
       .scrollIntoView()
       .click();
