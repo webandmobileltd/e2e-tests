@@ -289,13 +289,14 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   public filterByContentPartner(name: string) {
     cy.wait(1000);
 
-    cy.get('.content-partner-filter input')
+    cy.get(By.dataQa('content-partner-filter'))
+      .get('.ant-select-selector')
       .then(it => {
-        it.trigger('click');
+        it.trigger('mousedown');
       })
       .type(name);
 
-    cy.get('.ant-select-dropdown-menu-item').click();
+    cy.get('.ant-select-item-option-content').click();
 
     return this;
   }
