@@ -73,7 +73,7 @@ export async function findAccessRuleIdByName(
 
   if (accessRule) {
     const self = accessRule._links.self.href;
-    return self.substring(self.lastIndexOf('/'));
+    return self.substring(self.lastIndexOf('/') + 1);
   } else {
     return undefined;
   }
