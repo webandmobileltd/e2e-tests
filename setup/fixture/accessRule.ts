@@ -25,7 +25,7 @@ export function ltiIncludedCollectionsAccessRuleFixture(
 }
 
 export const INCLUDED_VIDEOS_ACCESS_RULE_NAME =
-  'Selected Videos AccessRuleFixture';
+  'Included Videos AccessRuleFixture';
 
 export function includedVideosAccessRuleFixture(
   videoIds: string[],

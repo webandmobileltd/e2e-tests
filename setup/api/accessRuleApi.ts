@@ -18,7 +18,7 @@ export interface AccessRuleLinks {
   self: Link;
 }
 
-export interface SelectedVideosAccessRule extends AccessRule {
+export interface IncludedVideosAccessRule extends AccessRule {
   videoIds: string[];
 }
 
