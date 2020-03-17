@@ -9,7 +9,7 @@ export function ltiApiIntegrationFixture(
 ): ApiIntegrationFixture {
   return {
     name: 'E2E Tests LTI Api Integration',
-    role: 'ROLE_PEARSON_MYREALIZE',
+    role: 'ROLE_TESTING_LTI',
     contentPackageId,
   };
 }
