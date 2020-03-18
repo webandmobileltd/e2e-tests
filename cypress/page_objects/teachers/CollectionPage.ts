@@ -36,7 +36,9 @@ export class CollectionPage extends TeacherPage {
     cy.get(By.dataQa('collection-edit-button')).click();
 
     cy.get('[data-qa="subjects"]')
-      .click()
+      .click();
+
+    cy.get(`.ant-select-dropdown-menu-item`)
       .should('be.visible');
 
     cy.get(`.ant-select-dropdown-menu-item`)
