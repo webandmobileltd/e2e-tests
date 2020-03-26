@@ -58,14 +58,7 @@ context('Backoffice', () => {
       .editFirstAndOnlyContentPartner();
   });
 
-  it('should go to collections page and create a collection', () => {
-    backoffice
-      .visit()
-      .logIn()
-      .goToCollectionsPage();
-  });
-
-  it('should go to collections page and create a collection', () => {
+  it('should create a collection', () => {
     backoffice
       .visit()
       .logIn()
@@ -76,7 +69,7 @@ context('Backoffice', () => {
       .findCreatedCollection();
   });
 
-  it('should go to collections page and create a collection', () => {
+  it('should edit video', () => {
     backoffice
       .visit()
       .logIn()
@@ -85,5 +78,16 @@ context('Backoffice', () => {
       .goToEditPage()
       .editVideo()
       .validateVideoChange();
+  });
+
+  it('should edit order', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .gotToOrdersPage()
+      .selectOrderFromOrdersTable()
+      .editRowInOrdersTable()
+      .editOrder()
+      .validateOrder();
   });
 });
