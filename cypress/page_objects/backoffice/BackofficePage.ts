@@ -75,6 +75,97 @@ export class BackofficePage {
     return this;
   }
 
+  public goToCollectionsPage() {
+    cy.get(By.dataQa('content-management'))
+      .trigger('mouseover')
+      .get(By.dataQa('collections-menu'))
+      .click();
+
+    return this;
+  }
+
+  public goToVideoPage() {
+    cy.get(By.dataQa('content-management'))
+      .trigger('mouseover')
+      .get(By.dataQa('video-management-menu'))
+      .click();
+
+    return this;
+  }
+
+  public findVideo() {
+    cy.get(By.dataQa('search-input')).type('5e1deda7885cfd10e80981c9'); // 5e7cb7f176c7ac0903312cad
+    cy.get(By.dataQa('search-video-button')).click();
+    return this;
+  }
+
+  public goToEditPage() {
+    cy.get(By.dataQa('edit-video-button')).click();
+    return this;
+  }
+
+  public editVideo() {
+    cy.get(By.dataQa('edit-video-form-title'))
+      .clear()
+      .type('edit video title');
+
+    cy.get(By.dataQa('edit-video-form-description'))
+      .clear()
+      .type('edit video test');
+
+    cy.get(By.dataQa('subjects-select')).click();
+
+    cy.get(By.dataState('subject-option'))
+      .first()
+      .click();
+
+    cy.get(By.dataQa('edit-video-form-title')).click();
+    cy.get(By.dataQa('save-video-button')).click();
+
+    return this;
+  }
+
+  public validateVideoChange() {
+    cy.get(By.dataQa('video-title')).contains('edit video title');
+
+    return this;
+  }
+
+  public fillCollectionDetails() {
+    cy.get(By.dataQa('collection-title-input')).type('collection test title');
+    cy.get(By.dataQa('collection-description-input')).type(
+      'collection test description',
+    );
+    cy.get(By.dataQa('upload-dropzone')).then(dropzone => {
+      const content = '123,456,789';
+      BackofficePage.uploadCSV(content, dropzone);
+    });
+
+    cy.get(By.dataQa('contracts-select')).click();
+    cy.get(By.dataQa('contract-option-5d79ff951c9d4400003593ef')).click();
+    cy.get(By.dataQa('collection-title-input')).click();
+
+    return this;
+  }
+
+  public findCreatedCollection() {
+    cy.get(By.dataQa('collections-filter-input')).type('collection test title');
+    cy.get(By.dataQa('filter-collection-button')).click();
+    return this;
+  }
+
+  public saveCollection() {
+    cy.get(By.dataQa('save-button')).click();
+
+    return this;
+  }
+
+  public openCollectionsModal() {
+    cy.get(By.dataQa('create-new-collection-button')).click();
+
+    return this;
+  }
+
   public contentPartnerTableHasData() {
     cy.get(By.dataQa('content-partner'))
       .its('length')

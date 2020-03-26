@@ -57,4 +57,33 @@ context('Backoffice', () => {
       .filterByContentPartner(contentPartnerName)
       .editFirstAndOnlyContentPartner();
   });
+
+  it('should go to collections page and create a collection', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .goToCollectionsPage();
+  });
+
+  it('should go to collections page and create a collection', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .goToCollectionsPage()
+      .openCollectionsModal()
+      .fillCollectionDetails()
+      .saveCollection()
+      .findCreatedCollection();
+  });
+
+  it('should go to collections page and create a collection', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .goToVideoPage()
+      .findVideo()
+      .goToEditPage()
+      .editVideo()
+      .validateVideoChange();
+  });
 });
