@@ -93,8 +93,56 @@ export class BackofficePage {
     return this;
   }
 
+  public gotToOrdersPage() {
+    cy.get(By.dataQa('orders-menu')).click();
+
+    return this;
+  }
+
+  public selectOrderFromOrdersTable() {
+    cy.get(By.dataQa('order'))
+      .first()
+      .click();
+
+    return this;
+  }
+
+  public editRowInOrdersTable() {
+    cy.get(By.dataQa('edit-row-button'))
+      .first()
+      .click();
+
+    return this;
+  }
+
+  public editOrder() {
+    cy.get(By.dataQa('duration-edit-input'))
+      .clear()
+      .type('3 Years');
+
+    cy.get(By.dataQa('territory-edit-input'))
+      .clear()
+      .type('Asia');
+
+    cy.get(By.dataQa('price-edit-input'))
+      .clear()
+      .type('100');
+
+    cy.get(By.dataQa('edit-form-save')).click();
+
+    return this;
+  }
+
+  public validateOrder() {
+    cy.get(By.dataQa('price')).contains('USD 100');
+    cy.get(By.dataQa('license-territory')).contains('Asia');
+    cy.get(By.dataQa('license-duration')).contains('3 Years');
+
+    return this;
+  }
+
   public findVideo() {
-    cy.get(By.dataQa('search-input')).type('5e1deda7885cfd10e80981c9'); // 5e7cb7f176c7ac0903312cad
+    cy.get(By.dataQa('search-input')).type('5e7cb7f176c7ac0903312cad');
     cy.get(By.dataQa('search-video-button')).click();
     return this;
   }

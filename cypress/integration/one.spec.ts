@@ -7,10 +7,10 @@ context('Backoffice test', () => {
     backoffice
       .visit()
       .logIn()
-      .goToVideoPage()
-      .findVideo()
-      .goToEditPage()
-      .editVideo()
-      .validateVideoChange();
+      .gotToOrdersPage()
+      .selectOrderFromOrdersTable()
+      .editRowInOrdersTable()
+      .editOrder()
+      .validateOrder();
   });
 });
