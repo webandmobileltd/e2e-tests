@@ -30,7 +30,7 @@ export class BackofficePage {
   }
 
   private static saveOrderRowEdit() {
-    cy.get(By.dataQa('inline-save'))
+    cy.get(By.dataQa('edit-form-save'))
       .first()
       .click({ force: true });
   }
@@ -170,7 +170,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
       .contains('USD')
       .scrollIntoView()
       .click();
-    cy.get(By.dataQa('inline-save')).click();
+    cy.get(By.dataQa('edit-form-save')).click();
 
     return this;
   }
@@ -178,8 +178,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   public updateOrderItemDuration(duration: string, index: number = 0) {
     BackofficePage.startOrderRowEdit(index);
 
-    cy.get(By.dataQa('duration-edit'))
-      .find('input')
+    cy.get(By.dataQa('duration-edit-input'))
       .clear()
       .type(duration);
 
@@ -193,8 +192,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   public updateOrderItemTerritory(territory: string, index: number = 0) {
     BackofficePage.startOrderRowEdit(index);
 
-    cy.get(By.dataQa('territory-edit'))
-      .find('input')
+    cy.get(By.dataQa('territory-edit-input'))
       .clear()
       .type(territory);
 
@@ -289,7 +287,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   public filterByContentPartner(name: string) {
     cy.wait(1000);
 
-    cy.get(By.dataQa('content-partner-filter'))
+    cy.get(By.dataQa('content-partner-filter-input'))
       .get('.ant-select-selector')
       .then(it => {
         it.trigger('mousedown');
