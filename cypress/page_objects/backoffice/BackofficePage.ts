@@ -141,8 +141,8 @@ export class BackofficePage {
     return this;
   }
 
-  public findVideo() {
-    cy.get(By.dataQa('search-input')).type('5e7cb7f176c7ac0903312cad');
+  public findVideo(videoId: string) {
+    cy.get(By.dataQa('search-input')).type(videoId);
     cy.get(By.dataQa('search-video-button')).click();
     return this;
   }
@@ -190,7 +190,9 @@ export class BackofficePage {
     });
 
     cy.get(By.dataQa('contracts-select')).click();
-    cy.get(By.dataQa('contract-option-5d79ff951c9d4400003593ef')).click();
+    cy.get(By.dataQa('contract-option'))
+      .first()
+      .click();
     cy.get(By.dataQa('collection-title-input')).click();
 
     return this;
