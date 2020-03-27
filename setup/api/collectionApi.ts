@@ -15,6 +15,7 @@ interface Collections {
 export interface Collection {
   id: string;
   title: string;
+  promoted?: boolean;
 }
 
 export async function ensureCollectionAndReturnId(
@@ -44,7 +45,21 @@ export async function insertCollection(
   });
 
   await assertApiResourceCreation(response, 'Collection creation');
-  return extractIdFromLocation(response);
+  const id = extractIdFromLocation(response);
+
+  if (collection.promoted) {
+    console.log(`🤩 Promoting collection [name=${collection.title}]`);
+    await fetch(`${API_URL}/v1/collections/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(collection),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  return id;
 }
 
 export async function getCollections(
@@ -89,6 +104,7 @@ export async function addVideoToCollection(
 export async function findOneCollectionId(
   name: string,
   token: string,
+  promoted?: boolean,
 ): Promise<string | undefined> {
   const myCollectionsUri = await getMyCollectionsLink(token);
 
@@ -107,7 +123,7 @@ export async function findOneCollectionId(
 
   const collection = collections.find((it: Collection) => it.title === name);
 
-  if (collection) {
+  if (collection && (promoted ? collection.promoted === promoted : true)) {
     return collection.id;
   } else {
     return undefined;
