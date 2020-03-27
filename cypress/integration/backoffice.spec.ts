@@ -1,7 +1,5 @@
 import uuid = require('uuid');
-import { findOneCollectionId } from '../../setup/api/collectionApi';
 import { findOneVideoId } from '../../setup/api/videoApi';
-import { ltiCollectionFixture } from '../../setup/fixture/collections';
 import { getParametrisedVideoFixtures } from '../../setup/fixture/videos';
 import { generateToken } from '../../setup/generateToken';
 import { BackofficePage } from '../page_objects/backoffice/BackofficePage';
@@ -11,27 +9,6 @@ context('Backoffice', () => {
 
   let token: string;
   let videoId: string;
-  let collectionId: string;
-
-  beforeEach(() => {
-    return generateToken()
-      .then(async (freshToken: string) => {
-        token = freshToken;
-        const allInstructionalVideos = await getParametrisedVideoFixtures(
-          freshToken,
-        );
-        return findOneVideoId(allInstructionalVideos[0].title, token);
-      })
-      .then((returnedVideoId: string) => {
-        videoId = returnedVideoId;
-      })
-      .then(async () => {
-        collectionId = (await findOneCollectionId(
-          ltiCollectionFixture.title,
-          token,
-        )) as string;
-      });
-  });
 
   it('should log in and view content partner page', () => {
     backoffice
@@ -99,6 +76,18 @@ context('Backoffice', () => {
   });
 
   it('should edit video', () => {
+    generateToken()
+      .then(async (freshToken: string) => {
+        token = freshToken;
+        const allInstructionalVideos = await getParametrisedVideoFixtures(
+          freshToken,
+        );
+        return findOneVideoId(allInstructionalVideos[0].title, token);
+      })
+      .then((returnedVideoId: string) => {
+        videoId = returnedVideoId;
+      });
+
     backoffice
       .visit()
       .logIn()

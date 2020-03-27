@@ -190,7 +190,7 @@ export class BackofficePage {
     });
 
     cy.get(By.dataQa('contracts-select')).click();
-    cy.get(By.dataQa('contract-option'))
+    cy.get(By.dataState('contract-option'))
       .first()
       .click();
     cy.get(By.dataQa('collection-title-input')).click();
