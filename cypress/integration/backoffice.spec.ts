@@ -58,36 +58,36 @@ context('Backoffice', () => {
       .editFirstAndOnlyContentPartner();
   });
 
-  // it('should create a collection', () => {
-  //   backoffice
-  //     .visit()
-  //     .logIn()
-  //     .goToCollectionsPage()
-  //     .openCollectionsModal()
-  //     .fillCollectionDetails()
-  //     .saveCollection()
-  //     .findCreatedCollection();
-  // });
-  //
-  // it('should edit video', () => {
-  //   backoffice
-  //     .visit()
-  //     .logIn()
-  //     .goToVideoPage()
-  //     .findVideo()
-  //     .goToEditPage()
-  //     .editVideo()
-  //     .validateVideoChange();
-  // });
-  //
-  // it('should edit order', () => {
-  //   backoffice
-  //     .visit()
-  //     .logIn()
-  //     .gotToOrdersPage()
-  //     .selectOrderFromOrdersTable()
-  //     .editRowInOrdersTable()
-  //     .editOrder()
-  //     .validateOrder();
-  // });
+  it('should create a collection', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .goToCollectionsPage()
+      .openCollectionsModal()
+      .fillCollectionDetails()
+      .saveCollection()
+      .findCreatedCollection();
+  });
+
+  it('should edit video', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .goToVideoPage()
+      .findVideo()
+      .goToEditPage()
+      .editVideo()
+      .validateVideoChange();
+  });
+
+  it('should edit order', () => {
+    backoffice
+      .visit()
+      .logIn()
+      .gotToOrdersPage()
+      .selectOrderFromOrdersTable()
+      .editRowInOrdersTable()
+      .editOrder()
+      .validateOrder();
+  });
 });
