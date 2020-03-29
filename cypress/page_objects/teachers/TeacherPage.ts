@@ -92,4 +92,15 @@ export class TeacherPage {
       .should('be.visible')
       .click();
   }
+
+  protected clickSelectOption(select: string, optionDataState: string) {
+    cy.get(By.dataQa(select))
+      .click()
+      .should('be.visible');
+
+    cy.get(By.dataState(optionDataState))
+      .scrollIntoView()
+      .should('be.visible')
+      .click();
+  }
 }
