@@ -47,6 +47,7 @@ export class TeachersHomepage extends TeacherPage {
   public activateAccount() {
     cy.get(By.dataQa('first-name')).type('Firstname');
     cy.get(By.dataQa('last-name')).type('Lastname');
+    this.clickDropDownOption(By.dataQa('select-role'), 'Teacher');
 
     cy.get(By.dataQa('onboard-next-button')).click();
 
