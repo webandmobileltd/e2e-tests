@@ -19,6 +19,7 @@ import { inserting } from './api/utilities';
 import { findVideos, insertVideo } from './api/videoApi';
 import { OPERATOR_PASSWORD, OPERATOR_USERNAME, TOKEN_URL } from './Constants';
 import {
+  excludedVideoTypesAccessRuleFixture,
   includedVideosAccessRuleFixture,
   ltiIncludedCollectionsAccessRuleFixture,
 } from './fixture/accessRule';
@@ -130,6 +131,18 @@ async function setupSelectedVideosE2ETest(token: string) {
   );
 }
 
+async function setupClassroomAccessRule(token: string) {
+  const accessRuleId = await ensureAccessRuleAndReturnId(
+    excludedVideoTypesAccessRuleFixture(['STOCK'], 'NO STOCK'),
+    token,
+  );
+
+  const contentPackageId = await createContentPackage(
+    { name: 'Classroom', accessRuleIds: [accessRuleId] },
+    token,
+  );
+}
+
 async function insertContentPartners(token: string) {
   return Promise.all(
     contentPartnerFixtures.map(async contentPartnerFixture => {
@@ -184,6 +197,9 @@ async function setUp() {
 
   inserting('Selected Videos AccessRuleFixture fixtures');
   await setupSelectedVideosE2ETest(token);
+
+  inserting('classroom accesrule fixtures');
+  await setupClassroomAccessRule(token);
 }
 
 setUp()
