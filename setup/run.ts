@@ -137,7 +137,7 @@ async function setupClassroomAccessRule(token: string) {
     token,
   );
 
-  const contentPackageId = await createContentPackage(
+  await createContentPackage(
     { name: 'Classroom', accessRuleIds: [accessRuleId] },
     token,
   );
