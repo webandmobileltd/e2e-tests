@@ -47,6 +47,15 @@ context('Teachers App Videos Journey', () => {
       .noVideosShown();
   });
 
+  specify('Searching non streaming videos', () => {
+    const disabledVideoSearchQuery = 'Disabled';
+    homepage
+      .log('searching non streaming')
+      .menu()
+      .search(disabledVideoSearchQuery)
+      .noVideosShown();
+  });
+
   specify('Search result pagination check', () => {
     homepage
       .menu()

@@ -20,4 +20,9 @@ export const contentPartnerFixtures: any[] = [
     distributionMethods: ['STREAM'],
     currency: 'GBP',
   },
+  {
+    name: 'Disabled From Streaming CP',
+    distributionMethods: ['DOWNLOAD'],
+    currency: 'GBP',
+  },
 ];

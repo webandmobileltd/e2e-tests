@@ -169,10 +169,9 @@ async function setUp() {
   }
 
   const contentPartners = await getContentPartners(token);
-  if (!contentPartners || contentPartners.length === 0) {
-    inserting('content partners');
-    await insertContentPartners(token);
-  }
+
+  inserting('content partners');
+  await insertContentPartners(token);
 
   inserting('videos');
   await insertVideos(token);

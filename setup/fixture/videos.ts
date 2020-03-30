@@ -249,5 +249,14 @@ export async function getParametrisedVideoFixtures(
     }),
   ];
 
-  return [...instructionalVideos, ...newsVideos, ...stockVideos];
+  const disabled = [
+    video({
+      providerId: convertContentPartnerNameToId('Disabled From Streaming CP'),
+      providerVideoId: 'disabled-123',
+      title: 'Disabled',
+      description: 'Not legally allowed to show',
+    }),
+  ];
+
+  return [...instructionalVideos, ...newsVideos, ...stockVideos, ...disabled];
 }
