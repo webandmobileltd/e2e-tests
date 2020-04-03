@@ -6,6 +6,7 @@ import {
 } from './api/collectionApi';
 
 import { ensureAccessRuleAndReturnId } from './api/accessRuleApi';
+import { getAgeRanges, insertAgeRange } from './api/ageRangeApi';
 import { ensureApiIntegrationAndReturnId } from './api/apiIntegrationApi';
 import { createContentPackage } from './api/contentPackageApi';
 import {
@@ -23,6 +24,7 @@ import {
   includedVideosAccessRuleFixture,
   ltiIncludedCollectionsAccessRuleFixture,
 } from './fixture/accessRule';
+import { ageRangeFixtures } from './fixture/ageRanges';
 import {
   includedVideosApiIntegrationFixture,
   ltiApiIntegrationFixture,
@@ -55,6 +57,12 @@ async function insertVideos(token: string) {
 async function insertSubjects(token: string) {
   return Promise.all(
     subjectFixtures.map(subject => insertSubject(subject, token)),
+  );
+}
+
+async function insertAgeRanges(token: string) {
+  return Promise.all(
+    ageRangeFixtures.map(range => insertAgeRange(range, token)),
   );
 }
 
@@ -167,6 +175,12 @@ async function setUp() {
   if (!subjects || subjects.length === 0) {
     inserting('subjects');
     await insertSubjects(token);
+  }
+
+  const ageRanges = await getAgeRanges();
+  if (!ageRanges || ageRanges.length === 0) {
+    inserting('ageRanges');
+    await insertAgeRanges(token);
   }
 
   const tags = await getTags();
