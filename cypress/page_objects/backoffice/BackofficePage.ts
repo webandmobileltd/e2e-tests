@@ -168,8 +168,8 @@ export class BackofficePage {
       .click();
 
     cy.get(By.dataQa('edit-video-form-title')).click();
-    cy.get(By.dataQa('oneToThree')).click();
-    cy.get(By.dataQa('threeToFive')).click();
+    // cy.get(By.dataQa('oneToThree')).click();
+    // cy.get(By.dataQa('threeToFive')).click();
     cy.get(By.dataQa('save-video-button')).click();
 
     return this;
