@@ -75,7 +75,7 @@ context('Backoffice', () => {
       .findCreatedCollection();
   });
 
-  it('should edit video', () => {
+  xit('should edit video', () => {
     generateToken()
       .then(async (freshToken: string) => {
         token = freshToken;
