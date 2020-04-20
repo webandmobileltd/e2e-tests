@@ -71,10 +71,6 @@ export class TeacherPage {
     videoCards.each((idx, el: HTMLElement) => {
       collections.push({
         title: el.querySelector(By.dataQa('collection-title'))!.textContent!,
-        numberOfVideos: Number(
-          el.querySelector(By.dataQa('collection-number-of-videos'))!
-            .textContent!,
-        ),
         bookmarked:
           el.querySelector(By.dataQa('unbookmark-collection')) !== null,
       });
