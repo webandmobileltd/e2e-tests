@@ -163,7 +163,7 @@ export class BackofficePage {
 
     cy.get(By.dataQa('subjects-select')).click();
 
-    cy.get(By.dataState('subject-option'))
+    cy.get(By.dataState('subject-item'))
       .first()
       .click();
 
