@@ -48,3 +48,17 @@ export async function getAgeRanges(): Promise<AgeRange[] | undefined> {
     return undefined;
   }
 }
+
+export async function findOneAgeRange(ageRangeId: string, token: string) {
+  const response = await fetch(
+    `${Constants.API_URL}/v1/age-ranges/${ageRangeId}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  const payload = await response.json();
+  return payload && payload.id;
+}

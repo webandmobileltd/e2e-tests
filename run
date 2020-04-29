@@ -39,4 +39,5 @@ export CYPRESS_LTI_TOOL_CONSUMER_EMULATOR_URL
 export CYPRESS_LTI_LAUNCH_URL
 
 npm run setup
+npm run setup
 npm run cypress:open

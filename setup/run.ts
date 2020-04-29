@@ -6,7 +6,11 @@ import {
 } from './api/collectionApi';
 
 import { ensureAccessRuleAndReturnId } from './api/accessRuleApi';
-import { getAgeRanges, insertAgeRange } from './api/ageRangeApi';
+import {
+  findOneAgeRange,
+  getAgeRanges,
+  insertAgeRange,
+} from './api/ageRangeApi';
 import { ensureApiIntegrationAndReturnId } from './api/apiIntegrationApi';
 import { createContentPackage } from './api/contentPackageApi';
 import {
@@ -62,7 +66,13 @@ async function insertSubjects(token: string) {
 
 async function insertAgeRanges(token: string) {
   return Promise.all(
-    ageRangeFixtures.map(range => insertAgeRange(range, token)),
+    ageRangeFixtures.map(range =>
+      findOneAgeRange(range.id, token).then(id => {
+        if (id) {
+          insertAgeRange(range, token);
+        }
+      }),
+    ),
   );
 }
 
@@ -113,10 +123,12 @@ async function setupLtiFixtures(token: string) {
     token,
   );
 
-  await ensureApiIntegrationAndReturnId(
-    ltiApiIntegrationFixture(contentPackageId),
-    token,
-  );
+  if (contentPackageId) {
+    await ensureApiIntegrationAndReturnId(
+      ltiApiIntegrationFixture(contentPackageId),
+      token,
+    );
+  }
 }
 
 async function setupSelectedVideosE2ETest(token: string) {
@@ -133,10 +145,12 @@ async function setupSelectedVideosE2ETest(token: string) {
     },
     token,
   );
-  await ensureApiIntegrationAndReturnId(
-    includedVideosApiIntegrationFixture(contentPackageId),
-    token,
-  );
+  if (contentPackageId) {
+    await ensureApiIntegrationAndReturnId(
+      includedVideosApiIntegrationFixture(contentPackageId),
+      token,
+    );
+  }
 }
 
 async function setupClassroomAccessRule(token: string) {

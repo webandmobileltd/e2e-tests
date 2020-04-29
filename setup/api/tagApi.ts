@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import * as Constants from '../Constants';
-import { Tag } from '../fixture/tags';
+import { Tag as FixtureTag } from '../fixture/tags';
 import { Link } from './hateoas';
 import { assertApiResourceCreation } from './utilities';
 
@@ -22,7 +22,7 @@ export interface TagLinks {
   self: Link;
 }
 
-export async function insertTag(tag: Tag, token: string) {
+export async function insertTag(tag: FixtureTag, token: string) {
   const response = await fetch(Constants.API_URL + '/v1/tags', {
     method: 'POST',
     body: JSON.stringify(tag),

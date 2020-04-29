@@ -6,7 +6,7 @@ import { assertApiResourceCreation, extractIdFromLocation } from './utilities';
 export async function createContentPackage(
   contentPackageFixture: ContentPackageFixture,
   token: string,
-) {
+): Promise<string | null> {
   const response = await fetch(`${API_URL}/v1/content-packages`, {
     method: 'POST',
     body: JSON.stringify(contentPackageFixture),
@@ -15,6 +15,13 @@ export async function createContentPackage(
       'Content-Type': 'application/json',
     },
   });
-  await assertApiResourceCreation(response, 'ContentPackage fixture creation');
-  return extractIdFromLocation(response);
+  if (response.status === 409) {
+    return null;
+  } else {
+    await assertApiResourceCreation(
+      response,
+      'ContentPackage fixture creation',
+    );
+    return extractIdFromLocation(response);
+  }
 }
