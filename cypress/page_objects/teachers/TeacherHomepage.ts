@@ -87,19 +87,19 @@ export class TeachersHomepage extends TeacherPage {
     return this;
   }
 
-  public applyAgeRangeFilter(filterName: string) {
+  public applyAgeRangeFilter(filterValue: string, filterDisplayValue: string) {
     cy.get('label')
-      .contains(filterName)
+      .contains(filterValue)
       .click()
       .get('input[type=checkbox]')
       .should('be.checked')
-      .log(`Checked checkbox ${filterName}`)
+      .log(`Checked checkbox ${filterValue}`)
       .get('body')
       .get(By.dataQa(`age-range-filter-tag`))
-      .contains(filterName)
+      .contains(filterDisplayValue)
       .get(By.dataQa('close-tag'))
       .should('be.visible')
-      .log(`Filter tag ${filterName} was visible`);
+      .log(`Filter tag ${filterValue} was visible`);
 
     return this;
   }

@@ -1,9 +1,6 @@
-import { v4 as uuid } from 'uuid';
-import { TeachersHomepage } from '../../page_objects/teachers';
-import {
-  clearLoginCookies,
-  preserveLoginCookiesBetweenTests,
-} from '../../page_objects/teachers/CookiesUtils';
+import {v4 as uuid} from 'uuid';
+import {TeachersHomepage} from '../../page_objects/teachers';
+import {clearLoginCookies, preserveLoginCookiesBetweenTests,} from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App Videos Journey', () => {
   const homepage = new TeachersHomepage();
@@ -95,11 +92,11 @@ context('Teachers App Videos Journey', () => {
       .visit()
       .menu()
       .search(MINUTE_PHYSICS)
-      .applyAgeRangeFilter('3 - 5')
+      .applyAgeRangeFilter('3 - 5', '3-5')
       .inspectResults(videos => {
         expect(videos.length).to.be.eq(2, `There are two videos showing`);
       })
-      .removeFilterTag('3 - 5');
+      .removeFilterTag('3-5');
   });
 
   specify('Video Rating', () => {
