@@ -422,7 +422,7 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
   }
 
   public submitContentPartner() {
-    cy.get(By.dataQa('buttons-row-save-button')).click();
+    cy.get(By.dataQa('save-partner-button')).click();
 
     return this;
   }

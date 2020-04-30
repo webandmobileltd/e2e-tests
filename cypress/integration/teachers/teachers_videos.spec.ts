@@ -1,6 +1,9 @@
-import {v4 as uuid} from 'uuid';
-import {TeachersHomepage} from '../../page_objects/teachers';
-import {clearLoginCookies, preserveLoginCookiesBetweenTests,} from '../../page_objects/teachers/CookiesUtils';
+import { v4 as uuid } from 'uuid';
+import { TeachersHomepage } from '../../page_objects/teachers';
+import {
+  clearLoginCookies,
+  preserveLoginCookiesBetweenTests,
+} from '../../page_objects/teachers/CookiesUtils';
 
 context('Teachers App Videos Journey', () => {
   const homepage = new TeachersHomepage();
