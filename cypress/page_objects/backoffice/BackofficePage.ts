@@ -75,6 +75,15 @@ export class BackofficePage {
     return this;
   }
 
+  public goToContentPartnerContractPage() {
+    cy.get(By.dataQa('content-management'))
+      .trigger('mouseover')
+      .get(By.dataQa('contracts-menu'))
+      .click();
+
+    return this;
+  }
+
   public goToCollectionsPage() {
     cy.get(By.dataQa('content-management'))
       .trigger('mouseover')
@@ -358,6 +367,18 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     return this;
   }
 
+  public createContentPartnerContract() {
+    cy.get(By.dataQa('new-contract-button')).click();
+
+    return this;
+  }
+
+  public setContentPartnerContractName(name: string) {
+    cy.get(By.dataQa('details-tab-content-partner-name')).type(name);
+
+    return this;
+  }
+
   public setContentPartnerName(name: string) {
     this.switchTabs('DETAILS');
 
@@ -421,8 +442,89 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     return this;
   }
 
+  public setContractRemittance(currency: string) {
+    cy.get(
+      'input#contentPartnerContractForm_details_remittanceCurrency',
+    ).click();
+
+    cy.get('.ant-select-item-option-content')
+      .contains(currency)
+      .click();
+
+    return this;
+  }
+
+  public checkContractRemittance(currency: string) {
+    cy.get('.ant-select-selection-item')
+      .contains('USD')
+      .should('have.length', 1);
+
+    return this;
+  }
+
+  public setContractDates() {
+    cy.get('.ant-picker-input')
+      .first()
+      .click();
+
+    cy.get('.ant-picker-cell-inner')
+      .contains('12')
+      .first()
+      .click();
+    cy.get('.ant-picker-cell-inner')
+      .contains('16')
+      .last()
+      .click();
+
+    return this;
+  }
+
+  public checkContractDates() {
+    cy.get('.ant-picker-input')
+      .find('input')
+      .should(inputs => {
+        console.log(inputs);
+        expect(inputs[0].value).to.contain('-12');
+        expect(inputs[1].value).to.contain('-16');
+      });
+
+    return this;
+  }
+
+  public setContractDocument() {
+    cy.get('.ant-upload-drag-container:visible').then(it => {
+      expect(it).to.have.length(1);
+
+      const [contractUpload] = it;
+
+      BackofficePage.uploadToDropzone(
+        contractUpload,
+        'contract.pdf',
+        'application/pdf',
+      );
+    });
+
+    cy.wait(2000);
+
+    cy.get('.ant-upload-drag-container:visible').should('have.length', 0); // dropzone shouldn't display once uploaded to
+
+    cy.get('.ant-upload-list-item').should('have.length', 1); // there is a file item in the file list
+
+    cy.get('.ant-upload-list-item-uploading').should('have.length', 0); // the file isn't still loading
+
+    cy.get('.ant-upload-list-item-error').should('have.length', 0); // the file upload did not fail
+
+    return this;
+  }
+
   public submitContentPartner() {
     cy.get(By.dataQa('save-partner-button')).click();
+
+    return this;
+  }
+
+  public submitContentPartnerContract() {
+    cy.get(By.dataQa('save-contract-button')).click();
 
     return this;
   }
@@ -446,6 +548,18 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     cy.get(By.dataQa('edit-content-partner'))
       .should(it => expect(it).to.have.length(1))
       .click();
+
+    return this;
+  }
+
+  public editLatestContentPartnerContract(name: string) {
+    cy.wait(500);
+
+    cy.get(By.dataQa('edit-content-partner'))
+      .last()
+      .click();
+
+    cy.scrollTo('top'); // for visibility
 
     return this;
   }

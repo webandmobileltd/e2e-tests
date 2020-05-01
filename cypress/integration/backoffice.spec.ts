@@ -1,8 +1,8 @@
 import uuid = require('uuid');
-import { findOneVideoId } from '../../setup/api/videoApi';
-import { getParametrisedVideoFixtures } from '../../setup/fixture/videos';
-import { generateToken } from '../../setup/generateToken';
 import { BackofficePage } from '../page_objects/backoffice/BackofficePage';
+import { generateToken } from '../../setup/generateToken';
+import { getParametrisedVideoFixtures } from '../../setup/fixture/videos';
+import { findOneVideoId } from '../../setup/api/videoApi';
 
 context('Backoffice', () => {
   const backoffice = new BackofficePage();
@@ -62,6 +62,23 @@ context('Backoffice', () => {
       .submitContentPartner()
       .filterByContentPartner(contentPartnerName)
       .editFirstAndOnlyContentPartner();
+  });
+
+  it('should create a content partner contract', () => {
+    const contractName = uuid.v4();
+    backoffice
+      .visit()
+      .logIn()
+      .goToContentPartnerContractPage()
+      .createContentPartnerContract()
+      .setContentPartnerContractName(contractName)
+      .setContractDocument()
+      .setContractRemittance('USD')
+      .setContractDates()
+      .submitContentPartnerContract()
+      .editLatestContentPartnerContract(contractName)
+      .checkContractRemittance('USD')
+      .checkContractDates();
   });
 
   it('should create a collection', () => {
