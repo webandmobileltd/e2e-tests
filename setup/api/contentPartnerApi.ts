@@ -19,6 +19,7 @@ export interface ContentPartner {
   ageRange?: any;
   distributionMethods?: string[];
   currency?: string;
+  contractId?: string;
 }
 
 export async function insertContentPartner(
