@@ -19,7 +19,7 @@ export interface ContentPartnerContract {
 
 export async function insertContentPartnerContract(token: string) {
   const response = await fetch(
-    Constants.API_URL + '/v1/content-partners-contracts',
+    Constants.API_URL + '/v1/content-partner-contracts',
     {
       method: 'POST',
       body: JSON.stringify({
@@ -54,7 +54,7 @@ export async function insertContentPartnerContract(token: string) {
 export async function getContentPartnerContracts(
   token: string,
 ): Promise<ContentPartnerContract[] | undefined> {
-  const response = await fetch(`${API_URL}/v1/content-partners-contracts`, {
+  const response = await fetch(`${API_URL}/v1/content-partner-contracts`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
