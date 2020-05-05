@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import * as Constants from '../Constants';
 import { API_URL } from '../Constants';
 import { assertApiResourceCreation } from './utilities';
+import uuid = require("uuid");
 
 interface HypermediaWrapper {
   _links: any;
@@ -9,7 +10,7 @@ interface HypermediaWrapper {
 }
 
 interface ContentPartnerContracts {
-  contentPartnerContracts: ContentPartnerContract[];
+  contracts: ContentPartnerContract[];
 }
 
 export interface ContentPartnerContract {
@@ -23,7 +24,7 @@ export async function insertContentPartnerContract(token: string) {
     {
       method: 'POST',
       body: JSON.stringify({
-        contentPartnerName: 'Related Content Partner',
+        contentPartnerName: 'Default Contract',
         contractDocument: 'http://server.com/oranges.png',
         contractDates: {
           start: '2010-12-31',
@@ -63,8 +64,8 @@ export async function getContentPartnerContracts(
   });
   const payload: HypermediaWrapper = await response.json();
 
-  if (payload && payload._embedded && payload._embedded.contentPartnerContracts) {
-    return payload._embedded.contentPartnerContracts;
+  if (payload && payload._embedded && payload._embedded.contracts) {
+    return payload._embedded.contracts;
   } else {
     return undefined;
   }

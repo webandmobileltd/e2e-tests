@@ -379,10 +379,52 @@ Crash Course Artificial Intelligence,CCAI_01_CLEAN_What-Is-AI,What Is Artificial
     return this;
   }
 
+  public setContentPartnerContractTerminationWarning(amount: string) {
+    cy.get(By.dataQa('details-tab-termination-warning')).type(amount);
+
+    return this;
+  }
+
+  public setContentPartnerContractMaximumLicense(amount: string) {
+    cy.get(By.dataQa('details-tab-maximum-license')).type(amount);
+
+    return this;
+  }
+
+  public setContentPartnerContractSellOffPeriod(amount: string) {
+    cy.get(By.dataQa('details-tab-sell-off-period')).type(amount);
+
+    return this;
+  }
+
+  public setContentPartnerContractRoyaltySplitDownload(amount: string) {
+    cy.get(By.dataQa('details-tab-download-royalty-split')).type(amount);
+
+    return this;
+  }
+
+  public setContentPartnerContractRoyaltySplitStreaming(amount: string) {
+    cy.get(By.dataQa('details-tab-streaming-royalty-split')).type(amount);
+
+    return this;
+  }
+
   public setContentPartnerName(name: string) {
     this.switchTabs('DETAILS');
 
     cy.get(By.dataQa('name-input')).type(name);
+
+    return this;
+  }
+
+  public setContentPartnerContract(name: string) {
+    this.switchTabs('DETAILS');
+
+    cy.get(By.dataQa('contract-select')).click();
+    cy.get(`.ant-select-item-option-content`)
+      .contains(name)
+      .scrollIntoView()
+      .click();
 
     return this;
   }
